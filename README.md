@@ -22,6 +22,8 @@ This system ensures consistent engagement and accountability.
 <img width="1918" height="913" alt="image" src="https://github.com/user-attachments/assets/ac61f187-16d1-4e35-9bf0-a9d87fec23e2" />
 <img width="1902" height="911" alt="image" src="https://github.com/user-attachments/assets/4b13189b-3bff-40d0-a7db-fefb47b7d544" />
 <img width="1900" height="907" alt="image" src="https://github.com/user-attachments/assets/7a7d9d3c-6347-4f81-9973-ed56a2c64152" />
+<img width="1123" height="580" alt="image" src="https://github.com/user-attachments/assets/840c0f64-724f-416d-9ef0-5018638a5de2" />
+
 
 
 ## 🔗 Live Demo
