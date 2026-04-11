@@ -34,6 +34,7 @@
     .topbar-title { font-size: 16px; font-weight: 600; flex: 1; }
     .tb-btn { background: rgba(255,255,255,.15); border: none; color: #fff; border-radius: 8px; padding: 7px 13px; font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
     .tb-btn.hi { background: rgba(255,255,255,.25); font-weight: 700; }
+    .tb-btn.icon-btn { padding: 7px 9px; display: flex; align-items: center; justify-content: center; }
     .shell { max-width: 560px; margin: 0 auto; padding: 24px 16px 80px; }
     .home-kicker { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
     .home-title { font-family: 'DM Serif Display', serif; font-size: 36px; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 8px; }
@@ -160,15 +161,139 @@
     .loading-dot:nth-child(2) { animation-delay: .2s; }
     .loading-dot:nth-child(3) { animation-delay: .4s; }
     @keyframes dotpulse { 0%,80%,100%{opacity:.2;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
+    /* ── History page ── */
+    .hist-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 10px; }
+    .hist-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .hist-date { font-size: 12px; color: var(--muted); flex: 1; }
+    .hist-badge { font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 99px; }
+    .hb-reached  { background: var(--success-bg); color: var(--success); }
+    .hb-attempt  { background: var(--gold-soft);  color: #92400e; }
+    .hb-message  { background: var(--blue-bg);    color: var(--blue); }
+    .hb-resched  { background: var(--surface-soft); color: var(--muted); }
+    .hist-result { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .hist-notes  { font-size: 13px; color: #4b5563; line-height: 1.55; margin-top: 4px; }
+    .hist-next   { font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .hist-empty  { padding: 28px 16px; text-align: center; font-size: 14px; color: var(--muted); }
+    .hist-person-hdr { display: flex; align-items: center; gap: 12px; background: var(--accent-soft); border: 1px solid rgba(36,76,67,.15); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; }
+    .hist-person-av  { width: 38px; height: 38px; border-radius: 9px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+    .hist-person-name { font-size: 15px; font-weight: 600; color: var(--accent); }
+    .hist-person-sub  { font-size: 12px; color: var(--muted); }
+    /* ── Recent interactions (log page) ── */
+    .recent-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; background:var(--surface-soft); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 14px; font-family:inherit; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; margin-bottom:0; }
+    .recent-toggle:hover { border-color:var(--accent); color:var(--accent); }
+    .recent-body-wrap { border:1px solid var(--line); border-top:none; border-radius:0 0 var(--radius-sm) var(--radius-sm); background:var(--surface); overflow:hidden; margin-bottom:12px; }
+    .recent-card { padding: 10px 14px; border-bottom:1px solid var(--line); }
+    .recent-card:last-child { border-bottom:none; }
+    .recent-top  { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+    .recent-date { font-size: 11px; color: var(--muted); flex: 1; }
+    .recent-badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 99px; }
+    .rb-reached  { background: var(--success-bg); color: var(--success); }
+    .rb-attempt  { background: var(--gold-soft); color: #92400e; }
+    .rb-message  { background: var(--blue-bg); color: var(--blue); }
+    .rb-resched  { background: var(--surface-soft); color: var(--muted); border:1px solid var(--line); }
+    .recent-note { font-size: 12px; color: #4b5563; line-height: 1.5; }
+    /* ── History people list ── */
+    .hist-people-list { margin-bottom: 16px; }
+    .hist-person-row { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 11px 14px; margin-bottom: 7px; cursor: pointer; transition: border-color .15s; }
+    .hist-person-row:hover { border-color: var(--accent); }
+    .hist-person-row.active { border-color: var(--accent); background: var(--accent-soft); }
+    .hist-pav { width: 34px; height: 34px; border-radius: 7px; background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+    .hist-person-row.active .hist-pav { background: var(--accent); color: #fff; }
+    .hist-pname { font-size: 14px; font-weight: 600; flex: 1; }
+    .hist-parrow { font-size: 18px; color: var(--line); }
+    .hist-inline  { border:1px solid var(--accent); border-top:none; border-radius:0 0 var(--radius-sm) var(--radius-sm); background:var(--surface); margin-bottom:7px; overflow:hidden; }
+    .hist-inline-card { padding:10px 14px; border-bottom:1px solid var(--line); }
+    .hist-inline-card:last-child { border-bottom:none; }
+    .hist-inline-empty { padding:12px 14px; font-size:13px; color:var(--muted); }
+    /* ── Who to Call recent-interactions dropdown ── */
+    .dash-hist-btn { flex-shrink:0; border:1px solid var(--line); border-radius:7px; background:transparent; padding:5px 9px; font-family:inherit; font-size:11px; font-weight:600; color:var(--muted); cursor:pointer; white-space:nowrap; }
+    .dash-hist-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .dash-hist-drop { display:none; border:1px solid var(--line); border-top:none; border-radius:0 0 var(--radius-sm) var(--radius-sm); background:var(--surface); margin-bottom:7px; overflow:hidden; }
+    .dash-hist-drop.open { display:block; }
+    .dash-hist-card { padding:10px 14px; border-bottom:1px solid var(--line); }
+    .dash-hist-card:last-child { border-bottom:none; }
+    .dash-hist-loading { padding:10px 14px; font-size:13px; color:var(--muted); }
+    /* ── Settings page ── */
+    .set-search-wrap { position: relative; margin-bottom: 16px; }
+    .set-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+    .set-search { width: 100%; padding: 11px 14px 11px 38px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); font-family: inherit; font-size: 14px; color: var(--text); outline: none; }
+    .set-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(36,76,67,.08); }
+    .cad-row { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; }
+    .cad-av  { width: 36px; height: 36px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .cad-info { flex: 1; min-width: 0; }
+    .cad-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cad-sub  { font-size: 12px; color: var(--muted); margin-top: 1px; }
+    .cad-right { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+    .cad-input { width: 56px; text-align: center; border: 1px solid var(--line); border-radius: 7px; background: var(--surface-soft); font-family: inherit; font-size: 15px; font-weight: 700; color: var(--text); padding: 6px 4px; outline: none; }
+    .cad-input:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(36,76,67,.08); }
+    .cad-days-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+    .cad-save { background: var(--accent); color: #fff; border: none; border-radius: 7px; padding: 7px 12px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .cad-save:disabled { opacity: .4; cursor: not-allowed; }
+    .cad-status { font-size: 14px; font-weight: 700; width: 16px; text-align: center; }
+    .cad-status.ok  { color: var(--success); }
+    .cad-status.err { color: var(--danger); }
+    .sw-wrap { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .sw-label { font-size: 11px; font-weight: 600; color: var(--muted); min-width: 38px; }
+    .sw-label.on  { color: var(--success); }
+    .sw-label.off { color: var(--danger); }
+    .sw { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+    .sw input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .sw-track { position: absolute; inset: 0; background: #d1d5db; border-radius: 99px; cursor: pointer; transition: background .2s; }
+    .sw input:checked + .sw-track { background: var(--success); }
+    .sw-track::after { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+    .sw input:checked + .sw-track::after { transform: translateX(16px); }
+    .sw input:disabled + .sw-track { opacity: .4; cursor: not-allowed; }
+    .cad-edit { background: none; border: 1px solid var(--line); border-radius: 7px; padding: 6px 9px; font-size: 13px; color: var(--muted); cursor: pointer; flex-shrink: 0; line-height: 1; }
+    .cad-edit:hover { border-color: var(--accent); color: var(--accent); }
+    /* ── Edit Person Modal ── */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; align-items: flex-end; justify-content: center; }
+    .modal-backdrop.open { display: flex; }
+    .modal-sheet { background: var(--surface); border-radius: 20px 20px 0 0; width: 100%; max-width: 560px; padding: 20px 20px 36px; max-height: 85vh; overflow-y: auto; }
+    .modal-handle { width: 36px; height: 4px; background: var(--line); border-radius: 99px; margin: 0 auto 18px; }
+    .modal-title { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 4px; }
+    .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .modal-field { margin-bottom: 14px; }
+    .modal-label { display: block; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .modal-input { width: 100%; padding: 10px 13px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-soft); font-family: inherit; font-size: 14px; color: var(--text); outline: none; }
+    .modal-input:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(36,76,67,.08); }
+    .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+    .modal-save { flex: 1; padding: 13px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+    .modal-save:disabled { opacity: .45; cursor: not-allowed; }
+    .modal-cancel { padding: 13px 18px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius-sm); font-family: inherit; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; }
+    .modal-msg { font-size: 13px; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px; display: none; }
+    .modal-msg.error { display: block; background: var(--danger-bg); color: var(--danger); }
+    .modal-msg.ok    { display: block; background: var(--success-bg); color: var(--success); }
+    /* ── Pull to refresh ── */
+    .ptr-bar { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; font-size: 13px; color: var(--muted); background: var(--surface-soft); border-bottom: 1px solid var(--line); }
+    .aset-row { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:13px 14px; margin-bottom:8px; }
+    .aset-label { font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+    .aset-desc { font-size:12px; color:var(--muted); margin-bottom:8px; }
+    .aset-row-ctrl { display:flex; gap:8px; align-items:center; }
+    .aset-input { flex:1; padding:9px 12px; border:1px solid var(--line); border-radius:7px; background:var(--surface-soft); font-family:inherit; font-size:14px; color:var(--text); outline:none; }
+    .aset-input:focus { border-color:var(--accent); background:#fff; box-shadow:0 0 0 3px rgba(36,76,67,.08); }
+    .aset-save { background:var(--accent); color:#fff; border:none; border-radius:7px; padding:9px 14px; font-family:inherit; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; }
+    .aset-save:disabled { opacity:.4; cursor:not-allowed; }
+    .aset-status { font-size:14px; font-weight:700; width:16px; text-align:center; }
+    .aset-status.ok { color:var(--success); }
+    .aset-status.err { color:var(--danger); }
   </style>
 </head>
 <body>
 
 <!-- HOME PAGE -->
 <div class="page active" id="pg-home">
+  <div class="topbar">
+    <span class="topbar-title">Call Tracker</span>
+    <button class="tb-btn icon-btn" onclick="showPage('pg-settings')" title="Settings" aria-label="Settings">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="2.5" stroke="#fff" stroke-width="1.5"/>
+        <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
   <div class="shell">
     <p class="home-kicker">Pastoral Call Tracker</p>
-    <h1 class="home-title">Call Tracker</h1>
+    <h1 class="home-title" id="home-greeting">Good morning, Pastor.</h1>
     <p class="home-sub">Your daily outreach dashboard.</p>
     <div class="stat-row">
       <div class="stat-box cb"><div class="stat-num" id="h-cb">—</div><div class="stat-lbl">Callbacks</div></div>
@@ -199,6 +324,27 @@
       <div class="nav-text"><div class="nav-title">Log a Call</div><div class="nav-sub">Record outcome, notes and next steps</div></div>
       <span class="nav-arrow">›</span>
     </div>
+    <div class="nav-card" onclick="showPage('pg-history')">
+      <div class="nav-icon soft">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 3a7 7 0 1 0 0 14A7 7 0 0 0 10 3z" stroke="#6f6f6a" stroke-width="1.4"/>
+          <path d="M10 6.5V10l2.5 2" stroke="#6f6f6a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-text"><div class="nav-title">Past Notes</div><div class="nav-sub">View call history for any person</div></div>
+      <span class="nav-arrow">›</span>
+    </div>
+    <div class="nav-card" onclick="showPage('pg-addperson')">
+      <div class="nav-icon soft">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="8" cy="7" r="3.5" stroke="#6f6f6a" stroke-width="1.4"/>
+          <path d="M2 17c0-3.314 2.686-5 6-5" stroke="#6f6f6a" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M15 12v5M12.5 14.5h5" stroke="#244c43" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="nav-text"><div class="nav-title">Add Person</div><div class="nav-sub">Add a new contact to your call list</div></div>
+      <span class="nav-arrow">›</span>
+    </div>
   </div>
 </div>
 
@@ -208,6 +354,7 @@
     <span class="topbar-title">Who to Call</span>
     <button class="tb-btn" onclick="showPage('pg-home')">Home</button>
     <button class="tb-btn" onclick="loadDash()">Refresh</button>
+    <button class="tb-btn" onclick="showPage('pg-addperson')">+ Add</button>
     <button class="tb-btn hi" onclick="showPage('pg-log')">Log Call</button>
   </div>
   <div class="sum-strip" id="sum-strip" style="display:none">
@@ -216,6 +363,10 @@
     <div class="sum-cell td" onclick="jumpTo('s-td')"><div class="sum-num2" id="sn-td">0</div><div class="sum-lbl2">Today</div></div>
     <div class="sum-cell wk" onclick="jumpTo('s-wk')"><div class="sum-num2" id="sn-wk">0</div><div class="sum-lbl2">This Week</div></div>
     <div class="sum-cell" onclick="jumpTo('s-nd')"><div class="sum-num2" id="sn-nd">0</div><div class="sum-lbl2">No Date</div></div>
+  </div>
+  <div class="ptr-bar" id="ptr-bar" style="display:none">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v3l3-3M8 2l-3 3M2 8a6 6 0 1 0 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Pull down to refresh
   </div>
   <div id="dash-body"></div>
 </div>
@@ -232,6 +383,7 @@
       <div class="s-title">Call logged</div>
       <div class="s-sub" id="success-sub">Saved successfully.</div>
       <button class="s-again" onclick="resetLog()">Log another call</button>
+      <button class="s-again" style="margin-top:10px;background:var(--surface);color:var(--accent);border:1px solid var(--accent);" onclick="showPage('pg-dash')">View Dashboard</button>
     </div>
     <div id="log-form">
       <p class="form-kicker">Outreach</p>
@@ -254,6 +406,13 @@
           <button class="sel-x" onclick="clearPerson()">×</button>
         </div>
         <input type="hidden" id="person-id">
+      </div>
+      <div id="recent-interactions" style="display:none; margin-bottom:4px;">
+        <button type="button" class="recent-toggle" id="recent-toggle" onclick="toggleRecent()">
+          <span id="recent-toggle-label">Recent interactions</span>
+          <span id="recent-toggle-arrow" style="transition:transform .2s">&#9662;</span>
+        </button>
+        <div id="recent-body" style="display:none;"></div>
       </div>
       <div class="divider"></div>
       <div class="field">
@@ -291,16 +450,165 @@
   </div>
 </div>
 
+<!-- HISTORY PAGE -->
+<div class="page" id="pg-history">
+  <div class="topbar">
+    <button class="tb-btn" onclick="showPage('pg-home')">‹ Home</button>
+    <span class="topbar-title">Past Notes</span>
+  </div>
+  <div class="shell">
+    <p class="form-kicker">Call History</p>
+    <h1 class="form-title">Past Notes</h1>
+    <p class="form-sub">Select a person to view their call history.</p>
+    <div class="set-search-wrap">
+      <svg class="set-search-icon" width="15" height="15" viewBox="0 0 16 16" fill="none">
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="#7a7870" stroke-width="1.4"/>
+        <path d="M10 10l3.5 3.5" stroke="#7a7870" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <input type="text" class="set-search" id="hist-filter" placeholder="Search people…" oninput="filterHistPeople()">
+    </div>
+    <div id="hist-people-list"></div>
+  </div>
+</div>
+
+<!-- SETTINGS MENU PAGE -->
+<div class="page" id="pg-settings">
+  <div class="topbar">
+    <button class="tb-btn" onclick="showPage('pg-home')">&#8249; Home</button>
+    <span class="topbar-title">Settings</span>
+  </div>
+  <div class="shell">
+    <p class="form-kicker">Configuration</p>
+    <h1 class="form-title">Settings</h1>
+    <p class="form-sub">Manage your app configuration and call cadence.</p>
+    <div class="nav-card" onclick="showPage('pg-appsettings')">
+      <div class="nav-icon soft">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="2.5" stroke="#6f6f6a" stroke-width="1.5"/>
+          <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42" stroke="#6f6f6a" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="nav-text">
+        <div class="nav-title">App Settings</div>
+        <div class="nav-sub">Reminders, hours, timezone and more</div>
+      </div>
+      <span class="nav-arrow">&#8250;</span>
+    </div>
+    <div class="nav-card" onclick="showPage('pg-cadence')">
+      <div class="nav-icon soft">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="7" stroke="#6f6f6a" stroke-width="1.4"/>
+          <path d="M10 6v4l2.5 2" stroke="#6f6f6a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-text">
+        <div class="nav-title">People Settings</div>
+        <div class="nav-sub">Manage cadence and active status per person</div>
+      </div>
+      <span class="nav-arrow">&#8250;</span>
+    </div>
+  </div>
+</div>
+
+<!-- APP SETTINGS SUB-PAGE -->
+<div class="page" id="pg-appsettings">
+  <div class="topbar">
+    <button class="tb-btn" onclick="showPage('pg-settings')">&#8249; Settings</button>
+    <span class="topbar-title">App Settings</span>
+  </div>
+  <div class="shell">
+    <p class="form-kicker">Configuration</p>
+    <h1 class="form-title">App Settings</h1>
+    <p class="form-sub">Reminders, schedule hours, and timezone.</p>
+    <div id="app-settings-list">
+      <div class="people-loading" style="padding:16px 0"><span>Loading</span><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CALL CADENCE SUB-PAGE -->
+<div class="page" id="pg-cadence">
+  <div class="topbar">
+    <button class="tb-btn" onclick="showPage('pg-settings')">&#8249; Settings</button>
+    <span class="topbar-title">People Settings</span>
+  </div>
+  <div class="shell">
+    <p class="form-kicker">Configuration</p>
+    <h1 class="form-title">People Settings</h1>
+    <p class="form-sub">Set call cadence and toggle active status for each person.</p>
+    <div class="set-search-wrap">
+      <svg class="set-search-icon" width="15" height="15" viewBox="0 0 16 16" fill="none">
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="#7a7870" stroke-width="1.4"/>
+        <path d="M10 10l3.5 3.5" stroke="#7a7870" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <input type="text" class="set-search" id="cad-filter" placeholder="Search people…" oninput="filterCadence()">
+    </div>
+    <div id="cad-list"></div>
+  </div>
+</div>
+
+
+<!-- ADD PERSON PAGE -->
+<div class="page" id="pg-addperson">
+  <div class="topbar">
+    <button class="tb-btn" onclick="showPage('pg-home')">&#8249; Home</button>
+    <span class="topbar-title">Add Person</span>
+  </div>
+  <div class="shell">
+    <div id="addperson-success" class="success-screen">
+      <div class="s-icon">&#10003;</div>
+      <div class="s-title" id="addperson-success-name"></div>
+      <div class="s-sub">Added to your call list.</div>
+      <button class="s-again" onclick="resetAddPerson()">Add another person</button>
+    </div>
+    <div id="addperson-form">
+      <p class="form-kicker">Contacts</p>
+      <h1 class="form-title">Add Person</h1>
+      <p class="form-sub">Add a new contact to your pastoral call list.</p>
+      <div id="addperson-msg" class="msg"></div>
+      <div class="field">
+        <label class="field-label">Full Name <span style="color:var(--danger)">*</span></label>
+        <input type="text" class="aset-input" id="ap-name" placeholder="e.g. John Smith" style="width:100%;padding:11px 14px;font-size:15px;">
+      </div>
+      <div class="field">
+        <label class="field-label">Role <span style="font-weight:400;color:var(--muted)">&#8212; optional</span></label>
+        <input type="text" class="aset-input" id="ap-role" placeholder="e.g. Elder, Deacon, Member" style="width:100%;padding:11px 14px;font-size:15px;">
+      </div>
+      <div class="field">
+        <label class="field-label">Fellowship <span style="font-weight:400;color:var(--muted)">&#8212; optional</span></label>
+        <input type="text" class="aset-input" id="ap-fellowship" placeholder="e.g. Youth, Seniors" style="width:100%;padding:11px 14px;font-size:15px;">
+      </div>
+      <div class="field">
+        <label class="field-label">Priority <span style="font-weight:400;color:var(--muted)">&#8212; optional</span></label>
+        <input type="text" class="aset-input" id="ap-priority" placeholder="e.g. High, Medium, Low" style="width:100%;padding:11px 14px;font-size:15px;">
+      </div>
+      <div class="field">
+        <label class="field-label">Call Cadence (days)</label>
+        <input type="number" class="aset-input" id="ap-cadence" value="30" min="1" max="365" style="width:100%;padding:11px 14px;font-size:15px;">
+        <p class="field-hint">How many days between calls. Default is 30.</p>
+      </div>
+    </div>
+  </div>
+  <div class="save-bar" id="addperson-bar">
+    <button class="save-btn" id="addperson-btn" onclick="submitAddPerson()">Add to Call List</button>
+  </div>
+</div>
+
 <script>
-  var API = 'https://script.google.com/macros/s/AKfycbxXxvktQZvp7XyxjHWvvwBSqr83mMna2-m-cAfavaSLRdQ8s5veOXodTwZLQbnEw97J/exec';
+  var API = 'YOUR WEB APP URL';
 
   function showPage(id) {
     document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
     document.getElementById(id).classList.add('active');
     window.scrollTo(0,0);
-    if (id === 'pg-dash') loadDash();
-    if (id === 'pg-log') initLogPage();
-    if (id === 'pg-home') loadHome();
+    if (id === 'pg-dash')         loadDash();
+    if (id === 'pg-log')          initLogPage();
+    if (id === 'pg-home')         loadHome();
+    if (id === 'pg-history')      initHistoryPage();
+    if (id === 'pg-settings')     {}
+    if (id === 'pg-appsettings')  loadAppSettings();
+    if (id === 'pg-cadence')      initCadencePage();
+    if (id === 'pg-addperson')    initAddPersonPage();
   }
 
   function apiFetch(action, params) {
@@ -325,6 +633,9 @@
   }
 
   function loadHome() {
+    var h = new Date().getHours();
+    var gr = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('home-greeting').textContent = gr + ', Pastor.';
     apiFetch('quickStats').then(function(d){
       document.getElementById('h-cb').textContent = d.callbacks || 0;
       document.getElementById('h-ov').textContent = d.overdue || 0;
@@ -351,6 +662,7 @@
     if (!arr.length) {
       h += '<div class="empty-row">None — all clear here ✓</div>';
     } else arr.forEach(function(p){
+      var pid = esc(p.id);
       h += '<div class="person-row ' + sec.row + '">';
       h += '<div class="av ' + sec.av + '">' + esc(ini(p.name)) + '</div>';
       h += '<div class="row-info"><div class="row-name">' + esc(p.name || 'Unnamed') + '</div>';
@@ -358,8 +670,9 @@
       if (p.priority) h += '<span class="row-pill">' + esc(p.priority) + '</span>';
       if (p.lastAttempt) h += '<span class="row-pill">Last: ' + esc(p.lastAttempt) + '</span>';
       h += '</div></div>';
-      h += '<button class="log-btn" onclick="goLogPerson(\'' + esc(p.id) + '\',\'' + esc(p.name) + '\')">Log</button>';
+      h += '<button class="log-btn" onclick="goLogPerson(\'' + pid + '\',\'' + esc(p.name) + '\')">Log</button>';
       h += '</div>';
+      // No notes dropdown on the Who to Call page — notes are in Past Notes
     });
     h += '</div>';
     return h;
@@ -517,6 +830,62 @@
     document.getElementById('sel-pill').classList.add('on');
     closeDrop();
     showMsg('', '');
+    loadRecentInteractions(p.id);
+  }
+
+  var recentOpen = false;
+
+  function loadRecentInteractions(pid) {
+    var wrap  = document.getElementById('recent-interactions');
+    var body  = document.getElementById('recent-body');
+    var lbl   = document.getElementById('recent-toggle-label');
+    var arrow = document.getElementById('recent-toggle-arrow');
+    // Reset to closed while loading
+    recentOpen = false;
+    body.style.display = 'none';
+    if (arrow) arrow.style.transform = '';
+    lbl.textContent = 'Recent interactions';
+    wrap.style.display = 'block';
+    apiFetch('getInteractions', { personId: pid }).then(function(list) {
+      if (!Array.isArray(list) || !list.length) {
+        lbl.textContent = 'No previous interactions';
+        body.innerHTML = '';
+        return;
+      }
+      var recentCount = Math.min(list.length, 3);
+      lbl.textContent = 'Recent interactions (' + recentCount + ')';
+      var top3 = list.slice(0, 3);
+      var h = '<div class="recent-body-wrap">';
+      top3.forEach(function(i) {
+        var badgeCls = i.outcome === 'Successful' ? 'rb-reached'
+          : i.result === 'Left Message' ? 'rb-message'
+          : i.result === 'Rescheduled Call' ? 'rb-resched'
+          : 'rb-attempt';
+        h += '<div class="recent-card">';
+        h += '<div class="recent-top"><span class="recent-date">' + esc(i.timestamp) + '</span><span class="recent-badge ' + badgeCls + '">' + esc(i.result) + '</span></div>';
+        if (i.summary) h += '<div class="recent-note">' + esc(i.summary) + '</div>';
+        h += '</div>';
+      });
+      if (list.length > 3) {
+        h += '<div style="padding:9px 14px;border-top:1px solid var(--line);"><button type="button" onclick="goHistoryPerson(\'' + esc(pid) + '\')" style="background:none;border:none;font-family:inherit;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:0;">View full history (' + list.length + ' total) ›</button></div>';
+      }
+      h += '</div>';
+      body.innerHTML = h;
+      // Auto-open after data loads
+      recentOpen = true;
+      body.style.display = 'block';
+      if (arrow) arrow.style.transform = 'rotate(180deg)';
+    }).catch(function() {
+      wrap.style.display = 'none';
+    });
+  }
+
+  function toggleRecent() {
+    var body  = document.getElementById('recent-body');
+    var arrow = document.getElementById('recent-toggle-arrow');
+    recentOpen = !recentOpen;
+    body.style.display  = recentOpen ? 'block' : 'none';
+    if (arrow) arrow.style.transform = recentOpen ? 'rotate(180deg)' : '';
   }
 
   function clearPerson() {
@@ -525,6 +894,15 @@
     document.getElementById('person-search').style.display = '';
     document.getElementById('sel-pill').classList.remove('on');
     document.getElementById('person-search').focus();
+    recentOpen = false;
+    var ri = document.getElementById('recent-interactions');
+    if (ri) ri.style.display = 'none';
+    var rb = document.getElementById('recent-body');
+    if (rb) { rb.style.display = 'none'; rb.innerHTML = ''; }
+    var arr = document.getElementById('recent-toggle-arrow');
+    if (arr) arr.style.transform = '';
+    var lbl = document.getElementById('recent-toggle-label');
+    if (lbl) lbl.textContent = 'Recent interactions';
   }
 
   function closeDrop() {
@@ -624,9 +1002,500 @@
     selAction = 'None';
     showMsg('', '');
     setSaving(false);
+    var ri = document.getElementById('recent-interactions');
+    if (ri) ri.style.display = 'none';
+  }
+
+  // ── History page ──────────────────────────────────────────
+  var histActivePid = null;
+  var histPreselPid = null;
+
+  function goHistoryPerson(pid) {
+    histPreselPid = pid;
+    showPage('pg-history');
+  }
+
+  function initHistoryPage() {
+    var hf = document.getElementById('hist-filter');
+    if (hf) hf.value = '';
+    if (histPreselPid) {
+      histActivePid = histPreselPid;
+      histPreselPid = null;
+    } else {
+      histActivePid = null;
+    }
+    if (peopleLoaded) {
+      renderHistPeopleList(allPeople);
+    } else {
+      document.getElementById('hist-people-list').innerHTML =
+        '<div class="people-loading" style="padding:20px 0"><span>Loading contacts</span><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
+      fetchPeople().then(function(){ renderHistPeopleList(allPeople); });
+    }
+  }
+
+  function filterHistPeople() {
+    var q = document.getElementById('hist-filter').value.trim().toLowerCase();
+    var list = q ? allPeople.filter(function(p){ return p.name.toLowerCase().indexOf(q) >= 0; }) : allPeople;
+    renderHistPeopleList(list);
+  }
+
+  function renderHistPeopleList(list) {
+    var el = document.getElementById('hist-people-list');
+    if (!list.length) { el.innerHTML = '<div class="hist-empty">No contacts found.</div>'; return; }
+    el.innerHTML = list.map(function(p) {
+      var pid = esc(p.id);
+      var isActive = histActivePid === String(p.id);
+      var rowCls = 'hist-person-row' + (isActive ? ' active' : '');
+      var arrowChar = isActive ? '▾' : '›';
+      return '<div class="' + rowCls + '" data-pid="' + pid + '" data-name="' + esc(p.name) + '" onclick="pickHistPersonFromList(this)">' +
+        '<div class="hist-pav">' + esc(ini(p.name)) + '</div>' +
+        '<span class="hist-pname">' + esc(p.name) + '</span>' +
+        '<span class="hist-parrow" id="harrow-' + pid + '">' + arrowChar + '</span>' +
+      '</div>' +
+      '<div class="hist-inline" id="hinline-' + pid + '" style="' + (isActive ? '' : 'display:none') + '"></div>';
+    }).join('');
+    // if one was already active, re-load its results
+    if (histActivePid) {
+      var activeEl = document.querySelector('[data-pid="' + histActivePid + '"]');
+      if (activeEl) {
+        var name = activeEl.getAttribute('data-name');
+        renderHistInline(histActivePid, name);
+      }
+    }
+  }
+
+  function pickHistPersonFromList(el) {
+    var pid  = el.getAttribute('data-pid');
+    var name = el.getAttribute('data-name');
+    // toggle: clicking the same person collapses it
+    if (histActivePid === pid) {
+      histActivePid = null;
+      var q = document.getElementById('hist-filter').value.trim().toLowerCase();
+      renderHistPeopleList(q ? allPeople.filter(function(p){ return p.name.toLowerCase().indexOf(q) >= 0; }) : allPeople);
+      return;
+    }
+    histActivePid = pid;
+    var q = document.getElementById('hist-filter').value.trim().toLowerCase();
+    renderHistPeopleList(q ? allPeople.filter(function(p){ return p.name.toLowerCase().indexOf(q) >= 0; }) : allPeople);
+  }
+
+  function renderHistInline(pid, name) {
+    var panel = document.getElementById('hinline-' + pid);
+    if (!panel) return;
+    panel.style.display = 'block';
+    panel.innerHTML = '<div class="hist-inline-empty">Loading…</div>';
+    apiFetch('getInteractions', { personId: pid }).then(function(list) {
+      if (!Array.isArray(list) || !list.length) {
+        panel.innerHTML = '<div class="hist-inline-empty">No call history yet.</div>';
+        return;
+      }
+      var h = '';
+      list.forEach(function(i) {
+        var badgeCls = i.outcome === 'Successful' ? 'hb-reached'
+          : i.result === 'Left Message' ? 'hb-message'
+          : i.result === 'Rescheduled Call' ? 'hb-resched'
+          : 'hb-attempt';
+        h += '<div class="hist-inline-card">';
+        h += '<div class="hist-top"><span class="hist-date">' + esc(i.timestamp) + '</span><span class="hist-badge ' + badgeCls + '">' + esc(i.result || i.outcome) + '</span></div>';
+        if (i.summary) h += '<div class="hist-notes">' + esc(i.summary) + '</div>';
+        if (i.nextAction && i.nextAction !== 'None') h += '<div class="hist-next">Next: ' + esc(i.nextAction) + (i.nextDt ? ' · ' + esc(i.nextDt) : '') + '</div>';
+        h += '</div>';
+      });
+      panel.innerHTML = h;
+    }).catch(function() {
+      panel.innerHTML = '<div class="hist-inline-empty">Could not load history.</div>';
+    });
+  }
+
+  function renderHistory(list, personName) {
+    var el = document.getElementById('hist-results');
+    if (!Array.isArray(list) || !list.length) {
+      el.innerHTML = '<div class="hist-empty">No call history found for this person.</div>';
+      return;
+    }
+    var countLabel = list.length === 1 ? '1 interaction' : list.length + ' interactions';
+    var h = '<div class="hist-person-hdr">';
+    h += '<div class="hist-person-av">' + esc(ini(personName)) + '</div>';
+    h += '<div><div class="hist-person-name">' + esc(personName) + '</div><div class="hist-person-sub">' + countLabel + '</div></div>';
+    h += '</div>';
+    list.forEach(function(i) {
+      var badgeCls = i.outcome === 'Successful' ? 'hb-reached'
+                   : i.result  === 'Left Message'       ? 'hb-message'
+                   : i.result  === 'Rescheduled Call'   ? 'hb-resched'
+                   : 'hb-attempt';
+      h += '<div class="hist-card">';
+      h += '<div class="hist-top"><span class="hist-date">' + esc(i.timestamp) + '</span><span class="hist-badge ' + badgeCls + '">' + esc(i.result || i.outcome) + '</span></div>';
+      if (i.summary) h += '<div class="hist-notes">' + esc(i.summary) + '</div>';
+      if (i.nextAction && i.nextAction !== 'None') {
+        h += '<div class="hist-next">Next: ' + esc(i.nextAction) + (i.nextDt ? ' · ' + esc(i.nextDt) : '') + '</div>';
+      }
+      h += '</div>';
+    });
+    el.innerHTML = h;
+  }
+
+  // ── Settings pages ───────────────────────────────────────
+  var cadPeople = [];
+  var cadSessionLoaded = false;
+  var cadSessionDirty  = false;
+
+  function initCadencePage() {
+    document.getElementById('cad-filter').value = '';
+    if (cadSessionLoaded && !cadSessionDirty) {
+      renderCadence(cadPeople);
+      return;
+    }
+    cadPeople = [];
+    loadCadencePeople();
+  }
+
+  function loadAppSettings() {
+    var el = document.getElementById('app-settings-list');
+    el.innerHTML = '<div class="people-loading" style="padding:16px 0"><span>Loading</span><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
+    apiFetch('getSettings').then(function(list) {
+      if (!Array.isArray(list) || !list.length) { el.innerHTML = '<div class="hist-empty">No settings found.</div>'; return; }
+      el.innerHTML = list.map(function(s) {
+        var k = esc(s.key);
+        return '<div class="aset-row">' +
+          '<div class="aset-label">' + esc(s.label || s.key) + '</div>' +
+          (s.desc ? '<div class="aset-desc">' + esc(s.desc) + '</div>' : '') +
+          '<div class="aset-row-ctrl">' +
+            '<input class="aset-input" id="aset-' + k + '" value="' + esc(s.val) + '" placeholder="—">' +
+            '<button class="aset-save" id="assave-' + k + '" onclick="saveAppSetting(\'' + k + '\')">Save</button>' +
+            '<span class="aset-status" id="asstat-' + k + '"></span>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }).catch(function(e) {
+      el.innerHTML = '<div class="err-box">Could not load settings.<br><small>' + esc(String(e)) + '</small></div>';
+    });
+  }
+
+  function saveAppSetting(key) {
+    var inp  = document.getElementById('aset-' + key);
+    var btn  = document.getElementById('assave-' + key);
+    var stat = document.getElementById('asstat-' + key);
+    if (!inp || !btn) return;
+    var val = inp.value;
+    btn.disabled = true; btn.textContent = '…';
+    apiFetch('saveSetting', { key: key, val: val }).then(function(res) {
+      btn.disabled = false; btn.textContent = 'Save';
+      if (res && res.success) {
+        if (stat) { stat.textContent = '✓'; stat.className = 'aset-status ok'; setTimeout(function(){ stat.textContent = ''; }, 2000); }
+      } else {
+        if (stat) { stat.textContent = '!'; stat.className = 'aset-status err'; }
+      }
+    }).catch(function() {
+      btn.disabled = false; btn.textContent = 'Save';
+      if (stat) { stat.textContent = '!'; stat.className = 'aset-status err'; }
+    });
+  }
+
+  function loadCadencePeople() {
+    cadPeople = [];
+    var el = document.getElementById('cad-list');
+    el.innerHTML = '<div class="people-loading" style="padding:28px 0"><span>Loading contacts</span><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
+    apiFetch('getPeopleWithCadence')
+      .then(function(list) {
+        cadPeople = Array.isArray(list) ? list : [];
+        cadSessionLoaded = true;
+        cadSessionDirty  = false;
+        if (!cadPeople.length) { el.innerHTML = '<div class="hist-empty">No contacts found.</div>'; return; }
+        renderCadence(cadPeople);
+      })
+      .catch(function(e) {
+        el.innerHTML = '<div class="err-box">Could not load contacts.<br><small>' + esc(String(e)) + '</small></div>';
+      });
+  }
+
+  function filterCadence() {
+    var q = document.getElementById('cad-filter').value.trim().toLowerCase();
+    var list = q ? cadPeople.filter(function(p){ return p.name.toLowerCase().indexOf(q) >= 0; }) : cadPeople;
+    renderCadence(list);
+  }
+
+  function renderCadence(list) {
+    var el = document.getElementById('cad-list');
+    if (!list.length) { el.innerHTML = '<div class="hist-empty">No contacts match.</div>'; return; }
+    el.innerHTML = list.map(function(p) {
+      var sub = [p.role, p.fellowship].filter(Boolean).join(' · ');
+      var pid = esc(p.id);
+      var isActive = p.active !== false;
+      var lblCls = isActive ? 'on' : 'off';
+      var lblTxt = isActive ? 'Active' : 'Off';
+      return '<div class="cad-row" id="crow-' + pid + '">' +
+        '<div class="cad-av">' + esc(ini(p.name)) + '</div>' +
+        '<div class="cad-info">' +
+          '<div class="cad-name">' + esc(p.name) + '</div>' +
+          (sub ? '<div class="cad-sub">' + esc(sub) + '</div>' : '') +
+        '</div>' +
+        '<div class="cad-right">' +
+          '<input class="cad-input" type="number" min="1" max="365" id="cad-' + pid + '" value="' + p.cadenceDays + '">' +
+          '<span class="cad-days-label">days</span>' +
+          '<button class="cad-save" id="csave-' + pid + '" onclick="saveCad(\'' + pid + '\')">Save</button>' +
+          '<button class="cad-edit" onclick="openEditModal(\'' + pid + '\')" title="Edit">✎</button>' +
+          '<div class="sw-wrap">' +
+            '<label class="sw-label ' + lblCls + '" id="clab-' + pid + '">' + lblTxt + '</label>' +
+            '<label class="sw">' +
+              '<input type="checkbox" id="ctog-' + pid + '" ' + (isActive ? 'checked' : '') + ' onchange="toggleActive(\'' + pid + '\')">' +
+              '<span class="sw-track"></span>' +
+            '</label>' +
+          '</div>' +
+          '<span class="cad-status" id="cstat-' + pid + '"></span>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function saveCad(pid) {
+    var inp  = document.getElementById('cad-' + pid);
+    var btn  = document.getElementById('csave-' + pid);
+    var stat = document.getElementById('cstat-' + pid);
+    if (!inp || !btn) return;
+    var days = parseInt(inp.value);
+    if (!days || days < 1) { inp.style.borderColor = 'var(--danger)'; return; }
+    inp.style.borderColor = '';
+    btn.disabled = true;
+    btn.textContent = '…';
+    apiFetch('saveCadence', { personId: pid, cadenceDays: days })
+      .then(function(res) {
+        btn.disabled = false;
+        btn.textContent = 'Save';
+        if (res && res.success) {
+          var p = cadPeople.find(function(x){ return String(x.id) === String(pid); });
+          if (p) p.cadenceDays = days;
+          cadSessionDirty = true;
+          if (stat) { stat.textContent = '✓'; stat.className = 'cad-status ok'; setTimeout(function(){ stat.textContent = ''; }, 2000); }
+        } else {
+          if (stat) { stat.textContent = '!'; stat.className = 'cad-status err'; }
+        }
+      })
+      .catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Save';
+        if (stat) { stat.textContent = '!'; stat.className = 'cad-status err'; }
+      });
+  }
+
+  function toggleActive(pid) {
+    var chk  = document.getElementById('ctog-' + pid);
+    var lbl  = document.getElementById('clab-' + pid);
+    var stat = document.getElementById('cstat-' + pid);
+    if (!chk) return;
+    var newActive = chk.checked;
+    chk.disabled = true;
+    apiFetch('setActive', { personId: pid, active: newActive ? 'true' : 'false' })
+      .then(function(res) {
+        chk.disabled = false;
+        if (res && res.success) {
+          var p = cadPeople.find(function(x){ return String(x.id) === String(pid); });
+          if (p) p.active = newActive;
+          cadSessionDirty = true;
+          if (lbl) { lbl.textContent = newActive ? 'Active' : 'Off'; lbl.className = 'sw-label ' + (newActive ? 'on' : 'off'); }
+          if (stat) { stat.textContent = '✓'; stat.className = 'cad-status ok'; setTimeout(function(){ stat.textContent = ''; }, 2000); }
+        } else {
+          // Revert checkbox on failure
+          chk.checked = !newActive;
+          if (lbl) { lbl.textContent = !newActive ? 'Active' : 'Off'; lbl.className = 'sw-label ' + (!newActive ? 'on' : 'off'); }
+          if (stat) { stat.textContent = '!'; stat.className = 'cad-status err'; }
+        }
+      })
+      .catch(function() {
+        chk.disabled = false;
+        chk.checked = !newActive;
+        if (lbl) { lbl.textContent = !newActive ? 'Active' : 'Off'; lbl.className = 'sw-label ' + (!newActive ? 'on' : 'off'); }
+        if (stat) { stat.textContent = '!'; stat.className = 'cad-status err'; }
+      });
+  }
+
+  // ── Add Person page ──────────────────────────────────────
+  var addPersonSaving = false;
+
+  function initAddPersonPage() {
+    resetAddPerson();
+  }
+
+  function resetAddPerson() {
+    addPersonSaving = false;
+    document.getElementById('addperson-form').style.display = 'block';
+    document.getElementById('addperson-success').classList.remove('on');
+    document.getElementById('addperson-bar').style.display = 'block';
+    document.getElementById('addperson-btn').disabled = false;
+    document.getElementById('addperson-btn').textContent = 'Add to Call List';
+    document.getElementById('ap-name').value = '';
+    document.getElementById('ap-role').value = '';
+    document.getElementById('ap-fellowship').value = '';
+    document.getElementById('ap-priority').value = '';
+    document.getElementById('ap-cadence').value = '30';
+    showAddPersonMsg('', '');
+  }
+
+  function showAddPersonMsg(text, cls) {
+    var el = document.getElementById('addperson-msg');
+    el.className = 'msg ' + (cls || '');
+    el.textContent = text || '';
+  }
+
+  function submitAddPerson() {
+    if (addPersonSaving) return;
+    var name      = document.getElementById('ap-name').value.trim();
+    var role      = document.getElementById('ap-role').value.trim();
+    var fellowship= document.getElementById('ap-fellowship').value.trim();
+    var priority  = document.getElementById('ap-priority').value.trim();
+    var cadence   = parseInt(document.getElementById('ap-cadence').value) || 30;
+
+    if (!name) { showAddPersonMsg('Full name is required.', 'error'); document.getElementById('ap-name').focus(); return; }
+
+    addPersonSaving = true;
+    var btn = document.getElementById('addperson-btn');
+    btn.disabled = true;
+    btn.textContent = 'Saving\u2026';
+    showAddPersonMsg('Saving\u2026', 'info');
+
+    var payload = JSON.stringify({ name: name, role: role, fellowship: fellowship, priority: priority, cadenceDays: cadence });
+    apiFetch('addPerson', { payload: payload })
+      .then(function(res) {
+        addPersonSaving = false;
+        btn.disabled = false;
+        btn.textContent = 'Add to Call List';
+        if (res && res.success) {
+          // Bust the people cache so Log a Call picks up the new person
+          peopleLoaded = false;
+          document.getElementById('addperson-form').style.display = 'none';
+          document.getElementById('addperson-bar').style.display = 'none';
+          document.getElementById('addperson-success-name').textContent = name + ' has been added.';
+          document.getElementById('addperson-success').classList.add('on');
+        } else {
+          var errMsg = (res && (res.error || res.message)) ? (res.error || res.message) : 'Save failed — check that your Apps Script is deployed and up to date.';
+          showAddPersonMsg(errMsg, 'error');
+        }
+      })
+      .catch(function(e) {
+        addPersonSaving = false;
+        btn.disabled = false;
+        btn.textContent = 'Add to Call List';
+        showAddPersonMsg('Error: ' + String(e), 'error');
+      });
   }
 
   window.onload = loadHome;
+
+  // ── Pull-to-refresh on dashboard ─────────────────────────
+  (function() {
+    var startY = 0, pulling = false;
+    var dashEl = document.getElementById('pg-dash');
+    dashEl.addEventListener('touchstart', function(e) {
+      if (window.scrollY === 0) { startY = e.touches[0].clientY; pulling = true; }
+    }, { passive: true });
+    dashEl.addEventListener('touchmove', function(e) {
+      if (!pulling) return;
+      var dist = e.touches[0].clientY - startY;
+      if (dist > 60) { document.getElementById('ptr-bar').style.display = 'flex'; }
+    }, { passive: true });
+    dashEl.addEventListener('touchend', function() {
+      if (!pulling) return;
+      pulling = false;
+      var bar = document.getElementById('ptr-bar');
+      if (bar.style.display === 'flex') { bar.style.display = 'none'; loadDash(); }
+    });
+  })();
+
+  // ── Edit Person Modal ─────────────────────────────────────
+  var editModalPid = null;
+
+  function openEditModal(pid) {
+    var p = cadPeople.find(function(x){ return String(x.id) === String(pid); });
+    if (!p) return;
+    editModalPid = pid;
+    document.getElementById('em-name').value       = p.name       || '';
+    document.getElementById('em-role').value       = p.role       || '';
+    document.getElementById('em-fellowship').value = p.fellowship || '';
+    document.getElementById('em-priority').value   = p.priority   || '';
+    document.getElementById('em-msg').className    = 'modal-msg';
+    document.getElementById('em-msg').textContent  = '';
+    document.getElementById('em-save').disabled    = false;
+    document.getElementById('em-save').textContent = 'Save Changes';
+    document.getElementById('edit-modal').classList.add('open');
+  }
+
+  function closeEditModal() {
+    document.getElementById('edit-modal').classList.remove('open');
+    editModalPid = null;
+  }
+
+  function submitEditPerson() {
+    if (!editModalPid) return;
+    var name       = document.getElementById('em-name').value.trim();
+    var role       = document.getElementById('em-role').value.trim();
+    var fellowship = document.getElementById('em-fellowship').value.trim();
+    var priority   = document.getElementById('em-priority').value.trim();
+    var msg        = document.getElementById('em-msg');
+    var btn        = document.getElementById('em-save');
+
+    if (!name) { msg.textContent = 'Name is required.'; msg.className = 'modal-msg error'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+    msg.className = 'modal-msg';
+
+    var payload = JSON.stringify({ personId: editModalPid, name: name, role: role, fellowship: fellowship, priority: priority });
+    apiFetch('editPerson', { payload: payload })
+      .then(function(res) {
+        btn.disabled = false;
+        btn.textContent = 'Save Changes';
+        if (res && res.success) {
+          // Update local cache
+          var p = cadPeople.find(function(x){ return String(x.id) === String(editModalPid); });
+          if (p) { p.name = name; p.role = role; p.fellowship = fellowship; p.priority = priority; }
+          cadSessionDirty = true;
+          msg.textContent = 'Saved!'; msg.className = 'modal-msg ok';
+          setTimeout(function() {
+            closeEditModal();
+            renderCadence(cadPeople);
+          }, 800);
+        } else {
+          msg.textContent = (res && res.error) ? res.error : 'Save failed.';
+          msg.className = 'modal-msg error';
+        }
+      })
+      .catch(function(e) {
+        btn.disabled = false;
+        btn.textContent = 'Save Changes';
+        msg.textContent = 'Error: ' + String(e);
+        msg.className = 'modal-msg error';
+      });
+  }
 </script>
+
+<!-- EDIT PERSON MODAL -->
+<div class="modal-backdrop" id="edit-modal" onclick="if(event.target===this)closeEditModal()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Edit Person</div>
+    <p class="modal-sub">Update name, role, fellowship or priority.</p>
+    <div class="modal-msg" id="em-msg"></div>
+    <div class="modal-field">
+      <label class="modal-label">Full Name <span style="color:var(--danger)">*</span></label>
+      <input class="modal-input" id="em-name" type="text" placeholder="Full name">
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">Role <span style="font-weight:400;color:var(--muted)">— optional</span></label>
+      <input class="modal-input" id="em-role" type="text" placeholder="e.g. Elder, Deacon, Member">
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">Fellowship <span style="font-weight:400;color:var(--muted)">— optional</span></label>
+      <input class="modal-input" id="em-fellowship" type="text" placeholder="e.g. Youth, Seniors">
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">Priority <span style="font-weight:400;color:var(--muted)">— optional</span></label>
+      <input class="modal-input" id="em-priority" type="text" placeholder="e.g. High, Medium, Low">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeEditModal()">Cancel</button>
+      <button class="modal-save" id="em-save" onclick="submitEditPerson()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
