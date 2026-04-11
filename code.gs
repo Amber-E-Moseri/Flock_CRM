@@ -103,6 +103,10 @@ function doGet(e) {
       return json_(api_editPerson(body));
     }
 
+    if (action === 'getAnalytics') {
+      return json_(api_getAnalytics());
+    }
+
     return json_({ ok: true });
 
   } catch (err) {
@@ -284,10 +288,10 @@ function api_getPeopleWithCadence() {
   const headers = data[0].map(h => h.toString().trim().toLowerCase().replace(/\s/g,''));
   const idx     = h => headers.indexOf(h);
 
-  return data.slice(1)
+  const result = data.slice(1)
     .filter(row => row[idx('fullname')])  // all people, active or not
     .map(row => {
-      const raw = Number(row[CADENCE_COL]);          // column E raw value
+      const raw = Number(row[CADENCE_COL]);
       return {
         id:          row[idx('personid')],
         name:        row[idx('fullname')],
@@ -304,8 +308,10 @@ function api_getPeopleWithCadence() {
 
   cachePut_(CACHE_KEY_CAD, result);
   return result;
-} ───────────────────────────────────────
-// Writes directly to column E (CadenceDays) by position
+}
+
+
+// ─── API: SAVE CADENCE ───────────────────────────────────────
 
 function api_saveCadence(personId, cadenceDays) {
   if (!personId)   return { success: false, error: 'Missing personId.' };
@@ -478,6 +484,104 @@ function api_editPerson(payload) {
     return { success: false, error: 'Person not found.' };
   } catch(e) {
     return { success: false, error: e.message };
+  }
+}
+
+
+// ─── API: ANALYTICS ──────────────────────────────────────────
+
+function api_getAnalytics() {
+  try {
+    const ss           = SpreadsheetApp.getActiveSpreadsheet();
+    const interactions = ss.getSheetByName(SHEET_INTERACTIONS);
+    if (!interactions) return { weeksData: [], summary: {} };
+
+    const data = interactions.getDataRange().getValues();
+    const h    = data[0].map(v => v.toString().trim().toLowerCase().replace(/\s/g,''));
+    const idx  = k => h.indexOf(k);
+
+    const now       = new Date();
+    const NUM_WEEKS = 12;
+
+    // Build week buckets: Mon–Sun, going back NUM_WEEKS weeks
+    const weeks = [];
+    // Find most recent Monday
+    const dayOfWeek = now.getDay(); // 0=Sun
+    const daysToMon = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    const thisMon   = new Date(now);
+    thisMon.setHours(0,0,0,0);
+    thisMon.setDate(thisMon.getDate() - daysToMon);
+
+    for (let w = NUM_WEEKS - 1; w >= 0; w--) {
+      const start = new Date(thisMon);
+      start.setDate(start.getDate() - w * 7);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 7);
+      weeks.push({ start, end, total: 0, reached: 0, attempts: 0, label: '' });
+      // Label: "Dec 2", "Dec 9" etc
+      weeks[weeks.length - 1].label = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    // Tally interactions into week buckets
+    let totalAll = 0, reachedAll = 0;
+    const personSet = new Set();
+
+    for (let i = 1; i < data.length; i++) {
+      const row = data[i];
+      const ts  = row[idx('timestamp')];
+      if (!ts) continue;
+      const d = new Date(ts);
+      if (isNaN(d)) continue;
+
+      const outcome = String(row[idx('outcometype')] || '').trim();
+      const pid     = String(row[idx('personid')]    || '').trim();
+
+      totalAll++;
+      if (outcome === 'Successful') reachedAll++;
+      if (pid) personSet.add(pid);
+
+      for (let w = 0; w < weeks.length; w++) {
+        if (d >= weeks[w].start && d < weeks[w].end) {
+          weeks[w].total++;
+          if (outcome === 'Successful') weeks[w].reached++;
+          else weeks[w].attempts++;
+          break;
+        }
+      }
+    }
+
+    // This week vs last week
+    const thisWeekTotal = weeks[weeks.length - 1].total;
+    const lastWeekTotal = weeks[weeks.length - 2] ? weeks[weeks.length - 2].total : 0;
+    const weekChange    = lastWeekTotal > 0 ? Math.round((thisWeekTotal - lastWeekTotal) / lastWeekTotal * 100) : null;
+
+    // Reach rate
+    const reachRate = totalAll > 0 ? Math.round(reachedAll / totalAll * 100) : 0;
+
+    // Best week
+    const bestWeek = weeks.reduce((best, w) => w.total > best.total ? w : best, weeks[0]);
+
+    return {
+      weeksData: weeks.map(w => ({
+        label:    w.label,
+        total:    w.total,
+        reached:  w.reached,
+        attempts: w.attempts
+      })),
+      summary: {
+        totalAll,
+        reachedAll,
+        reachRate,
+        thisWeekTotal,
+        lastWeekTotal,
+        weekChange,
+        bestWeekLabel: bestWeek.label,
+        bestWeekCount: bestWeek.total,
+        uniquePeople:  personSet.size
+      }
+    };
+  } catch(e) {
+    return { error: e.message };
   }
 }
 
