@@ -8,12 +8,7 @@ A lightweight outreach system built on Google Apps Script and Google Sheets — 
 
 ## Screenshots
 <img width="1918" height="851" alt="image" src="https://github.com/user-attachments/assets/91595f00-fe77-472c-8345-9657e2a03eb3" />
-<img width="1919" height="909" alt="image" src="https://github.com/user-attachments/assets/2f46be63-a799-45c2-bfb8-9d3f43aefa5f" />
-<img width="1919" height="909" alt="image" src="https://github.com/user-attachments/assets/885d8534-a21c-4e10-9ec3-46762ebb765e" />
 <img width="1901" height="911" alt="image" src="https://github.com/user-attachments/assets/a8b9e64d-abb0-4809-9ceb-a9a03c4cd6d7" />
-<img width="1901" height="911" alt="image" src="https://github.com/user-attachments/assets/efb46e67-214e-430f-b2c9-658de2ab58ae" />
-<img width="1901" height="911" alt="image" src="https://github.com/user-attachments/assets/f1bce6a2-f531-4f13-8b4b-525ae0e45445" />
-<img width="1901" height="911" alt="image" src="https://github.com/user-attachments/assets/11f7477e-4bd9-4fd2-8422-4ac529e47cd5" />
 <img width="1901" height="907" alt="image" src="https://github.com/user-attachments/assets/a8833303-83d1-4afb-91cb-80134bb9f32d" />
 <img width="1900" height="913" alt="image" src="https://github.com/user-attachments/assets/4a33b232-5a17-4fd7-aaf4-8dce86d5f165" />
 
