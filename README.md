@@ -17,13 +17,17 @@ A lightweight outreach system built on Google Apps Script and Google Sheets — 
 
 ## The Problem
 
-A pastor managing outreach to a number of leaders had no clear system.
+A pastor managing outreach to a number of people had no clear system.
 
 Follow-ups were missed, notes were scattered, and there wasn't a simple way to know who needed attention next.
 
 The goal was simple:
 
 > Have one flow where everything is clear and nothing is forgotten.
+
+It was built for church leadership. But the problem is not unique to that context.
+
+Anyone who makes regular mentorship calls, coaches a group, or is responsible for staying connected with a set of people will run into the same issue. The names change. The system is the same.
 
 ---
 
