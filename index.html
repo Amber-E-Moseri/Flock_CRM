@@ -664,10 +664,33 @@
 <script>
   var API = 'https://script.google.com/macros/s/AKfycbxIyopzk2Lg2joe_7AWLJhofkEKy4k8sDQBOJ9OtxYhQW7sh98nCuLWLMblpmh7ogC6/exec';
 
-  function showPage(id) {
+  // ── Hash-based routing ───────────────────────────────────
+  var HASH_MAP = {
+    'home':        'pg-home',
+    'dashboard':   'pg-dash',
+    'log':         'pg-log',
+    'history':     'pg-history',
+    'settings':    'pg-settings',
+    'appsettings': 'pg-appsettings',
+    'cadence':     'pg-cadence',
+    'addperson':   'pg-addperson',
+    'analytics':   'pg-analytics'
+  };
+  var PAGE_HASH = {};
+  Object.keys(HASH_MAP).forEach(function(h){ PAGE_HASH[HASH_MAP[h]] = h; });
+
+  var _navigating = false;
+
+  function showPage(id, pushState) {
     document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
     document.getElementById(id).classList.add('active');
     window.scrollTo(0,0);
+    // Update hash without triggering hashchange handler
+    if (pushState !== false) {
+      _navigating = true;
+      window.location.hash = PAGE_HASH[id] || 'home';
+      setTimeout(function(){ _navigating = false; }, 50);
+    }
     if (id === 'pg-dash')         loadDash();
     if (id === 'pg-log')          initLogPage();
     if (id === 'pg-home')         loadHome();
@@ -678,6 +701,13 @@
     if (id === 'pg-addperson')    initAddPersonPage();
     if (id === 'pg-analytics')    loadAnalytics();
   }
+
+  window.addEventListener('hashchange', function() {
+    if (_navigating) return;
+    var hash = window.location.hash.replace('#', '');
+    var pageId = HASH_MAP[hash] || 'pg-home';
+    showPage(pageId, false);
+  });
 
   function apiFetch(action, params) {
     var url = API + '?action=' + action;
@@ -1459,7 +1489,11 @@
       });
   }
 
-  window.onload = loadHome;
+  window.onload = function() {
+    var hash = window.location.hash.replace('#', '');
+    var pageId = (hash && HASH_MAP[hash]) ? HASH_MAP[hash] : 'pg-home';
+    showPage(pageId, false);
+  };
 
   // ── Analytics ─────────────────────────────────────────────
   var analyticsData = null;
