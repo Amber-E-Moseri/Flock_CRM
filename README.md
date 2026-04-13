@@ -1,4 +1,4 @@
-# 📞 Pastoral CRM
+# 📞 Pastoral CRM (Flock)
 
 A lightweight outreach system built on Google Apps Script and Google Sheets — designed to make sure nothing slips.
 
@@ -6,60 +6,80 @@ A lightweight outreach system built on Google Apps Script and Google Sheets — 
 
 ---
 
-## Screenshots
-<img width="1898" height="916" alt="image" src="https://github.com/user-attachments/assets/75de2bbb-bf94-4786-b6e6-76000caa8558" />
-<img width="1900" height="913" alt="image" src="https://github.com/user-attachments/assets/4a33b232-5a17-4fd7-aaf4-8dce86d5f165" />
-<img width="1901" height="912" alt="image" src="https://github.com/user-attachments/assets/03306a19-88a5-4b4a-bc5f-580b4d6015d2" />
-
-<img width="1918" height="851" alt="image" src="https://github.com/user-attachments/assets/91595f00-fe77-472c-8345-9657e2a03eb3" />
-<img width="1901" height="911" alt="image" src="https://github.com/user-attachments/assets/a8b9e64d-abb0-4809-9ceb-a9a03c4cd6d7" />
-<img width="1901" height="907" alt="image" src="https://github.com/user-attachments/assets/a8833303-83d1-4afb-91cb-80134bb9f32d" />
-<img width="1897" height="915" alt="image" src="https://github.com/user-attachments/assets/9dada27d-31a5-4d80-8880-028c9b8d2369" />
-
-
-
-
----
-
-
 ## The Problem
 
 A pastor managing outreach to a number of people had no clear system.
 
-Follow-ups were missed, notes were scattered, and there wasn't a simple way to know who needed attention next.
+Follow-ups were missed. Notes were scattered. And there wasn’t a simple way to know who needed attention next.
 
 The goal was simple:
 
 > Have one flow where everything is clear and nothing is forgotten.
 
-It was built for church leadership. But the problem is not unique to that context.
+This was built for church leadership. But the problem is not unique.
 
-Anyone who makes regular mentorship calls, coaches a group, or is responsible for staying connected with a set of people will run into the same issue. The names change. The system is the same.
+Anyone responsible for consistent follow-up — mentorship, coaching, team leadership — runs into the same issue.
 
 ---
 
 ## What This Solves
 
-- Every call is logged  
-- Every follow-up is tracked  
-- Every person has a clear next step  
+* Every call is logged
+* Every follow-up is tracked
+* Every person has a clear next step
 
 No guessing. No relying on memory. Just clarity and consistency.
 
 ---
 
+## What’s New (v3)
+
+This version moves the system from a simple tracker → a more complete pastoral CRM.
+
+* **AI Log Assistant** — log calls in plain language, edit before saving
+* **Editable confirm step** — fix person, result, or follow-up date instantly
+* **Daily summary notifications** — know what’s due without opening the app
+* **Draft restore** — continue where you left off if interrupted
+* **Return-to-context navigation** — go back to where you started after logging
+* **Improved settings structure** — clearer separation of app vs people settings
+* **Mobile-first UX improvements** — faster, cleaner, fewer taps
+
+---
+
 ## Features
 
-- **Priority dashboard** — see callbacks, overdue, due today, and upcoming at a glance  
-- **Call logging** — outcome, notes, and next action in one flow  
-- **Smart scheduling** — next due dates are set automatically based on cadence  
-- **Inline history** — see recent interactions while logging a call  
-- **Full history** — view all interactions per person  
-- **Analytics** — weekly trends, reached count, silent people, and role frequency  
-- **Email reminders** — daily and weekly summaries  
-- **Add people directly** — no need to go into the sheet for normal use  
-- **Settings from the app** — adjust reminder hours, timezone, and cadence easily  
-- **Works anywhere** — mobile-friendly, no Google login required  
+* **Priority dashboard**
+  See callbacks, overdue, due today, and upcoming at a glance
+
+* **AI-assisted logging**
+  Describe the call naturally → system extracts result and next step
+
+* **Call logging flow**
+  Outcome, summary, and next action in one clean step
+
+* **Smart scheduling**
+  Next due dates calculated automatically based on cadence
+
+* **Call history**
+  Clean interaction timeline per person
+
+* **Daily progress tracking**
+  See how many calls you’ve completed today
+
+* **Offline support (light)**
+  Save locally when offline, sync later
+
+* **Daily notification reminder**
+  One summary notification — not noisy, just useful
+
+* **Add people directly**
+  No need to go into the sheet
+
+* **Settings from the app**
+  Manage cadence, reminders, and preferences easily
+
+* **Works anywhere**
+  Mobile-friendly, no Google login required
 
 ---
 
@@ -67,32 +87,30 @@ No guessing. No relying on memory. Just clarity and consistency.
 
 This public demo is hosted on GitHub Pages and uses sample data.
 
-**Live Demo:**  
+**Live Demo:**
 https://amber-e-moseri.github.io/Pastoral_CRM/
 
-> Note: this demo is separate from the private production version and does not expose real user data.
+> Note: This demo is separate from the private production version and does not expose real user data.
 
 ---
 
 ## Tech Stack
 
-| Layer | Tool |
-|---|---|
-| Backend | Google Apps Script |
-| Database | Google Sheets |
+| Layer    | Tool                    |
+| -------- | ----------------------- |
+| Backend  | Google Apps Script      |
+| Database | Google Sheets           |
 | Frontend | HTML / CSS / JavaScript |
-| Email | GmailApp |
-| Hosting | GitHub Pages / Netlify |
+| Email    | GmailApp                |
+| Hosting  | GitHub Pages / Netlify  |
 
-No frameworks, no build tools — kept simple on purpose so it is easy to run, easy to maintain, and easy for the user to keep using.
+No frameworks. No build tools.
+
+Kept simple on purpose — easy to run, easy to maintain, easy to keep using.
 
 ---
 
 ## Architecture
-
-The frontend is a static file hosted publicly.
-
-It talks to a Google Apps Script web app as a simple HTTP API.
 
 ```text
 Frontend (HTML/JS)
@@ -104,180 +122,151 @@ Core Logic (Code.gs)
 Google Sheets (PEOPLE / INTERACTIONS / FOLLOWUPS / SETTINGS)
 ```
 
-Everything is separated properly, so the frontend can change later without needing to rebuild the backend.
+Frontend and backend are separated cleanly.
 
-That means the same backend structure could later support:
+So the system can later support:
 
 * a React frontend
 * a mobile app
 * another internal dashboard
 
+without rewriting the backend.
+
 ---
 
 ## Data Model
 
-There are four main sheets:
+| Sheet        | Purpose                       |
+| ------------ | ----------------------------- |
+| PEOPLE       | Who is being tracked          |
+| INTERACTIONS | Every call logged             |
+| FOLLOWUPS    | Open callbacks and follow-ups |
+| SETTINGS     | App configuration             |
 
-| Sheet        | Purpose                                                     |
-| ------------ | ----------------------------------------------------------- |
-| PEOPLE       | Who is being tracked                                        |
-| INTERACTIONS | Every call that has been logged                             |
-| FOLLOWUPS    | Open callbacks and follow-ups                               |
-| SETTINGS     | App configuration like reminder emails, hours, and timezone |
+v3 addition:
 
-Each dashboard load transforms the raw sheet data into clear priority buckets:
-
-| Bucket    | Meaning                               |
-| --------- | ------------------------------------- |
-| callbacks | Open follow-ups waiting on a response |
-| overdue   | Past due date                         |
-| today     | Due today                             |
-| this week | Coming up in the next few days        |
-| no date   | Active but not yet scheduled          |
-
-So instead of thinking through rows manually, the user can just see what matters and act on it.
+* **Notes (PEOPLE sheet)** — persistent per-person context 
 
 ---
 
 ## Engineering Decisions
 
-These were not random choices. Each one solved a real issue in the workflow.
+These were intentional, not random.
 
-### 1. Google Sheets instead of a traditional database
+### 1. Sheets instead of a database
 
-The user already lives in Google Workspace.
+The user already understands it.
 
-So instead of introducing a database they would not manage themselves, the system was built around a tool they already understand.
-
-That made the system more usable and more self-serviceable.
-
-**Tradeoff:** Sheets is slower and less scalable than a real database.  
-**Answer:** caching and lean API design.
+That made the system usable immediately.
 
 ---
 
-### 2. Server-side caching with explicit invalidation
+### 2. Caching for speed
 
-Reading from Sheets repeatedly is slow.
+* People list
+* Due buckets
 
-So the people list, due buckets, cadence list, and interaction history are cached for a short time. Every write clears the cache.
+Cached briefly → invalidated on write
 
-This gives:
-
-* faster reads
-* fresh data after updates
-* less repeated sheet work
-
-Fast when reading. Accurate when writing.
+Fast reads, fresh data.
 
 ---
 
-### 3. Batch writes instead of unnecessary repeated updates
+### 3. No heavy recalculation on save
 
-Writing cell by cell in Apps Script adds up quickly.
+Saving a call does **not** refresh everything.
 
-Originally, that kind of pattern would make simple actions slower than they needed to be.
-
-So updates were consolidated as much as possible and expensive recalculations were kept out of the critical save path.
-
-That made the app feel much more responsive.
+That work runs on a scheduled trigger instead.
 
 ---
 
-### 4. Daily recalculation instead of recalculating everything on every save
+### 4. Duplicate protection
 
-Recalculating all due statuses after every logged call works, but it is expensive.
+Double taps happen.
 
-That work was moved to a scheduled trigger instead.
-
-A call save should only do what is needed for that call, not refresh the whole world every single time.
-
-Simple decision. Big performance difference.
+Duplicate submissions are blocked server-side.
 
 ---
 
-### 5. Duplicate protection
+### 5. Cadence-based scheduling
 
-People double tap. Especially on mobile.
+Each person can have their own follow-up rhythm.
 
-So duplicate submissions are blocked using a short-lived cache key based on the interaction payload.
-
-That means if the same call is submitted again within a short window, it is ignored server-side.
-
-It is a simple reliability feature, but it matters.
+Not one-size-fits-all.
 
 ---
 
-### 6. Cadence-based scheduling
+### 6. API-first structure
 
-Each person can have their own cadence.
+Frontend is static. Backend is an API.
 
-After a successful contact, the system calculates the next due date based on that cadence. If there is no custom cadence set, it falls back to a default value.
-
-This keeps follow-up practical and personalized instead of one-size-fits-all.
+Simple, but scalable.
 
 ---
 
-### 7. Fixed cadence column for speed
+## AI Assist (v3)
 
-Cadence is read using a fixed column constant.
+The goal is not “more AI.”
 
-That is faster than scanning headers every single time, but it also means the sheet structure needs to stay consistent.
+It is:
 
-The important thing is that this tradeoff is explicit, not hidden.
+> Make logging faster, but still correct.
+
+So the system:
+
+* parses natural language
+* suggests result + next step
+* lets you **edit before saving**
+* never silently commits wrong data
+
+If unsure:
+
+* it asks
+* or lets you correct it quickly
 
 ---
 
-### 8. API and frontend separation from the start
+## Notifications
 
-The frontend is just a static interface.  
-The backend is just an Apps Script API.
+Minimal by design.
 
-That separation was intentional.
+* **One daily summary**
+* No spam
+* No per-person noise
 
-So the project is still simple, but not tightly coupled in a messy way.
+Example:
 
----
-
-### 9. Reading from the right source
-
-Early on, the reached count was always showing zero — even when 18 calls had been made that week.
-
-The bug was subtle. The metric was reading `DueStatus = 'Completed'` from the PEOPLE sheet. But once a successful call is logged, the next due date moves forward. The person is no longer "due this week" by the time analytics runs, so they disappear from the count entirely.
-
-The fix was to read from the INTERACTIONS sheet instead — count unique people with a `Successful` outcome this week, directly from the source.
-
-That is the kind of thing that looks fine in theory but breaks in practice. The Sheets data model makes it easy to read from the wrong place without realising it.
+> You have 4 people due today
 
 ---
 
 ## Analytics
 
-The analytics page makes outreach visible, not just logged.
+The analytics page makes outreach visible:
 
-This includes:
+* Weekly call volume
+* Reached this week (correctly from INTERACTIONS, not PEOPLE)
+* Silent people (6+ weeks)
+* Role frequency
+* Best week
 
-* **Weekly call volume** — total calls made each week over the last 1–3 months  
-* **Reached this week** — unique people with a successful contact this week  
-* **Silent people** — anyone with no successful contact in 6+ weeks, with a direct link to log a call  
-* **Role frequency** — average days between successful contacts, grouped by role  
-* **Best week** — the highest-reach week in the selected range  
+This helps answer:
 
-So it is not just about logging activity. It also helps show whether the system is actually being used effectively.
+> Are we actually being consistent?
 
 ---
 
-## What I'd Do Next
+## What I’d Do Next
 
-If this needed to scale, the natural next steps would be:
+If scaling:
 
-* move the data layer to **PostgreSQL**
-* add **TypeScript** for stronger frontend safety
-* move the UI into **React** as the interface keeps growing
-* add a proper **authentication layer**
-* introduce more structured **role-based access**
+* move data → PostgreSQL
+* introduce TypeScript
+* migrate UI → React
+* add authentication
+* add role-based access
 
-Google Sheets works well for this use case. The right tool for the right context. But it is still the weakest part of the stack if the system ever needs to grow much further.
+Sheets works well here. But it’s still the weakest layer long-term.
 
 ---
 
@@ -285,89 +274,73 @@ Google Sheets works well for this use case. The right tool for the right context
 
 ### 1. Create a Google Sheet
 
-Create a sheet and open:
+Extensions → Apps Script
 
-**Extensions → Apps Script**
+### 2. Paste backend code
 
-### 2. Paste the backend code
-
-Paste in `Code.gs` and run:
+Run:
 
 ```javascript
 setupSystem()
 ```
 
-This creates the required sheets:
+---
 
-* PEOPLE
-* INTERACTIONS
-* FOLLOWUPS
-* SETTINGS
+### 3. Deploy web app
 
-### 3. Deploy the Apps Script web app
+* Execute as: Me
+* Access: Anyone
 
-Deploy as:
+Copy `/exec` URL
 
-* **Execute as:** Me
-* **Who has access:** Anyone
+---
 
-Then copy the `/exec` URL.
-
-### 4. Connect the frontend to the API
-
-In `index.html`, set:
+### 4. Connect frontend
 
 ```javascript
 const API = "YOUR_APPS_SCRIPT_EXEC_URL";
 ```
 
+---
+
 ### 5. Configure settings
 
-Set things like:
-
 * reminder email
-* morning reminder hour
-* weekly summary hour
+* notification hour
 * timezone
+* your name
 
-This can be done in the sheet or via the frontend settings page.
+---
 
 ### 6. Set triggers
 
-Run `resetAllTriggers()` or create them manually for:
+| Function                    | Schedule |
+| --------------------------- | -------- |
+| refreshDueStatuses          | Daily    |
+| sendMorningDueNowReminder   | Daily    |
+| sendMondayFollowupsThisWeek | Weekly   |
 
-| Function                      | Schedule     |
-| ----------------------------- | ------------ |
-| `refreshDueStatuses`          | Daily        |
-| `sendMorningDueNowReminder`   | Daily        |
-| `sendMondayFollowupsThisWeek` | Every Monday |
+---
 
-### 7. Host the frontend
-
-You can host the frontend on:
+### 7. Host frontend
 
 * GitHub Pages
 * Netlify
-* any static host
-
-### 8. Add people
-
-Use the **Add Person** page in the app, or insert rows directly into the PEOPLE sheet.
 
 ---
 
 ## Why This Project Matters
 
-This was not built as just another CRUD demo.
+This was not built as a demo.
 
-It was built around a real workflow and a real need:
+It was built around a real workflow:
 
 * missed follow-ups
 * scattered notes
 * no visibility
-* no consistency
+* inconsistency
 
-The value of the system is not in being flashy.
+The value is not in complexity.
 
 It is in making the next action clear.
 
