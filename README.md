@@ -3,6 +3,17 @@
 A lightweight outreach system built on Google Apps Script and Google Sheets — designed to make sure nothing slips.
 
 **[Demo →](https://amber-e-moseri.github.io/Pastoral_CRM/)**
+---
+## Screenshots
+<img width="1898" height="916" alt="image" src="https://github.com/user-attachments/assets/75de2bbb-bf94-4786-b6e6-76000caa8558" />
+<img width="1900" height="913" alt="image" src="https://github.com/user-attachments/assets/4a33b232-5a17-4fd7-aaf4-8dce86d5f165" />
+<img width="1901" height="912" alt="image" src="https://github.com/user-attachments/assets/03306a19-88a5-4b4a-bc5f-580b4d6015d2" />
+
+<img width="1918" height="851" alt="image" src="https://github.com/user-attachments/assets/91595f00-fe77-472c-8345-9657e2a03eb3" />
+<img width="1901" height="911" alt="image" src="https://github.com/user-attachments/assets/a8b9e64d-abb0-4809-9ceb-a9a03c4cd6d7" />
+<img width="1901" height="907" alt="image" src="https://github.com/user-attachments/assets/a8833303-83d1-4afb-91cb-80134bb9f32d" />
+<img width="1897" height="915" alt="image" src="https://github.com/user-attachments/assets/9dada27d-31a5-4d80-8880-028c9b8d2369" />
+
 
 ---
 
