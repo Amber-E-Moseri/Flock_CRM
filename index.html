@@ -567,7 +567,7 @@
     <div class="sum-cell ov" onclick="jumpTo('s-ov')"><div class="sum-num2" id="sn-ov">0</div><div class="sum-lbl2">Overdue</div></div>
     <div class="sum-cell td" onclick="jumpTo('s-td')"><div class="sum-num2" id="sn-td">0</div><div class="sum-lbl2">Today</div></div>
     <div class="sum-cell wk" onclick="jumpTo('s-wk')"><div class="sum-num2" id="sn-wk">0</div><div class="sum-lbl2">This Week</div></div>
-    <div class="sum-cell" onclick="jumpTo('s-nd')"><div class="sum-num2" id="sn-nd">0</div><div class="sum-lbl2">No Date</div></div>
+    <div class="sum-cell" onclick="jumpTo('s-nd')"><div class="sum-num2" id="sn-nd">0</div><div class="sum-lbl2">Unscheduled</div></div>
   </div>
   <div class="ptr-bar" id="ptr-bar" style="display:none">
     <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v3l3-3M8 2l-3 3M2 8a6 6 0 1 0 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -967,7 +967,7 @@
     { key:'today',     id:'s-td', sn:'sn-td', label:'Due Today',   pip:'pip-td', badge:'badge-td', av:'av-td', row:'row-td', when:function(){ return 'Due today'; } },
     { key:'thisWeek',  id:'s-wk', sn:'sn-wk', label:'This Week',   pip:'pip-wk', badge:'badge-wk', av:'av-wk', row:'row-wk', when:function(p){ return p.nextDueDate ? 'Due ' + p.nextDueDate : 'This week'; } },
     { key:'nextWeek',  id:'s-nx', sn:null,     label:'Next Week',   pip:'pip-nx', badge:'badge-nx', av:'av-nx', row:'row-nx', when:function(p){ return p.nextDueDate ? 'Due ' + p.nextDueDate : 'Next week'; } },
-    { key:'noDate',    id:'s-nd', sn:'sn-nd',  label:'No Due Date', pip:'pip-nd', badge:'badge-nd', av:'av-nd', row:'row-nd', when:function(){ return 'No date set'; } }
+    { key:'noDate',    id:'s-nd', sn:'sn-nd',  label:'Not Yet Scheduled', pip:'pip-nd', badge:'badge-nd', av:'av-nd', row:'row-nd', when:function(){ return 'No due date — call when ready'; } }
   ];
 
   function ini(name){ if(!name) return '?'; var p = String(name).trim().split(/\s+/); return p.length === 1 ? p[0][0].toUpperCase() : (p[0][0] + p[p.length-1][0]).toUpperCase(); }
@@ -2977,8 +2977,11 @@
     if (diffDays === 0) return 'Today — ' + dateStr + ', ' + timeStr;
     if (diffDays === 1) return 'Tomorrow — ' + dateStr + ', ' + timeStr;
     if (diffDays > 1 && diffDays <= 7) return dateStr + ', ' + timeStr;
+    if (diffDays === 14) return 'In 2 weeks — ' + dateStr + ', ' + timeStr;
+    if (diffDays === 21) return 'In 3 weeks — ' + dateStr + ', ' + timeStr;
     return d.toLocaleDateString([], { weekday:'long', month:'short', day:'numeric' }) + ', ' + timeStr;
   }
+  function twoWeeksDate(){ var d=new Date(); d.setDate(d.getDate()+14); d.setHours(10,0,0,0); return d; }
   function nextWeekDate(base){
     var d = new Date(base || new Date());
     d.setDate(d.getDate() + 7);
@@ -3226,8 +3229,8 @@
     }).sort(function(a,b){ return b.score - a.score; });
     var top = ranked[0] || null, second = ranked[1] || null;
     var confidence = 'low';
-    if (top && top.score >= 0.85 && (!second || top.score - second.score >= 0.12)) confidence = 'high';
-    else if (top && top.score >= 0.45) confidence = 'medium';
+    if (top && top.score >= 0.70 && (!second || top.score - second.score >= 0.10)) confidence = 'high';
+    else if (top && top.score >= 0.40) confidence = 'medium';
     return { confidence:confidence, top:top, suggestions:ranked.filter(function(x){ return x.score >= 0.35; }).slice(0,3) };
   }
 
@@ -3248,13 +3251,21 @@
   function detectDate(text){
     try {
       var results = chrono.parse(text, new Date(), { forwardDate:true });
-      if (!results || !results.length) return null;
-      var d = results[0].start.date();
-      if (d && !isNaN(d)) {
-        if (!results[0].start.isCertain('hour')) d.setHours(10,0,0,0);
-        return d;
+      if (results && results.length) {
+        var d = results[0].start.date();
+        if (d && !isNaN(d)) {
+          if (!results[0].start.isCertain('hour')) d.setHours(10,0,0,0);
+          return d;
+        }
       }
     } catch(e){}
+    // Manual fallback for "in N week(s)" / "N weeks"
+    var weekMatch = String(text||'').match(/\bin\s+(\d+|two|three|four)\s+weeks?\b/i) ||
+                    String(text||'').match(/(\d+|two|three|four)\s+weeks?\s+(from now|away|later)/i);
+    if (weekMatch) {
+      var num = {'two':2,'three':3,'four':4}[String(weekMatch[1]).toLowerCase()] || parseInt(weekMatch[1],10) || 2;
+      var d2 = new Date(); d2.setDate(d2.getDate() + num*7); d2.setHours(10,0,0,0); return d2;
+    }
     return null;
   }
   function buildSummary(text){
@@ -3273,8 +3284,9 @@
             '<button class="ai-date-chip" type="button" onclick="aiApplyDateShortcut(\'tomorrow\')">Tomorrow</button>' +
             '<button class="ai-date-chip" type="button" onclick="aiApplyDateShortcut(\'friday\')">This Friday</button>' +
             '<button class="ai-date-chip" type="button" onclick="aiApplyDateShortcut(\'nextweek\')">Next week</button>' +
+            '<button class="ai-date-chip" type="button" onclick="aiApplyDateShortcut(\'twoweeks\')">2 Weeks</button>' +
           '</div>' +
-          '<div class="ai-helper-note">If the date is more than next week away, the full calendar date will be shown.</div>' +
+          '' +
         '</div>');
       dateRow.addEventListener('click', function(e){ if (e.target.closest('#ai-date-edit')) return; $('ai-date-edit').classList.toggle('open'); });
       $('ai-date-input').addEventListener('input', function(){ if (!window._aiParsed) return; window._aiParsed.nextActionDateTime = this.value; if (!window._aiParsed.nextAction || window._aiParsed.nextAction === 'None') window._aiParsed.nextAction = 'Follow-up'; renderAiDate(); saveAiDraft(); });
@@ -3305,7 +3317,7 @@
 
   window.aiApplyDateShortcut = function(type){
     if (!window._aiParsed) return;
-    var d = type === 'tomorrow' ? tomorrowDate() : type === 'friday' ? thisFridayDate() : nextWeekDate();
+    var d = type === 'tomorrow' ? tomorrowDate() : type === 'friday' ? thisFridayDate() : type === 'twoweeks' ? twoWeeksDate() : nextWeekDate();
     window._aiParsed.nextAction = window._aiParsed.nextAction === 'Callback' ? 'Callback' : 'Follow-up';
     window._aiParsed.nextActionDateTime = dtLocalValue(d);
     renderAiDate();
@@ -3771,11 +3783,11 @@
       screen.appendChild(backBtn);
     }
     var labelMap = {
-      'pg-analytics':'Back to Analytics',
-      'pg-dash':'Back to Who to Call',
-      'pg-search':'Back to Search',
-      'pg-history':'Back to Past Notes',
-      'pg-home':'Back Home'
+      'pg-analytics':'Back',
+      'pg-dash':'Back',
+      'pg-search':'Back',
+      'pg-history':'Back',
+      'pg-home':'Back'
     };
     backBtn.textContent = labelMap[window.__returnPageForLog] || 'Back';
   }
