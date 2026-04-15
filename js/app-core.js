@@ -1590,6 +1590,8 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
   var _activeTextareaId = null;
   var _activeMicBtnId = null;
   var _voiceErrorShownAt = 0;
+  var _voiceKeepAlive = false;
+  var _voiceManualStop = false;
 
   function voiceHint(msg) {
     var now = Date.now();
@@ -1625,6 +1627,8 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
     stopVoice();
     _activeTextareaId = textareaId;
     _activeMicBtnId = micBtnId;
+    _voiceManualStop = false;
+    _voiceKeepAlive = !!isIOS;
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     _recognition = new SpeechRecognition();
     _recognition.continuous = !isIOS;
@@ -1652,6 +1656,7 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
       if (ta2) ta2.value = startVal + finalTranscript + interim;
     };
     _recognition.onerror = function(e) {
+      _voiceKeepAlive = false;
       stopVoice();
       if (e && e.error === 'not-allowed') voiceHint('Microphone permission denied.');
       else if (e && e.error === 'service-not-allowed') voiceHint('Speech service is blocked on this browser. Try Safari.');
@@ -1662,7 +1667,15 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
     _recognition.onend = function() {
       var btn = document.getElementById(_activeMicBtnId);
       if (btn) btn.classList.remove('listening');
+      var shouldRestart = _voiceKeepAlive && !_voiceManualStop && _activeTextareaId === textareaId;
       _recognition = null;
+      if (shouldRestart) {
+        setTimeout(function() {
+          if (_voiceKeepAlive && !_voiceManualStop && _activeTextareaId === textareaId && !_recognition) {
+            toggleVoice(textareaId, micBtnId);
+          }
+        }, 140);
+      }
     };
     function startRecognition(allowRetry) {
       try {
@@ -1683,6 +1696,8 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
   }
 
   function stopVoice() {
+    _voiceManualStop = true;
+    _voiceKeepAlive = false;
     if (_recognition) {
       try { _recognition.stop(); } catch(e) {}
       _recognition = null;

@@ -60,6 +60,11 @@
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
     try { new Notification(title, { body: body || '', tag: tag || '' }); } catch(e) {}
   }
+  function getDailySummaryMode(){ try { return localStorage.getItem('ct-daily-summary-mode') || ''; } catch(e){ return ''; } }
+  function setDailySummaryMode(mode){ try { localStorage.setItem('ct-daily-summary-mode', mode || ''); } catch(e){} }
+  function supportsSystemNotifications(){
+    return ('Notification' in window);
+  }
   function isiOSWebPushEligible(){
     var ua = navigator.userAgent || '';
     var isIOS = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -72,10 +77,12 @@
   }
   function isDailySummaryEnabled(){ try { return localStorage.getItem('ct-daily-summary-enabled') === '1'; } catch(e){ return false; } }
   function getDailySummaryStatusText(){
-    if (!('Notification' in window)) return 'Not supported in this browser';
-    var iosCheck = isiOSWebPushEligible();
-    if (!iosCheck.ok) return 'Install app to enable on iPhone';
     if (!isDailySummaryEnabled()) return 'Off';
+    var mode = getDailySummaryMode();
+    if (mode === 'inapp') return 'On (in-app)';
+    if (!supportsSystemNotifications()) return 'On (in-app)';
+    var iosCheck = isiOSWebPushEligible();
+    if (!iosCheck.ok) return 'On (in-app)';
     if (Notification.permission === 'granted') return 'On';
     if (Notification.permission === 'denied') return 'Blocked in browser';
     return 'Needs permission';
@@ -97,24 +104,33 @@
     if (toggle) toggle.checked = isDailySummaryEnabled();
   }
   function toggleDailySummary(on){
+    var canSystemNotify = supportsSystemNotifications() && isiOSWebPushEligible().ok;
     if (on) {
+      if (!canSystemNotify) {
+        try { localStorage.setItem('ct-daily-summary-enabled', '1'); } catch(e){}
+        setDailySummaryMode('inapp');
+        updateDailySummaryUi();
+        notifyDueSummaryOnce(true);
+        if (window.showUxToast) window.showUxToast('Daily alerts enabled (in-app).');
+        return;
+      }
       requestPhoneNotifications().then(function(permission){
         if (permission === 'granted') {
           try { localStorage.setItem('ct-daily-summary-enabled', '1'); } catch(e){}
+          setDailySummaryMode('system');
           updateDailySummaryUi();
           notifyDueSummaryOnce(true);
         } else {
-          try { localStorage.setItem('ct-daily-summary-enabled', '0'); } catch(e){}
+          try { localStorage.setItem('ct-daily-summary-enabled', '1'); } catch(e){}
+          setDailySummaryMode('inapp');
           updateDailySummaryUi();
-          if (window.showUxToast) {
-            if (permission === 'ios-install-required') window.showUxToast('Install to Home Screen first to enable iPhone notifications.');
-            else if (permission === 'denied') window.showUxToast('Notifications are blocked. Enable them in browser settings.');
-            else window.showUxToast('Notification permission is required.');
-          }
+          notifyDueSummaryOnce(true);
+          if (window.showUxToast) window.showUxToast('System notifications unavailable. Using in-app daily alerts.');
         }
       });
     } else {
       try { localStorage.setItem('ct-daily-summary-enabled', '0'); } catch(e){}
+      setDailySummaryMode('');
       updateDailySummaryUi();
     }
   }
@@ -664,7 +680,8 @@
 
   function notifyDueSummaryOnce(force){
     if (!isDailySummaryEnabled()) return;
-    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+    var mode = getDailySummaryMode() || 'system';
+    var canSystem = supportsSystemNotifications() && Notification.permission === 'granted' && isiOSWebPushEligible().ok && mode !== 'inapp';
     var todayKey = new Date().toISOString().slice(0,10);
     if (!force && localStorage.getItem('ct-due-summary-notified') === todayKey) return;
     Promise.all([apiFetch('duePeople'), apiFetch('getTodos')]).then(function(res){
@@ -685,7 +702,9 @@
         var bits = [];
         if (duePeople > 0) bits.push(duePeople + ' people due/overdue');
         if (dueTasks > 0) bits.push(dueTasks + ' tasks due today');
-        notify('Call Tracker', 'Today: ' + bits.join(' â€¢ ') + '.', 'ct-daily-summary');
+        var msg = 'Today: ' + bits.join(' • ') + '.';
+        if (canSystem) notify('Call Tracker', msg, 'ct-daily-summary');
+        else if (window.showUxToast) window.showUxToast(msg);
         localStorage.setItem('ct-due-summary-notified', todayKey);
       }
     }).catch(function(){});
