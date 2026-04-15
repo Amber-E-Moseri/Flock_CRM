@@ -2,7 +2,7 @@
 
 A lightweight outreach system built on Google Apps Script and Google Sheets — designed to make sure nothing slips.
 
-**[Demo →](https://amber-e-moseri.github.io/Pastoral_CRM/)**
+**[Demo →](https://amber-e-moseri.github.io/Flock_CRM_Dev/)**
 ---
 ## Screenshots
 <img width="1898" height="916" alt="image" src="https://github.com/user-attachments/assets/75de2bbb-bf94-4786-b6e6-76000caa8558" />
