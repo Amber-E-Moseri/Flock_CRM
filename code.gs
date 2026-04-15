@@ -576,6 +576,7 @@ function saveInteractionCore_(payload) {
     payload.result, outcomeType, payload.summary || '',
     payload.nextAction || 'None', nextActionDT, true
   ]);
+  incrementTodayInteractionCount_(now);
 
   const pData = getSheetValues_(people);
   const pH    = pData[0].map(h => h.toString().trim().toLowerCase().replace(/\s/g,''));
@@ -619,6 +620,21 @@ function saveInteractionCore_(payload) {
 
   cacheBust_();
   return { success: true, interactionId: iId };
+}
+
+function todayKey_(dateObj, tz) {
+  const d = dateObj instanceof Date ? dateObj : new Date();
+  const zone = tz || getSetting_('TIMEZONE') || SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone() || Session.getScriptTimeZone();
+  return Utilities.formatDate(d, zone, 'yyyy-MM-dd');
+}
+
+function incrementTodayInteractionCount_(dateObj) {
+  try {
+    const key = 'todayCountProp:' + todayKey_(dateObj);
+    const props = PropertiesService.getScriptProperties();
+    const curr = parseInt(props.getProperty(key) || '0', 10) || 0;
+    props.setProperty(key, String(curr + 1));
+  } catch (e) {}
 }
 
 function deriveOutcomeType_(result) {
@@ -827,6 +843,18 @@ function api_getTodayCount() {
   const cached = cacheGet_(CACHE_KEY_TODAY);
   if (cached && typeof cached.count === 'number') return cached;
 
+  const tz = getSetting_('TIMEZONE') || SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone() || Session.getScriptTimeZone();
+  const todayKey = todayKey_(new Date(), tz);
+  try {
+    const propKey = 'todayCountProp:' + todayKey;
+    const propVal = PropertiesService.getScriptProperties().getProperty(propKey);
+    if (propVal != null && propVal !== '') {
+      const fromProp = { count: parseInt(propVal, 10) || 0 };
+      cachePut_(CACHE_KEY_TODAY, fromProp);
+      return fromProp;
+    }
+  } catch (e) {}
+
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_INTERACTIONS);
   if (!sheet) return { count: 0 };
 
@@ -840,9 +868,6 @@ function api_getTodayCount() {
   if (tsIdx < 0) return { count: 0 };
 
   const timestampVals = sheet.getRange(2, tsIdx + 1, lastRow - 1, 1).getValues();
-  const tz = getSetting_('TIMEZONE') || SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone() || Session.getScriptTimeZone();
-  const todayKey = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd');
-
   let count = 0;
   for (let i = 0; i < timestampVals.length; i++) {
     const raw = timestampVals[i][0];
@@ -854,6 +879,9 @@ function api_getTodayCount() {
   }
 
   const result = { count };
+  try {
+    PropertiesService.getScriptProperties().setProperty('todayCountProp:' + todayKey, String(count));
+  } catch (e) {}
   cachePut_(CACHE_KEY_TODAY, result);
   return result;
 }
@@ -1027,8 +1055,15 @@ function sendMondayFollowupsThisWeek() {
 }
 
 function sendEmailToMany_(emailsStr, subject, htmlBody) {
+  const cleanSubject = stripEmoji_(subject).replace(/\s{2,}/g, ' ').trim();
+  const cleanHtmlBody = stripEmoji_(htmlBody);
   emailsStr.split(',').map(e => e.trim()).filter(Boolean)
-    .forEach(email => GmailApp.sendEmail(email, subject, '', { htmlBody }));
+    .forEach(email => GmailApp.sendEmail(email, cleanSubject, '', { htmlBody: cleanHtmlBody }));
+}
+
+function stripEmoji_(input) {
+  return String(input == null ? '' : input)
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '');
 }
 
 

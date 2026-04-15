@@ -1,6 +1,6 @@
 ﻿
   var API = 'https://script.google.com/macros/s/AKfycbxIyopzk2Lg2joe_7AWLJhofkEKy4k8sDQBOJ9OtxYhQW7sh98nCuLWLMblpmh7ogC6/exec';
-  // â”€â”€ Hash-based routing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Hash-based routing 
   var HASH_MAP = {
     'home':        'pg-home',
     'dashboard':   'pg-dash',
@@ -217,22 +217,41 @@
     document.getElementById('dash-body').innerHTML = h;
   }
 
+  var _dashLoadSeq = 0;
+  var _dashDueSnapshot = null;
+  var _dashTodaySnapshot = null;
+
+  function applyDashTodayCount(today) {
+    var el = document.getElementById('dash-today-count');
+    if (!el) return;
+    var n = Number(today && today.count) || 0;
+    el.textContent = n + (n === 1 ? ' call logged today' : ' calls logged today');
+  }
+
   function loadDash() {
-    showDashLoading();
-    Promise.all([apiFetch('duePeople'), apiFetch('getTodayCount')])
-      .then(function(res){
-        var due = res[0] || {};
-        var today = res[1] || {};
-        renderDash(due);
-        var el = document.getElementById('dash-today-count');
-        if (el) {
-          var n = Number(today.count) || 0;
-          el.textContent = n + (n === 1 ? ' call logged today' : ' calls logged today');
-        }
+    var seq = ++_dashLoadSeq;
+    if (_dashDueSnapshot) renderDash(_dashDueSnapshot);
+    else showDashLoading();
+    if (_dashTodaySnapshot) applyDashTodayCount(_dashTodaySnapshot);
+
+    apiFetch('duePeople')
+      .then(function(due){
+        if (seq !== _dashLoadSeq) return;
+        _dashDueSnapshot = due || {};
+        renderDash(_dashDueSnapshot);
       })
       .catch(function(e){
+        if (seq !== _dashLoadSeq) return;
         document.getElementById('dash-body').innerHTML = '<div class="err-box">Could not load data. Try refreshing.<br><small>' + esc(String(e)) + '</small></div>';
       });
+
+    apiFetch('getTodayCount')
+      .then(function(today){
+        if (seq !== _dashLoadSeq) return;
+        _dashTodaySnapshot = today || {};
+        applyDashTodayCount(_dashTodaySnapshot);
+      })
+      .catch(function(){});
   }
 
   function jumpTo(id){ var el = document.getElementById(id); if (el) el.scrollIntoView({behavior:'smooth', block:'start'}); }
@@ -723,20 +742,28 @@ function renderHistory(list, personName) {
         'YOUR_NAME':             '[Name]'
       };
       el.innerHTML = list.map(function(s) {
-        var k    = esc(s.key);
-        var icon = SETTING_ICONS[s.key] || '[Setting]';
+        var keyRaw = String((s && s.key) || '').trim();
+        var keyNorm = keyRaw.toUpperCase();
+        var k    = esc(keyRaw);
+        var icon = SETTING_ICONS[keyNorm] || '[Setting]';
         var ctrlHtml = '';
-        if (s.key === 'NOTIFICATIONS_ENABLED') {
+        if (keyNorm === 'NOTIFICATIONS_ENABLED') {
           var raw = String(s.val == null ? '' : s.val).trim().toLowerCase();
           var isOn = raw === 'true' || raw === '1' || raw === 'yes' || raw === 'on';
           ctrlHtml =
-            '<div class="aset-row-ctrl aset-row-ctrl-bool">' +
-              '<input type="hidden" class="aset-input" id="aset-' + k + '" value="' + (isOn ? 'true' : 'false') + '">' +
-              '<div class="aset-toggle" id="aset-toggle-' + k + '">' +
-                '<button type="button" class="aset-toggle-btn' + (isOn ? ' active' : '') + '" onclick="asetPickBool(\'' + k + '\',true)">On</button>' +
-                '<button type="button" class="aset-toggle-btn' + (!isOn ? ' active' : '') + '" onclick="asetPickBool(\'' + k + '\',false)">Off</button>' +
+            '<input type="hidden" class="aset-input" id="aset-' + k + '" value="' + (isOn ? 'true' : 'false') + '">' +
+            '<div class="aset-inline-divider"></div>' +
+            '<div class="aset-switch-row">' +
+              '<div class="aset-switch-label">Enable notifications</div>' +
+              '<div class="sw-wrap">' +
+                '<span class="sw-label ' + (isOn ? 'on' : 'off') + '" id="notif-enabled-label-main">' + (isOn ? 'On' : 'Off') + '</span>' +
+                '<label class="sw">' +
+                  '<input type="checkbox" id="notif-enabled-toggle-main" ' + (isOn ? 'checked' : '') + ' onchange="asetPickBool(\'' + k + '\', this.checked);saveAppSetting(\'' + k + '\');(function(lbl){if(lbl){lbl.textContent=this.checked?\'On\':\'Off\';lbl.className=\'sw-label \'+(this.checked?\'on\':\'off\');}}).call(this, document.getElementById(\'notif-enabled-label-main\'));">' +
+                  '<span class="sw-track"></span>' +
+                '</label>' +
               '</div>' +
-              '<button class="aset-save" id="assave-' + k + '" onclick="saveAppSetting(\'' + k + '\')">Save</button>' +
+            '</div>' +
+            '<div class="aset-row-ctrl aset-row-ctrl-bool" style="justify-content:flex-end;margin-top:8px;">' +
               '<span class="aset-status" id="asstat-' + k + '"></span>' +
             '</div>';
         } else {
@@ -748,7 +775,7 @@ function renderHistory(list, personName) {
             '</div>';
         }
         return '<div class="aset-row">' +
-          '<div class="aset-label">' + icon + ' ' + esc(s.label || s.key) + '</div>' +
+          '<div class="aset-label">' + icon + ' ' + esc(s.label || keyRaw) + '</div>' +
           (s.desc ? '<div class="aset-desc">' + esc(s.desc) + '</div>' : '') +
           ctrlHtml +
         '</div>';
@@ -799,11 +826,11 @@ function renderHistory(list, personName) {
     var inp  = document.getElementById('aset-' + key);
     var btn  = document.getElementById('assave-' + key);
     var stat = document.getElementById('asstat-' + key);
-    if (!inp || !btn) return;
+    if (!inp) return;
     var val = inp.value;
-    btn.disabled = true; btn.textContent = '...';
+    if (btn) { btn.disabled = true; btn.textContent = '...'; }
     apiFetch('saveSetting', { key: key, val: val }).then(function(res) {
-      btn.disabled = false; btn.textContent = 'Save';
+      if (btn) { btn.disabled = false; btn.textContent = 'Save'; }
       if (res && res.success) {
         if (key === 'YOUR_NAME') {
           window._userName = val.trim() || ''; // update cache immediately
@@ -820,7 +847,7 @@ function renderHistory(list, personName) {
         if (stat) { stat.textContent = '!'; stat.className = 'aset-status err'; }
       }
     }).catch(function() {
-      btn.disabled = false; btn.textContent = 'Save';
+      if (btn) { btn.disabled = false; btn.textContent = 'Save'; }
       if (stat) { stat.textContent = '!'; stat.className = 'aset-status err'; }
     });
   }
@@ -1024,15 +1051,53 @@ function renderHistory(list, personName) {
       });
   }
 
+  function loadGuidePagePartial() {
+    var currentGuide = document.getElementById('pg-guide');
+    if (!currentGuide) return Promise.resolve();
+    return fetch('partials/pg-guide.html', { cache: 'no-store' })
+      .then(function(resp) {
+        if (!resp.ok) throw new Error('Guide partial unavailable');
+        return resp.text();
+      })
+      .then(function(html) {
+        var wrap = document.createElement('div');
+        wrap.innerHTML = html;
+        var incomingGuide = wrap.querySelector('#pg-guide');
+        if (!incomingGuide) {
+          var body = wrap.querySelector('body');
+          if (body) {
+            incomingGuide = document.createElement('div');
+            incomingGuide.id = 'pg-guide';
+            incomingGuide.className = 'page';
+            wrap.querySelectorAll('style,link[rel="stylesheet"]').forEach(function(node) {
+              incomingGuide.appendChild(node.cloneNode(true));
+            });
+            Array.prototype.slice.call(body.childNodes).forEach(function(node) {
+              incomingGuide.appendChild(node.cloneNode(true));
+            });
+          }
+        }
+        if (!incomingGuide) return;
+        var wasActive = currentGuide.classList.contains('active');
+        if (wasActive) incomingGuide.classList.add('active');
+        currentGuide.replaceWith(incomingGuide);
+      })
+      .catch(function() {});
+  }
+
   window.onload = function() {
     var hash = window.location.hash.replace('#', '');
     var pageId = (hash && HASH_MAP[hash]) ? HASH_MAP[hash] : 'pg-home';
-    showPage(pageId, false);
+    loadGuidePagePartial().then(function() {
+      showPage(pageId, false);
+    }, function() {
+      showPage(pageId, false);
+    });
   };
 
   // â”€â”€ Analytics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   var analyticsData = null;
-  var analyticsRange = '3m'; // '1m' or '3m'
+  var analyticsRange = '1m'; // '1m' or '3m'
   var roleFreqData = null;
 
   function loadAnalytics() {
@@ -1534,11 +1599,25 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
   }
 
   function toggleVoice(textareaId, micBtnId) {
-    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    var ua = navigator.userAgent || '';
+    var isIOS = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var isSafariIOS = isIOS && /Safari/i.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo|GSA/i.test(ua);
+    var hasSpeechApi = ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window);
+    if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+      voiceHint('Voice input requires HTTPS on iPhone.');
+      return;
+    }
+    if (!hasSpeechApi) {
       var btn = document.getElementById(micBtnId);
       if (btn) btn.classList.add('no-support');
-      voiceHint('Voice input is not supported here. Try Safari/Chrome or your keyboard mic.');
+      var fallbackTa = document.getElementById(textareaId);
+      if (fallbackTa) { try { fallbackTa.focus({ preventScroll: true }); } catch(e) { try { fallbackTa.focus(); } catch(_) {} } }
+      if (isIOS && !isSafariIOS) voiceHint('Voice input may be limited here. Open in Safari or use the keyboard mic.');
+      else voiceHint('Voice input is not supported in this browser. Use Safari on iPhone or your keyboard mic.');
       return;
+    }
+    if (isIOS && !isSafariIOS) {
+      voiceHint('Trying voice input. If it fails on iPhone, open this page in Safari.');
     }
     if (_recognition && _activeTextareaId === textareaId) {
       stopVoice(); return;
@@ -1547,8 +1626,6 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
     _activeTextareaId = textareaId;
     _activeMicBtnId = micBtnId;
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    var ua = navigator.userAgent || '';
-    var isIOS = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     _recognition = new SpeechRecognition();
     _recognition.continuous = !isIOS;
     _recognition.interimResults = !isIOS;
@@ -1587,12 +1664,22 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
       if (btn) btn.classList.remove('listening');
       _recognition = null;
     };
-    try {
-      _recognition.start();
-    } catch (e) {
-      stopVoice();
-      voiceHint('Could not start voice input. Try again and allow microphone access.');
+    function startRecognition(allowRetry) {
+      try {
+        _recognition.start();
+      } catch (e) {
+        if (allowRetry && isIOS) {
+          setTimeout(function() {
+            try { if (_recognition) _recognition.start(); }
+            catch (_) { stopVoice(); voiceHint('Could not start voice input. Try again and allow microphone access.'); }
+          }, 140);
+        } else {
+          stopVoice();
+          voiceHint('Could not start voice input. Try again and allow microphone access.');
+        }
+      }
     }
+    startRecognition(true);
   }
 
   function stopVoice() {
@@ -1736,7 +1823,7 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
     document.getElementById('notes-modal-sub').textContent = 'Persistent notes about ' + name;
     document.getElementById('notes-modal-msg').className = 'modal-msg';
     document.getElementById('notes-modal-msg').textContent = '';
-    document.getElementById('notes-modal-ta').value = 'Loadingâ€¦';
+    document.getElementById('notes-modal-ta').value = 'Loading...';
     document.getElementById('notes-modal-ta').disabled = true;
     document.getElementById('notes-save-btn').disabled = true;
     document.getElementById('notes-modal').classList.add('open');
@@ -1769,7 +1856,7 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
       .then(function(res) {
         btn.disabled = false; btn.textContent = 'Save Notes';
         if (res && res.success) {
-          msg.textContent = 'âœ“ Notes saved.'; msg.className = 'modal-msg ok';
+          msg.textContent = 'Notes saved.'; msg.className = 'modal-msg ok';
           setTimeout(function() { msg.className = 'modal-msg'; }, 2500);
         } else {
           msg.textContent = res && res.error ? res.error : 'Save failed.'; msg.className = 'modal-msg error';
@@ -1971,11 +2058,11 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
     var matchEl = document.getElementById('ai-conf-match');
     var overEl  = document.getElementById('ai-person-override');
     if (parsed.personId) {
-      matchEl.textContent = 'âœ“ Matched in contacts';
+      matchEl.textContent = 'Matched in contacts';
       matchEl.style.color = 'var(--success)';
       overEl.style.display = 'none';
     } else {
-      matchEl.textContent = 'âš  Not found in contacts';
+      matchEl.textContent = 'Not found in contacts';
       matchEl.style.color = 'var(--danger)';
       overEl.style.display = 'block';
       document.getElementById('ai-override-search').value = name;
@@ -2019,7 +2106,7 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
 
     document.getElementById('ai-confirm-msg').className = 'msg';
     document.getElementById('ai-confirm-btn').disabled = false;
-    document.getElementById('ai-confirm-btn').textContent = 'âœ“ Log This Call';
+    document.getElementById('ai-confirm-btn').textContent = 'Log This Call';
     aiShowStep('confirm');
   }
 
@@ -2045,7 +2132,7 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
     document.getElementById('ai-conf-av').textContent = ini(name);
     document.getElementById('ai-conf-name').textContent = name;
     var matchEl = document.getElementById('ai-conf-match');
-    matchEl.textContent = 'âœ“ Matched: ' + name;
+    matchEl.textContent = 'Matched: ' + name;
     matchEl.style.color = 'var(--success)';
     document.getElementById('ai-override-drop').style.display = 'none';
     document.getElementById('ai-override-search').value = name;
@@ -2113,16 +2200,16 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
         }
         var todoNote = aiTodos.length ? ' ' + aiTodos.length + ' action item' + (aiTodos.length > 1 ? 's' : '') + ' added.' : '';
         document.getElementById('ai-success-sub').textContent =
-          (res.offline ? 'ðŸ“¶ Saved offline - ' : 'Call with ') + p.personName +
+          (res.offline ? 'Saved offline - ' : 'Call with ') + p.personName +
           (res.offline ? ' will sync when reconnected.' : ' has been logged.') + todoNote;
         aiShowStep('success');
       } else {
-        btn.disabled = false; btn.textContent = 'âœ“ Log This Call';
+        btn.disabled = false; btn.textContent = 'Log This Call';
         var msg = document.getElementById('ai-confirm-msg');
         msg.textContent = 'Save failed: ' + (res && res.error ? res.error : 'Unknown'); msg.className = 'msg error';
       }
     }).catch(function(e) {
-      btn.disabled = false; btn.textContent = 'âœ“ Log This Call';
+      btn.disabled = false; btn.textContent = 'Log This Call';
       var msg = document.getElementById('ai-confirm-msg');
       msg.textContent = 'Error: ' + String(e); msg.className = 'msg error';
     });

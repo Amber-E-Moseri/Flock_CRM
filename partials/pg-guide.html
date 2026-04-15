@@ -1,188 +1,584 @@
-<div class="page" id="pg-guide">
-<div class="topbar">
-<button class="tb-btn" onclick="showPage('pg-home')">‹ Home</button>
-<span class="topbar-title">User Guide</span>
-</div>
-<div class="shell">
-<p class="form-kicker">Documentation</p>
-<h1 class="form-title">User Guide</h1>
-<p class="form-sub">Everything you need to know to use Flock effectively.</p>
-<link href="styles/guide.css" rel="stylesheet"/>
-<!-- Table of Contents -->
-<div class="guide-toc">
-<div class="guide-toc-title">Contents</div>
-<a href="#" onclick="document.getElementById('gs-overview').scrollIntoView({behavior:'smooth',block:'start'});return false;">1. Overview</a>
-<a href="#" onclick="document.getElementById('gs-home').scrollIntoView({behavior:'smooth',block:'start'});return false;">2. Home Screen</a>
-<a href="#" onclick="document.getElementById('gs-dash').scrollIntoView({behavior:'smooth',block:'start'});return false;">3. Who to Call</a>
-<a href="#" onclick="document.getElementById('gs-log').scrollIntoView({behavior:'smooth',block:'start'});return false;">4. Logging a Call</a>
-<a href="#" onclick="document.getElementById('gs-ai').scrollIntoView({behavior:'smooth',block:'start'});return false;">5. AI Log Assistant</a>
-<a href="#" onclick="document.getElementById('gs-history').scrollIntoView({behavior:'smooth',block:'start'});return false;">6. Past Notes</a>
-<a href="#" onclick="document.getElementById('gs-search').scrollIntoView({behavior:'smooth',block:'start'});return false;">7. Search</a>
-<a href="#" onclick="document.getElementById('gs-analytics').scrollIntoView({behavior:'smooth',block:'start'});return false;">8. Analytics</a>
-<a href="#" onclick="document.getElementById('gs-addperson').scrollIntoView({behavior:'smooth',block:'start'});return false;">9. Adding People</a>
-<a href="#" onclick="document.getElementById('gs-settings').scrollIntoView({behavior:'smooth',block:'start'});return false;">10. Settings</a>
-</div>
-<!-- 1. Overview -->
-<div class="guide-section" id="gs-overview">
-<div class="guide-section-header">
-<div class="guide-section-icon">🕊</div>
-<div class="guide-section-title">1. Overview</div>
-</div>
-<div class="guide-body">
-<p><strong>Flock</strong> is a pastoral call-tracking tool designed to help you stay consistently connected with the people in your care. It keeps track of who you have called, when each person is due for a follow-up, and what was discussed — so nothing falls through the cracks.</p>
-<p>Flock works by connecting to your contact list (stored in a Google Sheet) and showing you a prioritised call schedule each day. Every interaction you log is saved automatically.</p>
-</div>
-<div class="guide-tip"><span class="guide-tip-icon">💡</span>Flock works best when you log calls promptly after finishing them — this keeps the dashboard accurate and your next due dates up to date.</div>
-</div>
-<!-- 2. Home -->
-<div class="guide-section" id="gs-home">
-<div class="guide-section-header">
-<div class="guide-section-icon">🏠</div>
-<div class="guide-section-title">2. Home Screen</div>
-</div>
-<div class="guide-body">
-<p>The Home screen is your daily starting point. At a glance you can see three key numbers:</p>
-<div class="guide-badge-row">
-<span class="guide-badge" style="background:var(--accent-soft);color:var(--accent);">● Callbacks — people waiting for a return call</span>
-<span class="guide-badge" style="background:var(--danger-bg);color:var(--danger);">● Overdue — past their due date</span>
-<span class="guide-badge" style="background:var(--gold-soft);color:#92400e;">● Due Today — scheduled for today</span>
-</div>
-<p>Tap any stat box to jump straight to that section in the <strong>Who to Call</strong> dashboard. From Home you can also navigate to every other section of the app.</p>
-<p>The <strong>⚙ Settings icon</strong> (top right) opens app and people settings. The <strong>moon icon</strong> toggles dark mode.</p>
-</div>
-</div>
-<!-- 3. Who to Call -->
-<div class="guide-section" id="gs-dash">
-<div class="guide-section-header">
-<div class="guide-section-icon">📋</div>
-<div class="guide-section-title">3. Who to Call</div>
-</div>
-<div class="guide-body">
-<p>This is your prioritised call schedule. People are sorted into sections based on urgency:</p>
-<div class="guide-badge-row">
-<span class="guide-badge" style="background:var(--accent-soft);color:var(--accent);">● Callbacks</span>
-<span class="guide-badge" style="background:var(--danger-bg);color:var(--danger);">● Overdue</span>
-<span class="guide-badge" style="background:var(--gold-soft);color:#92400e;">● Due Today</span>
-<span class="guide-badge" style="background:var(--blue-bg);color:var(--blue);">● This Week</span>
-<span class="guide-badge" style="background:var(--surface-soft);color:var(--muted);">● No Date Set</span>
-</div>
-<p>The coloured strip at the top shows a count for each category — tap a category to jump to it. Tap <strong>Log</strong> next to any name to open the Log a Call form with that person pre-filled.</p>
-<p>People scheduled more than two weeks out are hidden — they will appear automatically when the time comes. Pull down to refresh the list.</p>
-</div>
-<div class="guide-tip"><span class="guide-tip-icon">💡</span>Work through <strong>Callbacks</strong> first, then <strong>Overdue</strong>, then <strong>Due Today</strong>. This keeps your most urgent commitments covered.</div>
-</div>
-<!-- 4. Log a Call -->
-<div class="guide-section" id="gs-log">
-<div class="guide-section-header">
-<div class="guide-section-icon">📞</div>
-<div class="guide-section-title">4. Logging a Call</div>
-</div>
-<div class="guide-body">
-<p>Use this form to record the outcome of any call. Here is the flow:</p>
-</div>
-<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Select a person</strong> — type their name in the search box and tap to select. Any recent interactions will appear below for context.</div></div>
-<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Pick a result</strong> — choose one of: <em>Reached</em>, <em>No Answer</em>, <em>Left Message</em>, or <em>Rescheduled</em>.</div></div>
-<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Set next action</strong> — choose <em>None</em>, <em>Callback</em> (they will call you back), or <em>Follow-up</em> (you will call them again). Choosing Callback or Follow-up reveals a date &amp; time picker.</div></div>
-<div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Add notes</strong> (optional) — jot a brief summary. Tap the microphone button to use voice-to-text instead of typing.</div></div>
-<div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Save Call</strong> — tap the green button at the bottom. A confirmation screen will offer to log another call or return to the dashboard.</div></div>
-<div class="guide-note"><span class="guide-note-icon">ℹ️</span>A date &amp; time is required when you choose <strong>Callback</strong> or <strong>Follow-up</strong> as the next action.</div>
-</div>
-<!-- 5. AI Log Assistant -->
-<div class="guide-section" id="gs-ai">
-<div class="guide-section-header">
-<div class="guide-section-icon">✨</div>
-<div class="guide-section-title">5. AI Log Assistant</div>
-</div>
-<div class="guide-body">
-<p>The AI Log Assistant lets you describe a call in plain language and automatically fills in the log form for you. Access it via the <strong>star icon</strong> in the Log a Call top bar, or from Settings.</p>
-</div>
-<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap the <strong>✨ icon</strong> in the top bar of Log a Call.</div></div>
-<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Type or speak a natural description of the call — e.g. <em>"Called Sarah, no answer, will try again Friday afternoon."</em></div></div>
-<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">The AI parses your description and pre-fills the person, result, next action, date, and notes.</div></div>
-<div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">Review the filled-in details and tap <strong>Confirm &amp; Save</strong>.</div></div>
-<div class="guide-tip"><span class="guide-tip-icon">💡</span>Be specific about the person's name and any follow-up date — the AI will pick them up automatically.</div>
-</div>
-<!-- 6. Past Notes -->
-<div class="guide-section" id="gs-history">
-<div class="guide-section-header">
-<div class="guide-section-icon">📖</div>
-<div class="guide-section-title">6. Past Notes</div>
-</div>
-<div class="guide-body">
-<p><strong>Past Notes</strong> shows the full call history for any person. Use it to review previous conversations before making a call.</p>
-</div>
-<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Go to <strong>Past Notes</strong> from the Home screen.</div></div>
-<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Type a name in the search box to filter the contact list.</div></div>
-<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Tap a person's name to see every logged call — result, notes, and next steps — in reverse chronological order.</div></div>
-<div class="guide-note"><span class="guide-note-icon">ℹ️</span>You can also reach a person's history from the <strong>Who to Call</strong> dashboard by tapping their name.</div>
-</div>
-<!-- 7. Search -->
-<div class="guide-section" id="gs-search">
-<div class="guide-section-header">
-<div class="guide-section-icon">🔍</div>
-<div class="guide-section-title">7. Search</div>
-</div>
-<div class="guide-body">
-<p><strong>Search</strong> lets you find notes and calls across your entire contact list at once — useful when you remember something from a conversation but cannot recall who it was with.</p>
-<p>Start typing and results from both names and call notes will appear. Tap a result to view that person's full history.</p>
-</div>
-<div class="guide-tip"><span class="guide-tip-icon">💡</span>Search checks both contact names and the notes field, so you can search for keywords from a conversation.</div>
-</div>
-<!-- 8. Analytics -->
-<div class="guide-section" id="gs-analytics">
-<div class="guide-section-header">
-<div class="guide-section-icon">📊</div>
-<div class="guide-section-title">8. Analytics</div>
-</div>
-<div class="guide-body">
-<p>The <strong>Analytics</strong> page gives you a bird's-eye view of your follow-up activity over time. It shows:</p>
-</div>
-<div class="guide-step"><div class="guide-step-num">📈</div><div class="guide-step-text"><strong>Calls per week</strong> — a trend of how many calls you have logged each week.</div></div>
-<div class="guide-step"><div class="guide-step-num">✓</div><div class="guide-step-text"><strong>Reach rate</strong> — the percentage of attempts where you actually spoke to someone.</div></div>
-<div class="guide-step"><div class="guide-step-num">📅</div><div class="guide-step-text"><strong>Activity overview</strong> — a breakdown of call results (Reached, No Answer, Left Message, Rescheduled).</div></div>
-<div class="guide-body" style="margin-top:10px;"><p>Tap <strong>Refresh</strong> in the top bar to load the latest data.</p></div>
-</div>
-<!-- 9. Adding People -->
-<div class="guide-section" id="gs-addperson">
-<div class="guide-section-header">
-<div class="guide-section-icon">➕</div>
-<div class="guide-section-title">9. Adding People</div>
-</div>
-<div class="guide-body">
-<p>Add a new contact to your call list from <strong>Home → Add Person</strong>.</p>
-</div>
-<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Full Name</strong> — required. This is how the person will appear throughout the app.</div></div>
-<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Role</strong> — optional. E.g. Cell Leader, Coordinator, Manager.</div></div>
-<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Fellowship</strong> — optional. The group, campus, or community they belong to.</div></div>
-<div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Priority</strong> — optional. E.g. High, Medium, Low — helps you identify important contacts at a glance.</div></div>
-<div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Call Cadence (days)</strong> — how many days between calls. Defaults to 28 days. Flock uses this to calculate when each person is next due.</div></div>
-<div class="guide-step"><div class="guide-step-num">6</div><div class="guide-step-text">Tap <strong>Add to Call List</strong> to save. The person will appear on the dashboard immediately.</div></div>
-<div class="guide-tip"><span class="guide-tip-icon">💡</span>You can edit a person's cadence and active status any time from <strong>Settings → People Settings</strong>.</div>
-</div>
-<!-- 10. Settings -->
-<div class="guide-section" id="gs-settings">
-<div class="guide-section-header">
-<div class="guide-section-icon">⚙️</div>
-<div class="guide-section-title">10. Settings</div>
-</div>
-<div class="guide-body">
-<p>Access Settings from the ⚙ icon on the Home screen. There are two sub-sections:</p>
-</div>
-<div class="guide-step"><div class="guide-step-num">①</div><div class="guide-step-text"><strong>Your Name</strong> — enter your name here so Flock can use it in greetings and email reminders.</div></div>
-<div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:14px 0 8px;">App Settings</div>
-<div class="guide-step"><div class="guide-step-num">⏱</div><div class="guide-step-text"><strong>Reminders</strong> — configure whether you receive email reminders and at what time of day.</div></div>
-<div class="guide-step"><div class="guide-step-num">🌐</div><div class="guide-step-text"><strong>Timezone</strong> — set your local timezone so due dates and reminders are calculated correctly.</div></div>
-<div class="guide-step"><div class="guide-step-num">🕐</div><div class="guide-step-text"><strong>Hours</strong> — define your working hours so Flock does not schedule calls outside of them.</div></div>
-<div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:14px 0 8px;">People Settings</div>
-<div class="guide-step"><div class="guide-step-num">📅</div><div class="guide-step-text"><strong>Cadence</strong> — adjust the number of days between calls for any individual. Type a new number and tap <strong>Save</strong>.</div></div>
-<div class="guide-step"><div class="guide-step-num">🔘</div><div class="guide-step-text"><strong>Active / Inactive</strong> — toggle someone inactive to remove them from the dashboard without deleting their history. Toggle them back on when ready to resume.</div></div>
-<div class="guide-step"><div class="guide-step-num">✎</div><div class="guide-step-text"><strong>Edit details</strong> — tap the pencil icon next to any person to update their name, role, fellowship, or priority.</div></div>
-<div class="guide-note" style="margin-top:14px;"><span class="guide-note-icon">ℹ️</span>Changes to cadence take effect immediately — the dashboard will reflect new due dates the next time it loads.</div>
-</div>
-<div class="guide-divider"></div>
-<div style="text-align:center;padding:8px 0 16px;">
-<p style="font-size:13px;color:var(--muted);margin-bottom:14px;">You are all set — happy shepherding! 🕊</p>
-<button class="save-btn" onclick="showPage('pg-home')" style="max-width:220px;padding:12px;">Back to Home</button>
-</div>
-</div>
-</div>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flock - User Guide</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --ac: #2f6b4f;
+      --ac-s: #e7f2eb;
+      --gd: #8b6f3d;
+      --gd-s: #f6efe2;
+      --dn: #b45309;
+      --dn-s: #fff3e8;
+      --bl: #365b8c;
+      --bl-s: #edf3fb;
+      --bg: #f7f4ef;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #ebe5db;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow: 0 8px 24px rgba(30,41,59,.07);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(1200px 500px at 10% -8%, rgba(47,107,79,.06) 0%, rgba(47,107,79,0) 58%),
+        radial-gradient(900px 420px at 92% -16%, rgba(54,91,140,.045) 0%, rgba(54,91,140,0) 60%),
+        linear-gradient(180deg, #faf7f2 0%, #f4efe8 100%);
+      min-height: 100vh;
+      color: var(--text);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: rgba(250,247,242,.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(235,229,219,.8);
+    }
+    .tb-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,.04);
+    }
+    .tb-btn:focus-visible {
+      outline: 2px solid rgba(47,107,79,.3);
+      outline-offset: 2px;
+    }
+    .topbar-title { font-size: 15px; font-weight: 700; letter-spacing: .02em; }
+    .tb-spacer { width: 80px; }
+
+    .shell {
+      width: min(960px, calc(100% - 28px));
+      margin: 26px auto 58px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(620px 250px at 8% -35%, rgba(47,107,79,.1) 0%, rgba(47,107,79,0) 68%),
+        radial-gradient(390px 210px at 88% -8%, rgba(139,111,61,.09) 0%, rgba(139,111,61,0) 72%),
+        radial-gradient(280px 180px at 96% 20%, rgba(54,91,140,.055) 0%, rgba(54,91,140,0) 68%),
+        var(--card);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 32px 26px 24px;
+      margin-bottom: 22px;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255,255,255,.28) 0%, rgba(255,255,255,0) 30%);
+    }
+    .hero > * { position: relative; z-index: 1; }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--ac-s);
+      color: var(--ac);
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.06;
+      letter-spacing: -.03em;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .hero > p {
+      font-size: 16px;
+      line-height: 1.68;
+      color: var(--muted);
+      max-width: 740px;
+    }
+    .qflow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .qcard {
+      border: 1px solid var(--line);
+      background: #fafaf8;
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .qnum {
+      width: 32px; height: 32px;
+      border-radius: 9px;
+      background: var(--ac-s);
+      color: var(--ac);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800;
+      margin-bottom: 11px;
+    }
+    .qcard strong { display: block; font-size: 13px; margin-bottom: 5px; }
+    .qcard p { font-size: 12px; line-height: 1.55; color: var(--muted); }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 74px;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 20px;
+      padding: 16px;
+    }
+    .toc-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .toc a {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      padding: 9px 11px;
+      border-radius: 10px;
+      margin-bottom: 2px;
+      transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+      line-height: 1.3;
+      position: relative;
+    }
+    .toc a:hover {
+      background: var(--ac-s);
+      color: var(--ac);
+      transform: translateX(3px);
+      box-shadow: 0 2px 10px rgba(36,76,67,.08);
+    }
+    .toc a::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(47,107,79,.26);
+      transform: translateY(-50%) scale(.9);
+      opacity: 0;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .toc a:hover::before,
+    .toc a:focus-visible::before {
+      opacity: 1;
+      transform: translateY(-50%) scale(1);
+    }
+    .toc a:focus-visible {
+      outline: 2px solid rgba(47,107,79,.28);
+      outline-offset: 2px;
+      background: var(--ac-s);
+    }
+
+    .main { display: flex; flex-direction: column; gap: 20px; }
+    .card {
+      background: linear-gradient(180deg, #fff 0%, #fcfaf7 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 26px 22px;
+    }
+    .main .card:nth-of-type(even) {
+      background: linear-gradient(180deg, #fff 0%, #fdfbf8 100%);
+    }
+    .main .card:nth-of-type(3n) .card-icon { background: var(--gd-s); color: var(--gd); }
+    .main .card:nth-of-type(3n+1) .card-icon { background: var(--ac-s); color: var(--ac); }
+    .main .card:nth-of-type(3n+2) .card-icon { background: var(--bl-s); color: var(--bl); }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      margin-bottom: 15px;
+    }
+    .card-icon {
+      width: 44px; height: 44px;
+      border-radius: 13px;
+      background: var(--ac-s);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .card h2 {
+      font-size: 22px;
+      line-height: 1.14;
+      letter-spacing: -.02em;
+      font-weight: 800;
+    }
+    .card-body p {
+      font-size: 14px;
+      line-height: 1.78;
+      margin-bottom: 14px;
+    }
+    .card-body p:last-child { margin-bottom: 0; }
+    .card-body + .badges { margin-top: 14px; }
+    .badges + .card-body { margin-top: 14px; }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 16px 0 10px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .b-green { background: var(--ac-s); color: var(--ac); }
+    .b-red   { background: var(--dn-s); color: var(--dn); }
+    .b-gold  { background: var(--gd-s); color: var(--gd); }
+    .b-blue  { background: var(--bl-s); color: var(--bl); }
+    .b-gray  { background: #f4f4f5; color: #5b6472; }
+
+    .tip {
+      background: var(--ac-s);
+      color: #1e4531;
+      border: 1px solid #cde4d4;
+      border-radius: 14px;
+      padding: 13px 15px;
+      margin-top: 20px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .note {
+      background: #f8f5ee;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px 15px;
+      margin-top: 20px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #4b5563;
+    }
+
+    .steps { display: grid; gap: 11px; margin-top: 17px; }
+    .card-body + .steps { margin-top: 18px; }
+    .steps + .tip,
+    .steps + .note { margin-top: 20px; }
+    .step {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 11px;
+      align-items: start;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.65);
+    }
+    .step-num {
+      width: 38px; height: 38px;
+      border-radius: 11px;
+      background: var(--ac-s);
+      color: var(--ac);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .step-text {
+      font-size: 13px;
+      line-height: 1.65;
+      padding-top: 2px;
+    }
+
+    .guide-footer {
+      text-align: center;
+      padding: 28px 10px 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .guide-grid { grid-template-columns: 1fr; }
+      .toc { position: relative; top: auto; }
+      .qflow { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .shell { width: calc(100% - 18px); margin: 16px auto 36px; }
+      .hero, .card { border-radius: 18px; padding: 20px 14px; }
+      .hero h1 { font-size: 28px; }
+      .card h2 { font-size: 20px; }
+      .qflow { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 34px 1fr; padding: 11px; }
+      .step-num { width: 34px; height: 34px; border-radius: 9px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <button class="tb-btn" onclick="if(window.showPage){showPage('pg-home');}else{window.location.hash='home';}">&larr; Home</button>
+    <span class="topbar-title">User Guide</span>
+    <div class="tb-spacer"></div>
+  </header>
+
+  <div class="shell">
+
+    <section class="hero">
+      <div class="kicker">Documentation</div>
+      <h1>Using Flock well, every day.</h1>
+      <p>Flock is built to help you stay intentional with people. It shows you who to reach, what happened last time, and what needs your attention next, so nothing slips through.</p>
+      <div class="qflow">
+        <div class="qcard"><div class="qnum">1</div><strong>Open Who to Call</strong><p>Start from your priority list, not from memory.</p></div>
+        <div class="qcard"><div class="qnum">2</div><strong>Work by urgency</strong><p>Callbacks, then overdue, then due today.</p></div>
+        <div class="qcard"><div class="qnum">3</div><strong>Log immediately</strong><p>Capture what happened while it is still fresh.</p></div>
+        <div class="qcard"><div class="qnum">4</div><strong>Set the next step</strong><p>That is what keeps your list accurate.</p></div>
+      </div>
+    </section>
+
+    <div class="guide-grid">
+      <aside class="toc">
+        <div class="toc-title">Contents</div>
+        <a href="#gs-overview">1. Overview</a>
+        <a href="#gs-daily">2. Daily Flow</a>
+        <a href="#gs-home">3. Home Screen</a>
+        <a href="#gs-dash">4. Who to Call</a>
+        <a href="#gs-log">5. Logging an Interaction</a>
+        <a href="#gs-ai">6. AI Log Assistant</a>
+        <a href="#gs-history">7. Past Notes</a>
+        <a href="#gs-search">8. Search</a>
+        <a href="#gs-analytics">9. Analytics</a>
+        <a href="#gs-addperson">10. Adding People</a>
+        <a href="#gs-settings">11. Settings</a>
+      </aside>
+
+      <main class="main">
+
+        <section class="card" id="gs-overview">
+          <div class="card-header">
+            <div class="card-icon">🕊</div>
+            <div><div class="card-label">Section 1</div><h2>Overview</h2></div>
+          </div>
+          <div class="card-body">
+            <p><strong>Flock</strong> is a pastoral follow-up tool designed to help you stay consistent with the people in your care.</p>
+            <p>It keeps track of who you reached, when someone is due next, and what was discussed, so your follow-up stays clear and nothing quietly drops off.</p>
+            <p>Each interaction you log updates the schedule automatically.</p>
+          </div>
+          <div class="tip">Flock works best when you log as you go, not later.</div>
+        </section>
+
+        <section class="card" id="gs-daily">
+          <div class="card-header">
+            <div class="card-icon">⚡</div>
+            <div><div class="card-label">Section 2</div><h2>Daily Flow</h2></div>
+          </div>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Open Who to Call</strong> and begin from the list, not from memory.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Start with Callbacks</strong>, then move to <strong>Overdue</strong>, then <strong>Due Today</strong>.</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Log each interaction immediately</strong> so your dashboard stays accurate.</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Set the next step</strong> before you leave the page.</div></div>
+          </div>
+        </section>
+
+        <section class="card" id="gs-home">
+          <div class="card-header">
+            <div class="card-icon">🏠</div>
+            <div><div class="card-label">Section 3</div><h2>Home Screen</h2></div>
+          </div>
+          <div class="card-body">
+            <p>The Home screen is your starting point for the day. It highlights the main numbers that need your attention quickly.</p>
+          </div>
+          <div class="badges">
+            <span class="badge b-green">Callbacks</span>
+            <span class="badge b-red">Overdue</span>
+            <span class="badge b-gold">Due Today</span>
+          </div>
+          <div class="card-body">
+            <p>Tap any stat card to jump straight into that section in <strong>Who to Call</strong>. From Home, you can also reach the rest of the app.</p>
+            <p>The <strong>Settings</strong> icon opens app preferences and people settings. The <strong>moon icon</strong> switches appearance mode.</p>
+          </div>
+        </section>
+
+        <section class="card" id="gs-dash">
+          <div class="card-header">
+            <div class="card-icon">📋</div>
+            <div><div class="card-label">Section 4</div><h2>Who to Call</h2></div>
+          </div>
+          <div class="card-body">
+            <p>This is your daily priority list. People are grouped by urgency so you know what to do first.</p>
+          </div>
+          <div class="badges">
+            <span class="badge b-green">Callbacks</span>
+            <span class="badge b-red">Overdue</span>
+            <span class="badge b-gold">Due Today</span>
+            <span class="badge b-blue">This Week</span>
+            <span class="badge b-gray">Not Yet Scheduled</span>
+          </div>
+          <div class="card-body">
+            <p>Tap a person to take action - call, log, or schedule the next step. The list updates from your latest interaction and due date.</p>
+            <p>People scheduled further out stay hidden until they are closer, which keeps the page focused.</p>
+          </div>
+          <div class="tip">Work through Callbacks first, then Overdue, then Due Today.</div>
+        </section>
+
+        <section class="card" id="gs-log">
+          <div class="card-header">
+            <div class="card-icon">📞</div>
+            <div><div class="card-label">Section 5</div><h2>Logging an Interaction</h2></div>
+          </div>
+          <div class="card-body">
+            <p>Log what happened, then set what comes next.</p>
+          </div>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Select a person</strong> by searching their name. Their recent interactions appear for quick context.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Choose a result</strong>: Reached, No Answer, Left Message, or Rescheduled.</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Set the next action</strong>: None, Callback, or Follow-up. If you choose Callback or Follow-up, add the date and time.</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Add notes</strong> if needed. Keep them short and useful. You can also use voice-to-text.</div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Save</strong> and let Flock update the schedule automatically.</div></div>
+          </div>
+          <div class="note">A date and time are required when the next action is Callback or Follow-up.</div>
+        </section>
+
+        <section class="card" id="gs-ai">
+          <div class="card-header">
+            <div class="card-icon">✨</div>
+            <div><div class="card-label">Section 6</div><h2>AI Log Assistant</h2></div>
+          </div>
+          <div class="card-body">
+            <p>Describe the interaction naturally and Flock helps structure it for you.</p>
+          </div>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text">Open the assistant from the <strong>star icon</strong> in the log page.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text">Type or speak what happened - for example: <em>Called Sarah, no answer, will try again Friday afternoon.</em></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text">Review the pre-filled person, result, notes, and next step.</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text">Confirm and save.</div></div>
+          </div>
+          <div class="tip">Be clear about the person's name and the follow-up timing. That gives the best result.</div>
+        </section>
+
+        <section class="card" id="gs-history">
+          <div class="card-header">
+            <div class="card-icon">📖</div>
+            <div><div class="card-label">Section 7</div><h2>Past Notes</h2></div>
+          </div>
+          <div class="card-body">
+            <p>Past Notes shows the full history for a person - calls, notes, outcomes, and follow-ups in one place.</p>
+            <p>Use it before making a call so your next conversation starts with context.</p>
+          </div>
+          <div class="note">You can also reach someone's history directly from Who to Call.</div>
+        </section>
+
+        <section class="card" id="gs-search">
+          <div class="card-header">
+            <div class="card-icon">🔍</div>
+            <div><div class="card-label">Section 8</div><h2>Search</h2></div>
+          </div>
+          <div class="card-body">
+            <p>Search helps you find people, notes, and past interactions quickly across the app.</p>
+            <p>You can search by name or by words you remember from a previous conversation.</p>
+          </div>
+        </section>
+
+        <section class="card" id="gs-analytics">
+          <div class="card-header">
+            <div class="card-icon">📊</div>
+            <div><div class="card-label">Section 9</div><h2>Analytics</h2></div>
+          </div>
+          <div class="card-body">
+            <p>Analytics gives you a quick view of how consistent your follow-up has been over time.</p>
+          </div>
+          <div class="steps">
+            <div class="step"><div class="step-num">📈</div><div class="step-text"><strong>Calls per week</strong> shows your recent activity trend.</div></div>
+            <div class="step"><div class="step-num">✓</div><div class="step-text"><strong>Reach rate</strong> shows how often your attempts led to an actual conversation.</div></div>
+            <div class="step"><div class="step-num">🗒</div><div class="step-text"><strong>Activity overview</strong> breaks down results such as Reached, No Answer, Left Message, and Rescheduled.</div></div>
+          </div>
+        </section>
+
+        <section class="card" id="gs-addperson">
+          <div class="card-header">
+            <div class="card-icon">➕</div>
+            <div><div class="card-label">Section 10</div><h2>Adding People</h2></div>
+          </div>
+          <div class="card-body">
+            <p>Add someone once, then update their details later whenever needed.</p>
+          </div>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Full Name</strong> is required.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Role</strong>, <strong>Fellowship</strong>, and <strong>Priority</strong> are optional but useful.</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Call Cadence</strong> controls how many days Flock leaves between follow-ups.</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Save</strong> and the person appears in the system immediately.</div></div>
+          </div>
+        </section>
+
+        <section class="card" id="gs-settings">
+          <div class="card-header">
+            <div class="card-icon">⚙</div>
+            <div><div class="card-label">Section 11</div><h2>Settings</h2></div>
+          </div>
+          <div class="card-body">
+            <p>Settings lets you control how Flock works for you and how people are managed in the system.</p>
+          </div>
+          <div class="steps">
+            <div class="step"><div class="step-num">👤</div><div class="step-text"><strong>Your Name</strong> is used for greetings and reminders.</div></div>
+            <div class="step"><div class="step-num">⏰</div><div class="step-text"><strong>Reminders</strong>, <strong>Timezone</strong>, and <strong>Hours</strong> help Flock schedule correctly around your day.</div></div>
+            <div class="step"><div class="step-num">🗒</div><div class="step-text"><strong>Cadence</strong> can be adjusted per person whenever needed.</div></div>
+            <div class="step"><div class="step-num">🔘</div><div class="step-text"><strong>Active / Inactive</strong> lets you remove someone from the dashboard without deleting their history.</div></div>
+            <div class="step"><div class="step-num">✎</div><div class="step-text"><strong>Edit details</strong> to update a person's name, role, fellowship, or priority.</div></div>
+          </div>
+          <div class="note">Changes to cadence take effect immediately.</div>
+        </section>
+
+        <div class="guide-footer">Stay consistent - that's where the impact is. 🕊</div>
+
+      </main>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,5 +1,4 @@
-
-(function(){
+﻿(function(){
   var AI_DRAFT_KEY = 'ct-ai-draft-v2';
   var LOG_DRAFT_KEY = 'ct-log-draft-v1';
   var BS_DRAFT_KEY = 'ct-bs-draft-v1';
@@ -61,9 +60,21 @@
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
     try { new Notification(title, { body: body || '', tag: tag || '' }); } catch(e) {}
   }
+  function isiOSWebPushEligible(){
+    var ua = navigator.userAgent || '';
+    var isIOS = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!isIOS) return { ok: true, reason: '' };
+    var isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+    if (!isStandalone && !window.navigator.standalone) {
+      return { ok: false, reason: 'On iPhone, notifications require the app to be installed (Add to Home Screen).' };
+    }
+    return { ok: true, reason: '' };
+  }
   function isDailySummaryEnabled(){ try { return localStorage.getItem('ct-daily-summary-enabled') === '1'; } catch(e){ return false; } }
   function getDailySummaryStatusText(){
     if (!('Notification' in window)) return 'Not supported in this browser';
+    var iosCheck = isiOSWebPushEligible();
+    if (!iosCheck.ok) return 'Install app to enable on iPhone';
     if (!isDailySummaryEnabled()) return 'Off';
     if (Notification.permission === 'granted') return 'On';
     if (Notification.permission === 'denied') return 'Blocked in browser';
@@ -71,6 +82,8 @@
   }
   function requestPhoneNotifications(){
     if (!('Notification' in window)) { return Promise.resolve('unsupported'); }
+    var iosCheck = isiOSWebPushEligible();
+    if (!iosCheck.ok) return Promise.resolve('ios-install-required');
     return Notification.requestPermission().then(function(permission){
       return permission;
     });
@@ -93,6 +106,11 @@
         } else {
           try { localStorage.setItem('ct-daily-summary-enabled', '0'); } catch(e){}
           updateDailySummaryUi();
+          if (window.showUxToast) {
+            if (permission === 'ios-install-required') window.showUxToast('Install to Home Screen first to enable iPhone notifications.');
+            else if (permission === 'denied') window.showUxToast('Notifications are blocked. Enable them in browser settings.');
+            else window.showUxToast('Notification permission is required.');
+          }
         }
       });
     } else {
@@ -125,45 +143,74 @@
     el.innerHTML = '<div class="people-loading" style="padding:16px 0"><span>Loading</span><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
     apiFetch('getSettings').then(function(list){
       list = Array.isArray(list) ? list.slice() : [];
-      var nameEntry = list.find(function(s){ return s.key === 'YOUR_NAME'; }) || { key:'YOUR_NAME', label:'Your Name', desc:'Used in greetings and reminders.', val:(window._userName && window._userName !== 'Pastor' ? window._userName : '') };
-      list = list.filter(function(s){ return s.key !== 'YOUR_NAME'; });
+      var keyNorm = function(s){ return String((s && s.key) || '').trim().toUpperCase(); };
+      var nameEntry = list.find(function(s){ return keyNorm(s) === 'YOUR_NAME'; }) || { key:'YOUR_NAME', label:'Your Name', desc:'Used in greetings and reminders.', val:(window._userName && window._userName !== 'Pastor' ? window._userName : '') };
+      var notifEntry = list.find(function(s){ return keyNorm(s) === 'NOTIFICATIONS_ENABLED'; }) || { key:'NOTIFICATIONS_ENABLED', label:'Notifications', desc:'Turn daily and weekly reminder notifications on or off.', val:'true' };
+      list = list.filter(function(s){ var k = keyNorm(s); return k !== 'YOUR_NAME' && k !== 'NOTIFICATIONS_ENABLED'; });
       var icons = {
-        'REMINDER_EMAIL':'📧','MORNING_REMINDER_HOUR':'🌅','DUESTATUS_REFRESH_HOUR':'🔄','MONDAY_FOLLOWUPS_HOUR':'📋','TIMEZONE':'🌍'
+        'REMINDER_EMAIL':'&#128231;','MORNING_REMINDER_HOUR':'&#127749;','DUESTATUS_REFRESH_HOUR':'&#128260;','MONDAY_FOLLOWUPS_HOUR':'&#128203;','TIMEZONE':'&#127757;'
       };
       var h = '';
       h += '<div class="aset-row">' +
-        '<div class="aset-label">👤 Your Name</div>' +
+        '<div class="aset-label">&#128100; Your Name</div>' +
         '<div class="aset-desc">Used in greetings and reminders.</div>' +
-        '<div class="aset-row-ctrl">' +
+        '<div class="aset-row-ctrl aset-row-ctrl-name">' +
           '<input class="aset-input" id="appsettings-your-name" value="' + esc(nameEntry.val || '') + '" placeholder="e.g. Pastor John">' +
           '<button class="aset-save" id="appsettings-your-name-btn" onclick="saveYourName()">Save</button>' +
           '<span class="aset-status" id="appsettings-your-name-status"></span>' +
         '</div>' +
       '</div>';
       h += '<div class="aset-row">' +
-        '<div class="aset-label">📱 Daily Summary Notifications</div>' +
+        '<div class="aset-label">&#128197; Daily Summary Notifications</div>' +
         '<div class="aset-desc">Get one summary notification per day.</div>' +
-        '<div class="aset-row-ctrl" style="justify-content:space-between;">' +
-          '<div id="phone-notif-status" class="aset-desc" style="margin:0;flex:1;">' + getDailySummaryStatusText() + '</div>' +
+        '<div class="aset-inline-divider"></div>' +
+        '<div class="aset-switch-row">' +
+          '<div class="aset-switch-label">Enable notifications</div>' +
           '<div class="sw-wrap">' +
-            '<span class="sw-label " id="daily-summary-toggle-label">' + (isDailySummaryEnabled() ? 'On' : 'Off') + '</span>' +
+            '<span class="sw-label ' + (isDailySummaryEnabled() ? 'on' : 'off') + '" id="daily-summary-toggle-label">' + (isDailySummaryEnabled() ? 'On' : 'Off') + '</span>' +
             '<label class="sw">' +
               '<input type="checkbox" id="daily-summary-toggle" ' + (isDailySummaryEnabled() ? 'checked' : '') + ' onchange="toggleDailySummary(this.checked)">' +
               '<span class="sw-track"></span>' +
             '</label>' +
           '</div>' +
         '</div>' +
+        '<div id="phone-notif-status" class="aset-desc aset-status-line">' + getDailySummaryStatusText() + '</div>' +
+      '</div>';
+      var notifRaw = String(notifEntry.val == null ? '' : notifEntry.val).trim().toLowerCase();
+      var notifOn = notifRaw === 'true' || notifRaw === '1' || notifRaw === 'yes' || notifRaw === 'on';
+      h += '<div class="aset-row">' +
+        '<div class="aset-label">&#9881; ' + esc(notifEntry.label || 'Notifications') + '</div>' +
+        (notifEntry.desc ? '<div class="aset-desc">' + esc(notifEntry.desc) + '</div>' : '') +
+        '<input type="hidden" class="aset-input" id="aset-NOTIFICATIONS_ENABLED" value="' + (notifOn ? 'true' : 'false') + '">' +
+        '<div class="aset-inline-divider"></div>' +
+        '<div class="aset-switch-row">' +
+          '<div class="aset-switch-label">Enable notifications</div>' +
+          '<div class="sw-wrap">' +
+            '<span class="sw-label ' + (notifOn ? 'on' : 'off') + '" id="notif-enabled-label">' + (notifOn ? 'On' : 'Off') + '</span>' +
+            '<label class="sw">' +
+              '<input type="checkbox" id="notif-enabled-toggle" ' + (notifOn ? 'checked' : '') + ' onchange="asetPickBool(\'NOTIFICATIONS_ENABLED\', this.checked);saveAppSetting(\'NOTIFICATIONS_ENABLED\');(function(lbl){if(lbl){lbl.textContent=this.checked?\'On\':\'Off\';lbl.className=\'sw-label \'+(this.checked?\'on\':\'off\');}}).call(this, document.getElementById(\'notif-enabled-label\'));">' +
+              '<span class="sw-track"></span>' +
+            '</label>' +
+          '</div>' +
+        '</div>' +
+        '<div class="aset-row-ctrl aset-row-ctrl-bool" style="justify-content:flex-end;margin-top:8px;">' +
+          '<span class="aset-status" id="asstat-NOTIFICATIONS_ENABLED"></span>' +
+        '</div>' +
       '</div>';
       h += list.map(function(s){
-        var k = esc(s.key), icon = icons[s.key] || '⚙️';
-        return '<div class="aset-row">' +
-          '<div class="aset-label">' + icon + ' ' + esc(s.label || s.key) + '</div>' +
-          (s.desc ? '<div class="aset-desc">' + esc(s.desc) + '</div>' : '') +
+        var keyRaw = String((s && s.key) || '').trim();
+        var keyUpper = keyRaw.toUpperCase();
+        var k = esc(keyRaw), icon = icons[keyUpper] || '&#9881;';
+        var ctrlHtml =
           '<div class="aset-row-ctrl">' +
             '<input class="aset-input" id="aset-' + k + '" value="' + esc(s.val) + '" placeholder="-">' +
             '<button class="aset-save" id="assave-' + k + '" onclick="saveAppSetting(\'' + k + '\')">Save</button>' +
             '<span class="aset-status" id="asstat-' + k + '"></span>' +
-          '</div>' +
+          '</div>';
+        return '<div class="aset-row">' +
+          '<div class="aset-label">' + icon + ' ' + esc(s.label || keyRaw) + '</div>' +
+          (s.desc ? '<div class="aset-desc">' + esc(s.desc) + '</div>' : '') +
+          ctrlHtml +
         '</div>';
       }).join('');
       el.innerHTML = h;
@@ -171,24 +218,23 @@
       el.innerHTML = '<div class="err-box">Could not load settings.<br><small>' + esc(String(e)) + '</small></div>';
     });
   };
-
   window.saveYourName = function(){
     var inp = $('appsettings-your-name') || $('settings-your-name');
     var btn = $('appsettings-your-name-btn') || $('your-name-btn');
     var stat = $('appsettings-your-name-status') || $('your-name-status');
     if (!inp) return;
     var val = inp.value.trim();
-    if (!val) { if (stat) { stat.textContent = '✕'; stat.className='aset-status err'; } return; }
-    if (btn) { btn.disabled = true; btn.textContent = '…'; }
+    if (!val) { if (stat) { stat.textContent = 'âœ•'; stat.className='aset-status err'; } return; }
+    if (btn) { btn.disabled = true; btn.textContent = 'â€¦'; }
     apiFetch('saveSetting', { key:'YOUR_NAME', val:val }).then(function(res){
       if (btn) { btn.disabled = false; btn.textContent = 'Save'; }
       if (res && res.success) {
         window._userName = val;
         var greetEl = $('home-greeting');
         if (greetEl) { var h = new Date().getHours(); var gr = 'Good morning'; greetEl.textContent = val ? gr + ', ' + val + '.' : gr + '.'; }
-        if (stat) { stat.textContent = '✓'; stat.className='aset-status ok'; }
-      } else if (stat) { stat.textContent='✕'; stat.className='aset-status err'; }
-    }).catch(function(){ if (btn) { btn.disabled=false; btn.textContent='Save'; } if (stat) { stat.textContent='✕'; stat.className='aset-status err'; } });
+        if (stat) { stat.textContent = 'âœ“'; stat.className='aset-status ok'; }
+      } else if (stat) { stat.textContent='âœ•'; stat.className='aset-status err'; }
+    }).catch(function(){ if (btn) { btn.disabled=false; btn.textContent='Save'; } if (stat) { stat.textContent='âœ•'; stat.className='aset-status err'; } });
   };
 
   function saveAiDraft(){
@@ -356,7 +402,7 @@
       if (personHeader) {
         personHeader.classList.add('ai-editable-card');
         personHeader.id = 'ai-conf-edit-person';
-        personHeader.insertAdjacentHTML('afterend', '<div id="ai-person-inline" class="ai-inline-edit"><div class="ai-mini-label">Change person</div><div style="position:relative;"><input id="ai-override-search" style="width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-soft);font-family:inherit;font-size:14px;color:var(--text);outline:none;" placeholder="Search by name…" oninput="aiOverrideSearch()" autocomplete="off"><div id="ai-override-drop" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--accent);border-radius:var(--radius-sm);box-shadow:0 8px 24px rgba(0,0,0,.12);max-height:160px;overflow-y:auto;z-index:100;"></div></div><div class="ai-person-picked" id="ai-person-picked-note"></div></div>');
+        personHeader.insertAdjacentHTML('afterend', '<div id="ai-person-inline" class="ai-inline-edit"><div class="ai-mini-label">Change person</div><div style="position:relative;"><input id="ai-override-search" style="width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-soft);font-family:inherit;font-size:14px;color:var(--text);outline:none;" placeholder="Search by nameâ€¦" oninput="aiOverrideSearch()" autocomplete="off"><div id="ai-override-drop" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--accent);border-radius:var(--radius-sm);box-shadow:0 8px 24px rgba(0,0,0,.12);max-height:160px;overflow-y:auto;z-index:100;"></div></div><div class="ai-person-picked" id="ai-person-picked-note"></div></div>');
         personHeader.addEventListener('click', function(e){ if (e.target.closest('#ai-person-inline')) return; $('ai-person-inline').classList.toggle('open'); var inp=$('ai-override-search'); if (inp) setTimeout(function(){ inp.focus(); }, 50); });
       }
       personWrap.style.display = 'none';
@@ -427,7 +473,7 @@
       inline.classList.toggle('open', parsed.matchConfidence !== 'high');
       if (drop && parsed.suggestions && parsed.suggestions.length) {
         drop.style.display = 'block';
-        drop.innerHTML = '<div class="ai-mini-label" style="padding:10px 10px 0;">Did you mean…?</div>' + parsed.suggestions.map(function(item){ return '<button type="button" class="ai-suggestion-btn" onclick="aiChoosePerson(\'' + esc(String(item.person.id)) + '\')">' + esc(item.person.name || item.person.id) + '<div style="font-size:11px;color:var(--muted);margin-top:2px;">' + Math.round(item.score*100) + '% match</div></button>'; }).join('');
+        drop.innerHTML = '<div class="ai-mini-label" style="padding:10px 10px 0;">Did you meanâ€¦?</div>' + parsed.suggestions.map(function(item){ return '<button type="button" class="ai-suggestion-btn" onclick="aiChoosePerson(\'' + esc(String(item.person.id)) + '\')">' + esc(item.person.name || item.person.id) + '<div style="font-size:11px;color:var(--muted);margin-top:2px;">' + Math.round(item.score*100) + '% match</div></button>'; }).join('');
       } else if (drop) {
         drop.style.display = 'none';
       }
@@ -438,7 +484,7 @@
     var desc = ($('ai-input') && $('ai-input').value.trim()) || '';
     if (!desc) { var msg = $('ai-input-msg'); if (msg) { msg.textContent='Please describe the call first.'; msg.className='msg error'; } return; }
     if (window.stopVoice) stopVoice();
-    var btn = $('ai-parse-btn'); if (btn) { btn.disabled = true; btn.textContent='⏳ Parsing…'; }
+    var btn = $('ai-parse-btn'); if (btn) { btn.disabled = true; btn.textContent='â³ Parsingâ€¦'; }
     if ($('ai-input-msg')) $('ai-input-msg').className='msg';
     var peoplePromise = (window.allPeople && window.allPeople.length) ? Promise.resolve(window.allPeople) : apiFetch('people').then(function(list){ window._aiPeopleCache = list || []; return list || []; });
     peoplePromise.then(function(people){
@@ -468,8 +514,8 @@
       renderAiDate();
       aiShowStep('confirm');
       saveAiDraft();
-      if (btn) { btn.disabled=false; btn.textContent='✨ Parse with AI'; }
-    }).catch(function(e){ if (btn) { btn.disabled=false; btn.textContent='✨ Parse with AI'; } var msg = $('ai-input-msg'); if (msg) { msg.textContent='Could not parse right now. ' + String(e); msg.className='msg error'; } });
+      if (btn) { btn.disabled=false; btn.textContent='âœ¨ Parse with AI'; }
+    }).catch(function(e){ if (btn) { btn.disabled=false; btn.textContent='âœ¨ Parse with AI'; } var msg = $('ai-input-msg'); if (msg) { msg.textContent='Could not parse right now. ' + String(e); msg.className='msg error'; } });
   };
 
   var _origAiPickResult = window.aiPickResult;
@@ -516,7 +562,7 @@
       summary: summaryText,
       nextActionDateTime: p.nextActionDateTime || null
     };
-    var btn = $('ai-confirm-btn'); if (btn) { btn.disabled=true; btn.textContent='Saving…'; }
+    var btn = $('ai-confirm-btn'); if (btn) { btn.disabled=true; btn.textContent='Savingâ€¦'; }
     var savePromise = !navigator.onLine ? (queueOfflineCall(payload), Promise.resolve({ success:true, offline:true })) : apiFetch('saveInteraction', { payload: JSON.stringify(payload) });
     savePromise.then(function(res){
       if (res && res.success) {
@@ -531,13 +577,13 @@
         }
         scheduleLocalReminder(payload);
         clearAiDraft();
-        if ($('ai-success-sub')) $('ai-success-sub').textContent = (res.offline ? '📶 Saved offline - ' : 'Call with ') + payload.fullName + (res.offline ? ' will sync when reconnected.' : ' has been logged.') + (aiTodos.length ? ' ' + aiTodos.length + ' action item' + (aiTodos.length > 1 ? 's' : '') + ' added.' : '');
+        if ($('ai-success-sub')) $('ai-success-sub').textContent = (res.offline ? 'ðŸ“¶ Saved offline - ' : 'Call with ') + payload.fullName + (res.offline ? ' will sync when reconnected.' : ' has been logged.') + (aiTodos.length ? ' ' + aiTodos.length + ' action item' + (aiTodos.length > 1 ? 's' : '') + ' added.' : '');
         aiShowStep('success');
       } else {
-        if (btn) { btn.disabled=false; btn.textContent='✓ Log This Call'; }
+        if (btn) { btn.disabled=false; btn.textContent='âœ“ Log This Call'; }
         var msg = $('ai-confirm-msg'); if (msg) { msg.textContent='Save failed. Check that the selected person exists and your Apps Script endpoint is responding.'; msg.className='msg error'; }
       }
-    }).catch(function(e){ if (btn) { btn.disabled=false; btn.textContent='✓ Log This Call'; } var msg = $('ai-confirm-msg'); if (msg) { msg.textContent='Error: ' + String(e); msg.className='msg error'; } });
+    }).catch(function(e){ if (btn) { btn.disabled=false; btn.textContent='âœ“ Log This Call'; } var msg = $('ai-confirm-msg'); if (msg) { msg.textContent='Error: ' + String(e); msg.className='msg error'; } });
   };
 
   var _origOpenAiAssist = window.openAiAssist;
@@ -639,7 +685,7 @@
         var bits = [];
         if (duePeople > 0) bits.push(duePeople + ' people due/overdue');
         if (dueTasks > 0) bits.push(dueTasks + ' tasks due today');
-        notify('Call Tracker', 'Today: ' + bits.join(' • ') + '.', 'ct-daily-summary');
+        notify('Call Tracker', 'Today: ' + bits.join(' â€¢ ') + '.', 'ct-daily-summary');
         localStorage.setItem('ct-due-summary-notified', todayKey);
       }
     }).catch(function(){});
@@ -655,3 +701,4 @@
     notifyDueSummaryOnce();
   });
 })();
+

@@ -17,7 +17,7 @@
 <link href="styles/base.css" rel="stylesheet"/>
 </head>
 <body>
-<div class="offline-banner" id="offline-banner">âš¡ Offline - calls will sync when you reconnect <span id="offline-q-count"></span></div>
+<div class="offline-banner" id="offline-banner">Offline - calls will sync when you reconnect <span id="offline-q-count"></span></div>
 <!-- â”€â”€ Quick Log Bottom Sheet â”€â”€ -->
 <div class="bsheet-backdrop" id="bsheet-backdrop" onclick="closeBsheet()"></div>
 <div class="bsheet" id="bsheet">
@@ -35,18 +35,18 @@
 <div class="field">
 <span class="field-label">Result</span>
 <div class="chip-grid">
-<button class="chip" data-r="Reached" onclick="pickResult(this)" type="button"><span class="chip-icon">✓</span>Reached</button>
-<button class="chip" data-r="No Answer" onclick="pickResult(this)" type="button"><span class="chip-icon">✕</span>No Answer</button>
-<button class="chip" data-r="Left Message" onclick="pickResult(this)" type="button"><span class="chip-icon">✉</span>Left Message</button>
-<button class="chip" data-r="Rescheduled Call" onclick="pickResult(this)" type="button"><span class="chip-icon">↻</span>Rescheduled</button>
+<button class="chip" data-r="Reached" onclick="bsPick(this,'r')" type="button"><span class="chip-icon">✓</span>Reached</button>
+<button class="chip" data-r="No Answer" onclick="bsPick(this,'r')" type="button"><span class="chip-icon">✕</span>No Answer</button>
+<button class="chip" data-r="Left Message" onclick="bsPick(this,'r')" type="button"><span class="chip-icon">✉</span>Left Message</button>
+<button class="chip" data-r="Rescheduled Call" onclick="bsPick(this,'r')" type="button"><span class="chip-icon">↻</span>Rescheduled</button>
 </div>
 </div>
 <div class="field">
 <span class="field-label">Next Action</span>
 <div class="action-grid">
 <button class="ac a-none a-sel" data-a="None" onclick="bsPick(this,'a')"><span class="ac-icon">-</span>None</button>
-<button class="ac" data-a="Callback" onclick="pickAction(this)" type="button"><span class="ac-icon">↩</span>Callback</button>
-<button class="ac" data-a="Follow-up" onclick="pickAction(this)" type="button"><span class="ac-icon">↗</span>Follow-up</button>
+<button class="ac" data-a="Callback" onclick="bsPick(this,'a')" type="button"><span class="ac-icon">↩</span>Callback</button>
+<button class="ac" data-a="Follow-up" onclick="bsPick(this,'a')" type="button"><span class="ac-icon">↗</span>Follow-up</button>
 </div>
 </div>
 <div class="field" id="bs-dateWrap" style="display:none;">
@@ -57,7 +57,7 @@
 <span class="field-label">Notes</span>
 <div class="vtb-wrap">
 <textarea class="vtb-textarea" id="bs-summary" placeholder="Optional notes..." rows="3" style="width:100%;padding:10px 42px 10px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-soft);font-family:inherit;font-size:14px;color:var(--text);outline:none;resize:vertical;min-height:72px;"></textarea>
-<button class="vtb-mic" id="bs-mic-btn" onclick="toggleVoice('bs-summary','bs-mic-btn')" title="Voice to text"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" x2="12" y1="19" y2="22"></line><line x1="8" x2="16" y1="22" y2="22"></line></svg></button>
+<button class="vtb-mic" id="bs-mic-btn" onclick="toggleVoice('bs-summary','bs-mic-btn')" title="Voice to text" type="button"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" x2="12" y1="19" y2="22"></line><line x1="8" x2="16" y1="22" y2="22"></line></svg></button>
 </div>
 </div>
 <div class="msg" id="bs-msg"></div>
@@ -183,87 +183,87 @@
 <!-- 1. Overview -->
 <div class="guide-section" id="gs-overview">
 <div class="guide-section-header">
-<div class="guide-section-icon">ðŸ•Š</div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">1. Overview</div>
 </div>
 <div class="guide-body">
-<p><strong>Flock</strong> is a pastoral call-tracking tool designed to help you stay consistently connected with the people in your care. It keeps track of who you have called, when each person is due for a follow-up, and what was discussed â€” so nothing falls through the cracks.</p>
+<p><strong>Flock</strong> is a pastoral call-tracking tool designed to help you stay consistently connected with the people in your care. It keeps track of who you have called, when each person is due for a follow-up, and what was discussed so nothing falls through the cracks.</p>
 <p>Flock works by connecting to your contact list (stored in a Google Sheet) and showing you a prioritised call schedule each day. Every interaction you log is saved automatically.</p>
 </div>
-<div class="guide-tip"><span class="guide-tip-icon">ðŸ’¡</span>Flock works best when you log calls promptly after finishing them â€” this keeps the dashboard accurate and your next due dates up to date.</div>
+<div class="guide-tip"><span class="guide-tip-icon"></span>Flock works best when you log calls promptly after finishing them this keeps the dashboard accurate and your next due dates up to date.</div>
 </div>
 <!-- 2. Home -->
 <div class="guide-section" id="gs-home">
 <div class="guide-section-header">
-<div class="guide-section-icon">ðŸ </div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">2. Home Screen</div>
 </div>
 <div class="guide-body">
 <p>The Home screen is your daily starting point. At a glance you can see three key numbers:</p>
 <div class="guide-badge-row">
-<span class="guide-badge" style="background:var(--accent-soft);color:var(--accent);">â— Callbacks â€” people waiting for a return call</span>
-<span class="guide-badge" style="background:var(--danger-bg);color:var(--danger);">â— Overdue â€” past their due date</span>
-<span class="guide-badge" style="background:var(--gold-soft);color:#92400e;">â— Due Today â€” scheduled for today</span>
+<span class="guide-badge" style="background:var(--accent-soft);color:var(--accent);"> Callbacks people waiting for a return call</span>
+<span class="guide-badge" style="background:var(--danger-bg);color:var(--danger);"> Overdue past their due date</span>
+<span class="guide-badge" style="background:var(--gold-soft);color:#92400e;"> Due Today scheduled for today</span>
 </div>
 <p>Tap any stat box to jump straight to that section in the <strong>Who to Call</strong> dashboard. From Home you can also navigate to every other section of the app.</p>
-<p>The <strong>âš™ Settings icon</strong> (top right) opens app and people settings. The <strong>moon icon</strong> toggles dark mode.</p>
+<p>The <strong> Settings icon</strong> (top right) opens app and people settings. The <strong>moon icon</strong> toggles dark mode.</p>
 </div>
 </div>
 <!-- 3. Who to Call -->
 <div class="guide-section" id="gs-dash">
 <div class="guide-section-header">
-<div class="guide-section-icon">ðŸ“‹</div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">3. Who to Call</div>
 </div>
 <div class="guide-body">
 <p>This is your prioritised call schedule. People are sorted into sections based on urgency:</p>
 <div class="guide-badge-row">
-<span class="guide-badge" style="background:var(--accent-soft);color:var(--accent);">â— Callbacks</span>
-<span class="guide-badge" style="background:var(--danger-bg);color:var(--danger);">â— Overdue</span>
-<span class="guide-badge" style="background:var(--gold-soft);color:#92400e;">â— Due Today</span>
-<span class="guide-badge" style="background:var(--blue-bg);color:var(--blue);">â— This Week</span>
-<span class="guide-badge" style="background:var(--surface-soft);color:var(--muted);">â— No Date Set</span>
+<span class="guide-badge" style="background:var(--accent-soft);color:var(--accent);"> Callbacks</span>
+<span class="guide-badge" style="background:var(--danger-bg);color:var(--danger);"> Overdue</span>
+<span class="guide-badge" style="background:var(--gold-soft);color:#92400e;"> Due Today</span>
+<span class="guide-badge" style="background:var(--blue-bg);color:var(--blue);"> This Week</span>
+<span class="guide-badge" style="background:var(--surface-soft);color:var(--muted);"> No Date Set</span>
 </div>
-<p>The coloured strip at the top shows a count for each category â€” tap a category to jump to it. Tap <strong>Log</strong> next to any name to open the Log a Call form with that person pre-filled.</p>
-<p>People scheduled more than two weeks out are hidden â€” they will appear automatically when the time comes. Pull down to refresh the list.</p>
+<p>The coloured strip at the top shows a count for each category tap a category to jump to it. Tap <strong>Log</strong> next to any name to open the Log a Call form with that person pre-filled.</p>
+<p>People scheduled more than two weeks out are hidden they will appear automatically when the time comes. Pull down to refresh the list.</p>
 </div>
-<div class="guide-tip"><span class="guide-tip-icon">ðŸ’¡</span>Work through <strong>Callbacks</strong> first, then <strong>Overdue</strong>, then <strong>Due Today</strong>. This keeps your most urgent commitments covered.</div>
+<div class="guide-tip"><span class="guide-tip-icon"></span>Work through <strong>Callbacks</strong> first, then <strong>Overdue</strong>, then <strong>Due Today</strong>. This keeps your most urgent commitments covered.</div>
 </div>
 <!-- 4. Log a Call -->
 <div class="guide-section" id="gs-log">
 <div class="guide-section-header">
-<div class="guide-section-icon">ðŸ“ž</div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">4. Logging a Call</div>
 </div>
 <div class="guide-body">
 <p>Use this form to record the outcome of any call. Here is the flow:</p>
 </div>
-<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Select a person</strong> â€” type their name in the search box and tap to select. Any recent interactions will appear below for context.</div></div>
-<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Pick a result</strong> â€” choose one of: <em>Reached</em>, <em>No Answer</em>, <em>Left Message</em>, or <em>Rescheduled</em>.</div></div>
-<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Set next action</strong> â€” choose <em>None</em>, <em>Callback</em> (they will call you back), or <em>Follow-up</em> (you will call them again). Choosing Callback or Follow-up reveals a date &amp; time picker.</div></div>
-<div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Add notes</strong> (optional) â€” jot a brief summary. Tap the microphone button to use voice-to-text instead of typing.</div></div>
-<div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Save Call</strong> â€” tap the green button at the bottom. A confirmation screen will offer to log another call or return to the dashboard.</div></div>
-<div class="guide-note"><span class="guide-note-icon">â„¹ï¸</span>A date &amp; time is required when you choose <strong>Callback</strong> or <strong>Follow-up</strong> as the next action.</div>
+<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Select a person</strong> type their name in the search box and tap to select. Any recent interactions will appear below for context.</div></div>
+<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Pick a result</strong> choose one of: <em>Reached</em>, <em>No Answer</em>, <em>Left Message</em>, or <em>Rescheduled</em>.</div></div>
+<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Set next action</strong> choose <em>None</em>, <em>Callback</em> (they will call you back), or <em>Follow-up</em> (you will call them again). Choosing Callback or Follow-up reveals a date &amp; time picker.</div></div>
+<div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Add notes</strong> (optional) jot a brief summary. Tap the microphone button to use voice-to-text instead of typing.</div></div>
+<div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Save Call</strong> tap the green button at the bottom. A confirmation screen will offer to log another call or return to the dashboard.</div></div>
+<div class="guide-note"><span class="guide-note-icon"></span>A date &amp; time is required when you choose <strong>Callback</strong> or <strong>Follow-up</strong> as the next action.</div>
 </div>
 <!-- 5. AI Log Assistant -->
 <div class="guide-section" id="gs-ai">
 <div class="guide-section-header">
-<div class="guide-section-icon">âœ¨</div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">5. AI Log Assistant</div>
 </div>
 <div class="guide-body">
 <p>The AI Log Assistant lets you describe a call in plain language and automatically fills in the log form for you. Access it via the <strong>star icon</strong> in the Log a Call top bar, or from Settings.</p>
 </div>
-<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap the <strong>âœ¨ icon</strong> in the top bar of Log a Call.</div></div>
-<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Type or speak a natural description of the call â€” e.g. <em>"Called Sarah, no answer, will try again Friday afternoon."</em></div></div>
+<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap the <strong> icon</strong> in the top bar of Log a Call.</div></div>
+<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Type or speak a natural description of the call e.g. <em>"Called Sarah, no answer, will try again Friday afternoon."</em></div></div>
 <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">The AI parses your description and pre-fills the person, result, next action, date, and notes.</div></div>
 <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">Review the filled-in details and tap <strong>Confirm &amp; Save</strong>.</div></div>
-<div class="guide-tip"><span class="guide-tip-icon">ðŸ’¡</span>Be specific about the person's name and any follow-up date â€” the AI will pick them up automatically.</div>
+<div class="guide-tip"><span class="guide-tip-icon"></span>Be specific about the person's name and any follow-up date the AI will pick them up automatically.</div>
 </div>
 <!-- 6. Past Notes -->
 <div class="guide-section" id="gs-history">
 <div class="guide-section-header">
-<div class="guide-section-icon">ðŸ“–</div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">6. Past Notes</div>
 </div>
 <div class="guide-body">
@@ -271,75 +271,75 @@
 </div>
 <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Go to <strong>Past Notes</strong> from the Home screen.</div></div>
 <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Type a name in the search box to filter the contact list.</div></div>
-<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Tap a person's name to see every logged call â€” result, notes, and next steps â€” in reverse chronological order.</div></div>
-<div class="guide-note"><span class="guide-note-icon">â„¹ï¸</span>You can also reach a person's history from the <strong>Who to Call</strong> dashboard by tapping their name.</div>
+<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Tap a person's name to see every logged call result, notes, and next steps in reverse chronological order.</div></div>
+<div class="guide-note"><span class="guide-note-icon"></span>You can also reach a person's history from the <strong>Who to Call</strong> dashboard by tapping their name.</div>
 </div>
 <!-- 7. Search -->
 <div class="guide-section" id="gs-search">
 <div class="guide-section-header">
-<div class="guide-section-icon">ðŸ”</div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">7. Search</div>
 </div>
 <div class="guide-body">
-<p><strong>Search</strong> lets you find notes and calls across your entire contact list at once â€” useful when you remember something from a conversation but cannot recall who it was with.</p>
+<p><strong>Search</strong> lets you find notes and calls across your entire contact list at once useful when you remember something from a conversation but cannot recall who it was with.</p>
 <p>Start typing and results from both names and call notes will appear. Tap a result to view that person's full history.</p>
 </div>
-<div class="guide-tip"><span class="guide-tip-icon">ðŸ’¡</span>Search checks both contact names and the notes field, so you can search for keywords from a conversation.</div>
+<div class="guide-tip"><span class="guide-tip-icon"></span>Search checks both contact names and the notes field, so you can search for keywords from a conversation.</div>
 </div>
 <!-- 8. Analytics -->
 <div class="guide-section" id="gs-analytics">
 <div class="guide-section-header">
-<div class="guide-section-icon">ðŸ“Š</div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">8. Analytics</div>
 </div>
 <div class="guide-body">
 <p>The <strong>Analytics</strong> page gives you a bird's-eye view of your follow-up activity over time. It shows:</p>
 </div>
-<div class="guide-step"><div class="guide-step-num">ðŸ“ˆ</div><div class="guide-step-text"><strong>Calls per week</strong> â€” a trend of how many calls you have logged each week.</div></div>
-<div class="guide-step"><div class="guide-step-num">âœ“</div><div class="guide-step-text"><strong>Reach rate</strong> â€” the percentage of attempts where you actually spoke to someone.</div></div>
-<div class="guide-step"><div class="guide-step-num">ðŸ“…</div><div class="guide-step-text"><strong>Activity overview</strong> â€” a breakdown of call results (Reached, No Answer, Left Message, Rescheduled).</div></div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Calls per week</strong> a trend of how many calls you have logged each week.</div></div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Reach rate</strong> the percentage of attempts where you actually spoke to someone.</div></div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Activity overview</strong> a breakdown of call results (Reached, No Answer, Left Message, Rescheduled).</div></div>
 <div class="guide-body" style="margin-top:10px;"><p>Tap <strong>Refresh</strong> in the top bar to load the latest data.</p></div>
 </div>
 <!-- 9. Adding People -->
 <div class="guide-section" id="gs-addperson">
 <div class="guide-section-header">
-<div class="guide-section-icon">âž•</div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">9. Adding People</div>
 </div>
 <div class="guide-body">
-<p>Add a new contact to your call list from <strong>Home â†’ Add Person</strong>.</p>
+<p>Add a new contact to your call list from <strong>Home Add Person</strong>.</p>
 </div>
-<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Full Name</strong> â€” required. This is how the person will appear throughout the app.</div></div>
-<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Role</strong> â€” optional. E.g. Cell Leader, Coordinator, Manager.</div></div>
-<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Fellowship</strong> â€” optional. The group, campus, or community they belong to.</div></div>
-<div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Priority</strong> â€” optional. E.g. High, Medium, Low â€” helps you identify important contacts at a glance.</div></div>
-<div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Call Cadence (days)</strong> â€” how many days between calls. Defaults to 28 days. Flock uses this to calculate when each person is next due.</div></div>
+<div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Full Name</strong> required. This is how the person will appear throughout the app.</div></div>
+<div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Role</strong> optional. E.g. Cell Leader, Coordinator, Manager.</div></div>
+<div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Fellowship</strong> optional. The group, campus, or community they belong to.</div></div>
+<div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Priority</strong> optional. E.g. High, Medium, Low helps you identify important contacts at a glance.</div></div>
+<div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Call Cadence (days)</strong> how many days between calls. Defaults to 28 days. Flock uses this to calculate when each person is next due.</div></div>
 <div class="guide-step"><div class="guide-step-num">6</div><div class="guide-step-text">Tap <strong>Add to Call List</strong> to save. The person will appear on the dashboard immediately.</div></div>
-<div class="guide-tip"><span class="guide-tip-icon">ðŸ’¡</span>You can edit a person's cadence and active status any time from <strong>Settings â†’ People Settings</strong>.</div>
+<div class="guide-tip"><span class="guide-tip-icon"></span>You can edit a person's cadence and active status any time from <strong>Settings People Settings</strong>.</div>
 </div>
 <!-- 10. Settings -->
 <div class="guide-section" id="gs-settings">
 <div class="guide-section-header">
-<div class="guide-section-icon">âš™ï¸</div>
+<div class="guide-section-icon"></div>
 <div class="guide-section-title">10. Settings</div>
 </div>
 <div class="guide-body">
-<p>Access Settings from the âš™ icon on the Home screen. There are two sub-sections:</p>
+<p>Access Settings from the icon on the Home screen. There are two sub-sections:</p>
 </div>
-<div class="guide-step"><div class="guide-step-num">â‘ </div><div class="guide-step-text"><strong>Your Name</strong> â€” enter your name here so Flock can use it in greetings and email reminders.</div></div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Your Name</strong> enter your name here so Flock can use it in greetings and email reminders.</div></div>
 <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:14px 0 8px;">App Settings</div>
-<div class="guide-step"><div class="guide-step-num">â±</div><div class="guide-step-text"><strong>Reminders</strong> â€” configure whether you receive email reminders and at what time of day.</div></div>
-<div class="guide-step"><div class="guide-step-num">ðŸŒ</div><div class="guide-step-text"><strong>Timezone</strong> â€” set your local timezone so due dates and reminders are calculated correctly.</div></div>
-<div class="guide-step"><div class="guide-step-num">ðŸ•</div><div class="guide-step-text"><strong>Hours</strong> â€” define your working hours so Flock does not schedule calls outside of them.</div></div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Reminders</strong> configure whether you receive email reminders and at what time of day.</div></div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Timezone</strong> set your local timezone so due dates and reminders are calculated correctly.</div></div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Hours</strong> define your working hours so Flock does not schedule calls outside of them.</div></div>
 <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:14px 0 8px;">People Settings</div>
-<div class="guide-step"><div class="guide-step-num">ðŸ“…</div><div class="guide-step-text"><strong>Cadence</strong> â€” adjust the number of days between calls for any individual. Type a new number and tap <strong>Save</strong>.</div></div>
-<div class="guide-step"><div class="guide-step-num">ðŸ”˜</div><div class="guide-step-text"><strong>Active / Inactive</strong> â€” toggle someone inactive to remove them from the dashboard without deleting their history. Toggle them back on when ready to resume.</div></div>
-<div class="guide-step"><div class="guide-step-num">âœŽ</div><div class="guide-step-text"><strong>Edit details</strong> â€” tap the pencil icon next to any person to update their name, role, fellowship, or priority.</div></div>
-<div class="guide-note" style="margin-top:14px;"><span class="guide-note-icon">â„¹ï¸</span>Changes to cadence take effect immediately â€” the dashboard will reflect new due dates the next time it loads.</div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Cadence</strong> adjust the number of days between calls for any individual. Type a new number and tap <strong>Save</strong>.</div></div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Active / Inactive</strong> toggle someone inactive to remove them from the dashboard without deleting their history. Toggle them back on when ready to resume.</div></div>
+<div class="guide-step"><div class="guide-step-num"></div><div class="guide-step-text"><strong>Edit details</strong> tap the pencil icon next to any person to update their name, role, fellowship, or priority.</div></div>
+<div class="guide-note" style="margin-top:14px;"><span class="guide-note-icon"></span>Changes to cadence take effect immediately the dashboard will reflect new due dates the next time it loads.</div>
 </div>
 <div class="guide-divider"></div>
 <div style="text-align:center;padding:8px 0 16px;">
-<p style="font-size:13px;color:var(--muted);margin-bottom:14px;">You are all set â€” happy shepherding! ðŸ•Š</p>
+<p style="font-size:13px;color:var(--muted);margin-bottom:14px;">You are all set happy shepherding! </p>
 <button class="save-btn" onclick="showPage('pg-home')" style="max-width:220px;padding:12px;">Back to Home</button>
 </div>
 </div>
@@ -438,7 +438,7 @@
 <label class="field-label">Notes <span style="font-weight:400;color:var(--line)">- optional</span></label>
 <div class="vtb-wrap">
 <textarea class="vtb-textarea" id="summary" placeholder="Brief summary of the conversation..."></textarea>
-<button class="vtb-mic" id="main-mic-btn" onclick="toggleVoice('summary','main-mic-btn')" title="Voice to text"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" x2="12" y1="19" y2="22"></line><line x1="8" x2="16" y1="22" y2="22"></line></svg></button>
+<button class="vtb-mic" id="main-mic-btn" onclick="toggleVoice('summary','main-mic-btn')" title="Voice to text" type="button"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" x2="12" y1="19" y2="22"></line><line x1="8" x2="16" y1="22" y2="22"></line></svg></button>
 </div>
 </div>
 <div class="divider"></div>
@@ -620,15 +620,15 @@
 <input class="aset-input" id="ap-name" placeholder="e.g. John Smith" style="width:100%;padding:11px 14px;font-size:15px;" type="text"/>
 </div>
 <div class="field">
-<label class="field-label">Role <span style="font-weight:400;color:var(--muted)">â€” optional</span></label>
+<label class="field-label">Role <span style="font-weight:400;color:var(--muted)">- optional</span></label>
 <input class="aset-input" id="ap-role" placeholder="e.g. Coordinator, Cell leader, Manager" style="width:100%;padding:11px 14px;font-size:15px;" type="text"/>
 </div>
 <div class="field">
-<label class="field-label">Fellowship <span style="font-weight:400;color:var(--muted)">â€” optional</span></label>
+<label class="field-label">Fellowship <span style="font-weight:400;color:var(--muted)">- optional</span></label>
 <input class="aset-input" id="ap-fellowship" placeholder="e.g. University of Manitoba, University of Lethbridge" style="width:100%;padding:11px 14px;font-size:15px;" type="text"/>
 </div>
 <div class="field">
-<label class="field-label">Priority <span style="font-weight:400;color:var(--muted)">â€” optional</span></label>
+<label class="field-label">Priority <span style="font-weight:400;color:var(--muted)">- optional</span></label>
 <input class="aset-input" id="ap-priority" placeholder="e.g. High, Medium, Low" style="width:100%;padding:11px 14px;font-size:15px;" type="text"/>
 </div>
 <div class="field">
@@ -716,7 +716,7 @@
 <div class="modal-msg" id="notes-modal-msg"></div>
 <div class="vtb-wrap" style="position:relative;">
 <textarea class="notes-textarea vtb-textarea" id="notes-modal-ta" placeholder="Add notes about this person - background, context, prayer requestsâ€¦" rows="6" style="padding-right:44px;"></textarea>
-<button class="vtb-mic" id="notes-mic-btn" onclick="toggleVoice('notes-modal-ta','notes-mic-btn')" title="Voice to text"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" x2="12" y1="19" y2="22"></line><line x1="8" x2="16" y1="22" y2="22"></line></svg></button>
+<button class="vtb-mic" id="notes-mic-btn" onclick="toggleVoice('notes-modal-ta','notes-mic-btn')" title="Voice to text" type="button"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" x2="12" y1="19" y2="22"></line><line x1="8" x2="16" y1="22" y2="22"></line></svg></button>
 </div>
 <div class="modal-actions">
 <button class="modal-save" id="notes-save-btn" onclick="savePersonNotes()">Save Notes</button>
@@ -749,7 +749,7 @@
 <label class="field-label">Describe the call</label>
 <div class="vtb-wrap ai-input-wrap">
 <textarea class="vtb-textarea ai-input-area" id="ai-input" placeholder="Who did you call? What happened? Any next steps?" rows="4"></textarea>
-<button class="vtb-mic" id="ai-mic-btn" onclick="toggleVoice('ai-input','ai-mic-btn')" title="Voice to text"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" x2="12" y1="19" y2="22"></line><line x1="8" x2="16" y1="22" y2="22"></line></svg></button>
+<button class="vtb-mic" id="ai-mic-btn" onclick="toggleVoice('ai-input','ai-mic-btn')" title="Voice to text" type="button"><svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" x2="12" y1="19" y2="22"></line><line x1="8" x2="16" y1="22" y2="22"></line></svg></button>
 </div>
 </div>
 <div class="ai-extract-cues">AI will extract: <strong>Person</strong> · <strong>Outcome</strong> · <strong>Next step</strong></div>
@@ -776,18 +776,18 @@
 <div style="background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;">
 <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px;">Result <span style="font-weight:400;opacity:.6;">(tap to change)</span></div>
 <div id="ai-result-chips" style="display:flex;flex-wrap:wrap;gap:5px;">
-<button class="ai-rc" data-r="Reached" onclick="aiPickResult(this)">âœ“ Reached</button>
-<button class="ai-rc" data-r="No Answer" onclick="aiPickResult(this)">â€“ No Answer</button>
-<button class="ai-rc" data-r="Left Message" onclick="aiPickResult(this)">âœ‰ Left Message</button>
-<button class="ai-rc" data-r="Rescheduled Call" onclick="aiPickResult(this)">â†» Rescheduled</button>
+<button class="ai-rc" data-r="Reached" onclick="aiPickResult(this)">✓ Reached</button>
+<button class="ai-rc" data-r="No Answer" onclick="aiPickResult(this)">- No Answer</button>
+<button class="ai-rc" data-r="Left Message" onclick="aiPickResult(this)">✉ Left Message</button>
+<button class="ai-rc" data-r="Rescheduled Call" onclick="aiPickResult(this)">↻ Rescheduled</button>
 </div>
 </div>
 <div style="background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;">
 <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px;">Next Action <span style="font-weight:400;opacity:.6;">(tap to change)</span></div>
 <div id="ai-action-chips" style="display:flex;flex-wrap:wrap;gap:5px;">
 <button class="ai-rc" data-a="None" onclick="aiPickAction(this)">- None</button>
-<button class="ai-rc" data-a="Callback" onclick="aiPickAction(this)">â†© Callback</button>
-<button class="ai-rc" data-a="Follow-up" onclick="aiPickAction(this)">â†— Follow-up</button>
+<button class="ai-rc" data-a="Callback" onclick="aiPickAction(this)">↩ Callback</button>
+<button class="ai-rc" data-a="Follow-up" onclick="aiPickAction(this)">↗ Follow-up</button>
 </div>
 </div>
 </div>
@@ -802,19 +802,19 @@
 </div>
 <!-- Person override if no match found -->
 <div id="ai-person-override" style="display:none;margin-bottom:14px;">
-<div style="font-size:12px;color:var(--danger);font-weight:600;margin-bottom:8px;">âš ï¸ Person not found - please select:</div>
+<div style="font-size:12px;color:var(--danger);font-weight:600;margin-bottom:8px;">Person not found - please select:</div>
 <div style="position:relative;">
-<input autocomplete="off" id="ai-override-search" oninput="aiOverrideSearch()" placeholder="Search by nameâ€¦" style="width:100%;padding:10px 14px;border:1px solid var(--danger);border-radius:var(--radius-sm);background:var(--surface-soft);font-family:inherit;font-size:14px;color:var(--text);outline:none;"/>
+<input autocomplete="off" id="ai-override-search" oninput="aiOverrideSearch()" placeholder="Search by name..." style="width:100%;padding:10px 14px;border:1px solid var(--danger);border-radius:var(--radius-sm);background:var(--surface-soft);font-family:inherit;font-size:14px;color:var(--text);outline:none;"/>
 <div id="ai-override-drop" style="display:none;position:absolute;top:calc(100%+4px);left:0;right:0;background:var(--surface);border:1px solid var(--accent);border-radius:var(--radius-sm);box-shadow:0 8px 24px rgba(0,0,0,.12);max-height:160px;overflow-y:auto;z-index:100;"></div>
 </div>
 </div>
 <div class="msg" id="ai-confirm-msg"></div>
-<button class="bsheet-save" id="ai-confirm-btn" onclick="confirmAiLog()">âœ“ Log This Call</button>
+<button class="bsheet-save" id="ai-confirm-btn" onclick="confirmAiLog()">✓ Log This Call</button>
 <button onclick="aiGoBack()" style="display:block;width:100%;margin-top:10px;padding:12px;background:none;border:1px solid var(--line);border-radius:var(--radius-sm);font-family:inherit;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;">&larr; Edit Description</button>
 </div>
 <!-- Step 3: Success -->
 <div id="ai-step-success" style="display:none;text-align:center;padding:24px 0;">
-<div style="font-size:48px;margin-bottom:10px;">âœ…</div>
+<div style="font-size:48px;margin-bottom:10px;">✓</div>
 <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--accent);margin-bottom:6px;">Call Logged!</div>
 <div id="ai-success-sub" style="font-size:14px;color:var(--muted);margin-bottom:20px;"></div>
 <button onclick="closeAiAssist();loadDash();" style="padding:12px 28px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;">Done</button>
@@ -869,6 +869,7 @@
 </div>
 </div>
 <script src="js/todos.js"></script>
+
 
 
 
