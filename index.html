@@ -201,6 +201,46 @@
     .loading-dot:nth-child(2) { animation-delay: .2s; }
     .loading-dot:nth-child(3) { animation-delay: .4s; }
     @keyframes dotpulse { 0%,80%,100%{opacity:.2;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
+
+    /* ── To-Do styles ── */
+    .todo-item { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 6px; }
+    .todo-item.done-item { opacity: .55; }
+    .todo-cb { width: 18px; height: 18px; border: 2px solid var(--line); border-radius: 5px; appearance: none; -webkit-appearance: none; flex-shrink: 0; cursor: pointer; position: relative; transition: background .15s, border-color .15s; }
+    .todo-cb:checked { background: var(--accent); border-color: var(--accent); }
+    .todo-cb:checked::after { content: '✓'; position: absolute; top: -1px; left: 2px; font-size: 11px; color: #fff; font-weight: 700; }
+    .todo-text { flex: 1; font-size: 13px; line-height: 1.5; }
+    .todo-text.done-text { text-decoration: line-through; color: var(--muted); }
+    .todo-del { background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; line-height: 1; padding: 0 2px; flex-shrink: 0; }
+    .todo-person-group { margin-bottom: 20px; }
+    .todo-person-label { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+    .todo-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .todo-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .todo-seg { display: inline-flex; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); }
+    .todo-filter-btn { padding: 8px 14px; border: none; border-right: 1px solid var(--line); background: transparent; font-family: inherit; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; }
+    .todo-filter-btn:last-child { border-right: none; }
+    .todo-filter-btn.active { background: var(--accent-soft); color: var(--accent); }
+    .todo-sort-wrap { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; }
+    .todo-sort-label { font-size: 12px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+    .todo-sort-select { min-width: 130px; padding: 8px 30px 8px 10px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); font-family: inherit; font-size: 12px; font-weight: 600; color: var(--text); outline: none; appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 16px) calc(50% + 1px), calc(100% - 11px) calc(50% + 1px); background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
+    .todo-sort-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(36,76,67,.08); }
+    @media (max-width: 700px) {
+      .todo-toolbar { flex-wrap: wrap; }
+      .todo-sort-wrap { margin-left: 0; width: 100%; }
+      .todo-sort-select { flex: 1; min-width: 0; }
+    }
+    .todo-add-row { display: flex; gap: 8px; margin-bottom: 16px; }
+    .todo-add-input { flex: 1; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); font-family: inherit; font-size: 14px; color: var(--text); outline: none; }
+    .todo-add-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(36,76,67,.08); }
+    .todo-date-input { width: 140px; padding: 10px 10px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); font-family: inherit; font-size: 13px; color: var(--text); outline: none; flex-shrink: 0; }
+    .todo-date-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(36,76,67,.08); }
+    .todo-plus-btn { width: 40px; border: 1px solid var(--accent); border-radius: var(--radius-sm); background: var(--accent); color: #fff; font-family: inherit; font-size: 22px; font-weight: 600; cursor: pointer; line-height: 1; }
+    .todo-plus-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .todo-edit-input { width: 100%; padding: 8px 10px; border: 1px solid var(--accent); border-radius: 8px; background: var(--surface); font-family: inherit; font-size: 13px; color: var(--text); outline: none; }
+    .todo-edit-actions { display: flex; gap: 6px; margin-top: 6px; }
+    .todo-edit-btn { border: 1px solid var(--line); border-radius: 7px; background: var(--surface); font-family: inherit; font-size: 12px; font-weight: 700; color: var(--muted); padding: 4px 8px; cursor: pointer; }
+    .todo-edit-btn.save { border-color: var(--accent); color: var(--accent); }
+    .todo-edit-btn:disabled { opacity: .55; cursor: not-allowed; }
+
     /* ── History page ── */
     .hist-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 10px; }
     .hist-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
@@ -258,7 +298,7 @@
     .set-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; }
     .set-search { width: 100%; padding: 11px 14px 11px 38px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); font-family: inherit; font-size: 14px; color: var(--text); outline: none; }
     .set-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(36,76,67,.08); }
-    /* ── People Settings rows — two-line layout for mobile ── */
+    /* ── People Settings rows - two-line layout for mobile ── */
     .cad-row { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; }
     .cad-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .cad-av  { width: 34px; height: 34px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
@@ -424,7 +464,7 @@
   </style>
 </head>
 <body>
-<div class="offline-banner" id="offline-banner">⚡ Offline — calls will sync when you reconnect <span id="offline-q-count"></span></div>
+<div class="offline-banner" id="offline-banner">⚡ Offline - calls will sync when you reconnect <span id="offline-q-count"></span></div>
 
 <!-- ── Quick Log Bottom Sheet ── -->
 <div class="bsheet-backdrop" id="bsheet-backdrop" onclick="closeBsheet()"></div>
@@ -437,7 +477,7 @@
   <div class="bsheet-body">
     <div class="bsheet-person-tag">
       <div class="bsheet-person-av" id="bsheet-av">?</div>
-      <div class="bsheet-person-name" id="bsheet-name">—</div>
+      <div class="bsheet-person-name" id="bsheet-name">-</div>
     </div>
     <div class="field">
       <span class="field-label">Result</span>
@@ -451,7 +491,7 @@
     <div class="field">
       <span class="field-label">Next Action</span>
       <div class="action-grid">
-        <button class="ac a-none a-sel" data-a="None" onclick="bsPick(this,'a')"><span class="ac-icon">—</span>None</button>
+        <button class="ac a-none a-sel" data-a="None" onclick="bsPick(this,'a')"><span class="ac-icon">-</span>None</button>
         <button class="ac" data-a="Callback" onclick="bsPick(this,'a')"><span class="ac-icon">↩</span>Callback</button>
         <button class="ac" data-a="Follow-up" onclick="bsPick(this,'a')"><span class="ac-icon">📋</span>Follow-up</button>
       </div>
@@ -480,7 +520,7 @@
     <button class="tb-btn icon-btn" onclick="openAiAssist()" title="AI Log Assistant" aria-label="AI Log Assistant">
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 2.5C1.5 1.67 2.17 1 3 1h12c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H5L1.5 16V2.5z" fill="white"/><path d="M9 4l.65 2H12l-1.7 1.25.65 2L9 8l-1.95 1.25.65-2L6 6h2.35L9 4z" fill="#244c43"/></svg>
     </button>
-    <button class="tb-btn icon-btn" onclick="showPage('pg-addperson')" title="Add Person" aria-label="Add Person">
+    <button class="tb-btn icon-btn" onclick="openAddPerson()" title="Add Person" aria-label="Add Person">
       <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
         <circle cx="8" cy="7" r="3.2" stroke="#fff" stroke-width="1.5"/>
         <path d="M2 17c0-3 2.5-4.8 6-4.8" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
@@ -500,9 +540,9 @@
     <h1 class="home-title" id="home-greeting">Good morning.</h1>
     <p class="home-sub">Your daily follow-up dashboard.</p>
     <div class="stat-row">
-      <div class="stat-box cb" onclick="goToDashSection('s-cb')" style="cursor:pointer"><div class="stat-num" id="h-cb">—</div><div class="stat-lbl">Callbacks</div></div>
-      <div class="stat-box ov" onclick="goToDashSection('s-ov')" style="cursor:pointer"><div class="stat-num" id="h-ov">—</div><div class="stat-lbl">Overdue</div></div>
-      <div class="stat-box td" onclick="goToDashSection('s-td')" style="cursor:pointer"><div class="stat-num" id="h-td">—</div><div class="stat-lbl">Due Today</div></div>
+      <div class="stat-box cb" onclick="goToDashSection('s-cb')" style="cursor:pointer"><div class="stat-num" id="h-cb">-</div><div class="stat-lbl">Callbacks</div></div>
+      <div class="stat-box ov" onclick="goToDashSection('s-ov')" style="cursor:pointer"><div class="stat-num" id="h-ov">-</div><div class="stat-lbl">Overdue</div></div>
+      <div class="stat-box td" onclick="goToDashSection('s-td')" style="cursor:pointer"><div class="stat-num" id="h-td">-</div><div class="stat-lbl">Due Today</div></div>
     </div>
     <p class="sec-label">Actions</p>
     <div class="nav-card" onclick="showPage('pg-dash')">
@@ -515,7 +555,7 @@
         </svg>
       </div>
       <div class="nav-text"><div class="nav-title">Who to Call</div><div class="nav-sub">View your full call schedule</div></div>
-      <span class="nav-arrow">›</span>
+      <span class="nav-arrow">></span>
     </div>
     <div class="nav-card" onclick="showPage('pg-log')">
       <div class="nav-icon soft">
@@ -526,7 +566,7 @@
         </svg>
       </div>
       <div class="nav-text"><div class="nav-title">Log a Call</div><div class="nav-sub">Record outcome, notes and next steps</div></div>
-      <span class="nav-arrow">›</span>
+      <span class="nav-arrow">></span>
     </div>
     <div class="nav-card" onclick="showPage('pg-history')">
       <div class="nav-icon soft">
@@ -536,7 +576,7 @@
         </svg>
       </div>
       <div class="nav-text"><div class="nav-title">Past Notes</div><div class="nav-sub">View call history for any person</div></div>
-      <span class="nav-arrow">›</span>
+      <span class="nav-arrow">></span>
     </div>
 
     <div class="nav-card" onclick="showPage('pg-analytics')">
@@ -549,7 +589,248 @@
         </svg>
       </div>
       <div class="nav-text"><div class="nav-title">Analytics</div><div class="nav-sub">Calls per week, reach rate and trends</div></div>
-      <span class="nav-arrow">›</span>
+      <span class="nav-arrow">></span>
+    </div>
+    <div class="nav-card" onclick="showPage('pg-todos')">
+      <div class="nav-icon soft">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="2" y="3" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6 7h8M6 10h8M6 13h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="15" cy="13" r="3.5" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.3"/>
+          <path d="M13.5 13l1 1 2-2" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-text"><div class="nav-title">To-Do List</div><div class="nav-sub" id="home-todo-sub">Action items from your calls</div></div>
+      <span class="nav-arrow">></span>
+    </div>
+
+  </div>
+</div>
+
+<!-- USER GUIDE PAGE -->
+<div class="page" id="pg-guide">
+  <div class="topbar">
+    <button class="tb-btn" onclick="showPage('pg-home')">&#8249; Home</button>
+    <span class="topbar-title">User Guide</span>
+  </div>
+  <div class="shell">
+    <p class="form-kicker">Documentation</p>
+    <h1 class="form-title">User Guide</h1>
+    <p class="form-sub">Everything you need to know to use Flock effectively.</p>
+
+    <style>
+      .guide-toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 28px; }
+      .guide-toc-title { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+      .guide-toc a { display: block; font-size: 13px; font-weight: 500; color: var(--accent); text-decoration: none; padding: 4px 0; border-bottom: 1px solid var(--line); }
+      .guide-toc a:last-child { border-bottom: none; }
+      .guide-toc a:hover { opacity: .7; }
+      .guide-section { margin-bottom: 32px; scroll-margin-top: 70px; }
+      .guide-section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--line); }
+      .guide-section-icon { width: 34px; height: 34px; border-radius: 9px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+      body.dark .guide-section-icon { background: var(--accent-soft); color: var(--accent); }
+      .guide-section-title { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text); }
+      .guide-body { font-size: 14px; color: var(--text); line-height: 1.7; }
+      .guide-body p { margin-bottom: 10px; }
+      .guide-step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; display: flex; gap: 12px; align-items: flex-start; }
+      .guide-step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+      body.dark .guide-step-num { background: var(--accent-soft); color: var(--accent); }
+      .guide-step-text { font-size: 13px; line-height: 1.6; flex: 1; }
+      .guide-step-text strong { color: var(--text); font-weight: 600; }
+      .guide-tip { background: var(--gold-soft); border: 1px solid rgba(184,145,70,.25); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; font-size: 13px; color: var(--text); line-height: 1.6; display: flex; gap: 10px; align-items: flex-start; }
+      .guide-tip-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+      .guide-note { background: var(--accent-soft); border: 1px solid rgba(36,76,67,.15); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; font-size: 13px; color: var(--text); line-height: 1.6; display: flex; gap: 10px; align-items: flex-start; }
+      .guide-note-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+      .guide-badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+      .guide-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 99px; font-size: 12px; font-weight: 600; }
+      .guide-divider { height: 1px; background: var(--line); margin: 28px 0; }
+    </style>
+
+    <!-- Table of Contents -->
+    <div class="guide-toc">
+      <div class="guide-toc-title">Contents</div>
+      <a href="#" onclick="document.getElementById('gs-overview').scrollIntoView({behavior:'smooth',block:'start'});return false;">1. Overview</a>
+      <a href="#" onclick="document.getElementById('gs-home').scrollIntoView({behavior:'smooth',block:'start'});return false;">2. Home Screen</a>
+      <a href="#" onclick="document.getElementById('gs-dash').scrollIntoView({behavior:'smooth',block:'start'});return false;">3. Who to Call</a>
+      <a href="#" onclick="document.getElementById('gs-log').scrollIntoView({behavior:'smooth',block:'start'});return false;">4. Logging a Call</a>
+      <a href="#" onclick="document.getElementById('gs-ai').scrollIntoView({behavior:'smooth',block:'start'});return false;">5. AI Log Assistant</a>
+      <a href="#" onclick="document.getElementById('gs-history').scrollIntoView({behavior:'smooth',block:'start'});return false;">6. Past Notes</a>
+      <a href="#" onclick="document.getElementById('gs-search').scrollIntoView({behavior:'smooth',block:'start'});return false;">7. Search</a>
+      <a href="#" onclick="document.getElementById('gs-analytics').scrollIntoView({behavior:'smooth',block:'start'});return false;">8. Analytics</a>
+      <a href="#" onclick="document.getElementById('gs-addperson').scrollIntoView({behavior:'smooth',block:'start'});return false;">9. Adding People</a>
+      <a href="#" onclick="document.getElementById('gs-settings').scrollIntoView({behavior:'smooth',block:'start'});return false;">10. Settings</a>
+    </div>
+
+    <!-- 1. Overview -->
+    <div class="guide-section" id="gs-overview">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#128330;</div>
+        <div class="guide-section-title">1. Overview</div>
+      </div>
+      <div class="guide-body">
+        <p><strong>Flock</strong> is a pastoral call-tracking tool designed to help you stay consistently connected with the people in your care. It keeps track of who you have called, when each person is due for a follow-up, and what was discussed &#8212; so nothing falls through the cracks.</p>
+        <p>Flock works by connecting to your contact list (stored in a Google Sheet) and showing you a prioritised call schedule each day. Every interaction you log is saved automatically.</p>
+      </div>
+      <div class="guide-tip"><span class="guide-tip-icon">&#128161;</span>Flock works best when you log calls promptly after finishing them &#8212; this keeps the dashboard accurate and your next due dates up to date.</div>
+    </div>
+
+    <!-- 2. Home -->
+    <div class="guide-section" id="gs-home">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#127968;</div>
+        <div class="guide-section-title">2. Home Screen</div>
+      </div>
+      <div class="guide-body">
+        <p>The Home screen is your daily starting point. At a glance you can see three key numbers:</p>
+        <div class="guide-badge-row">
+          <span class="guide-badge" style="background:var(--accent-soft);color:var(--accent);">&#9679; Callbacks &#8212; people waiting for a return call</span>
+          <span class="guide-badge" style="background:var(--danger-bg);color:var(--danger);">&#9679; Overdue &#8212; past their due date</span>
+          <span class="guide-badge" style="background:var(--gold-soft);color:#92400e;">&#9679; Due Today &#8212; scheduled for today</span>
+        </div>
+        <p>Tap any stat box to jump straight to that section in the <strong>Who to Call</strong> dashboard. From Home you can also navigate to every other section of the app.</p>
+        <p>The <strong>&#9881; Settings icon</strong> (top right) opens app and people settings. The <strong>moon icon</strong> toggles dark mode.</p>
+      </div>
+    </div>
+
+    <!-- 3. Who to Call -->
+    <div class="guide-section" id="gs-dash">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#128203;</div>
+        <div class="guide-section-title">3. Who to Call</div>
+      </div>
+      <div class="guide-body">
+        <p>This is your prioritised call schedule. People are sorted into sections based on urgency:</p>
+        <div class="guide-badge-row">
+          <span class="guide-badge" style="background:var(--accent-soft);color:var(--accent);">&#9679; Callbacks</span>
+          <span class="guide-badge" style="background:var(--danger-bg);color:var(--danger);">&#9679; Overdue</span>
+          <span class="guide-badge" style="background:var(--gold-soft);color:#92400e;">&#9679; Due Today</span>
+          <span class="guide-badge" style="background:var(--blue-bg);color:var(--blue);">&#9679; This Week</span>
+          <span class="guide-badge" style="background:var(--surface-soft);color:var(--muted);">&#9679; No Date Set</span>
+        </div>
+        <p>The coloured strip at the top shows a count for each category &#8212; tap a category to jump to it. Tap <strong>Log</strong> next to any name to open the Log a Call form with that person pre-filled.</p>
+        <p>People scheduled more than two weeks out are hidden &#8212; they will appear automatically when the time comes. Pull down to refresh the list.</p>
+      </div>
+      <div class="guide-tip"><span class="guide-tip-icon">&#128161;</span>Work through <strong>Callbacks</strong> first, then <strong>Overdue</strong>, then <strong>Due Today</strong>. This keeps your most urgent commitments covered.</div>
+    </div>
+
+    <!-- 4. Log a Call -->
+    <div class="guide-section" id="gs-log">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#128222;</div>
+        <div class="guide-section-title">4. Logging a Call</div>
+      </div>
+      <div class="guide-body">
+        <p>Use this form to record the outcome of any call. Here is the flow:</p>
+      </div>
+      <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Select a person</strong> &#8212; type their name in the search box and tap to select. Any recent interactions will appear below for context.</div></div>
+      <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Pick a result</strong> &#8212; choose one of: <em>Reached</em>, <em>No Answer</em>, <em>Left Message</em>, or <em>Rescheduled</em>.</div></div>
+      <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Set next action</strong> &#8212; choose <em>None</em>, <em>Callback</em> (they will call you back), or <em>Follow-up</em> (you will call them again). Choosing Callback or Follow-up reveals a date &amp; time picker.</div></div>
+      <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Add notes</strong> (optional) &#8212; jot a brief summary. Tap the microphone button to use voice-to-text instead of typing.</div></div>
+      <div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Save Call</strong> &#8212; tap the green button at the bottom. A confirmation screen will offer to log another call or return to the dashboard.</div></div>
+      <div class="guide-note"><span class="guide-note-icon">&#8505;&#65039;</span>A date &amp; time is required when you choose <strong>Callback</strong> or <strong>Follow-up</strong> as the next action.</div>
+    </div>
+
+    <!-- 5. AI Log Assistant -->
+    <div class="guide-section" id="gs-ai">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#10024;</div>
+        <div class="guide-section-title">5. AI Log Assistant</div>
+      </div>
+      <div class="guide-body">
+        <p>The AI Log Assistant lets you describe a call in plain language and automatically fills in the log form for you. Access it via the <strong>star icon</strong> in the Log a Call top bar, or from Settings.</p>
+      </div>
+      <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap the <strong>&#10024; icon</strong> in the top bar of Log a Call.</div></div>
+      <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Type or speak a natural description of the call &#8212; e.g. <em>"Called Sarah, no answer, will try again Friday afternoon."</em></div></div>
+      <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">The AI parses your description and pre-fills the person, result, next action, date, and notes.</div></div>
+      <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">Review the filled-in details and tap <strong>Confirm &amp; Save</strong>.</div></div>
+      <div class="guide-tip"><span class="guide-tip-icon">&#128161;</span>Be specific about the person's name and any follow-up date &#8212; the AI will pick them up automatically.</div>
+    </div>
+
+    <!-- 6. Past Notes -->
+    <div class="guide-section" id="gs-history">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#128214;</div>
+        <div class="guide-section-title">6. Past Notes</div>
+      </div>
+      <div class="guide-body">
+        <p><strong>Past Notes</strong> shows the full call history for any person. Use it to review previous conversations before making a call.</p>
+      </div>
+      <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Go to <strong>Past Notes</strong> from the Home screen.</div></div>
+      <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Type a name in the search box to filter the contact list.</div></div>
+      <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Tap a person's name to see every logged call &#8212; result, notes, and next steps &#8212; in reverse chronological order.</div></div>
+      <div class="guide-note"><span class="guide-note-icon">&#8505;&#65039;</span>You can also reach a person's history from the <strong>Who to Call</strong> dashboard by tapping their name.</div>
+    </div>
+
+    <!-- 7. Search -->
+    <div class="guide-section" id="gs-search">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#128269;</div>
+        <div class="guide-section-title">7. Search</div>
+      </div>
+      <div class="guide-body">
+        <p><strong>Search</strong> lets you find notes and calls across your entire contact list at once &#8212; useful when you remember something from a conversation but cannot recall who it was with.</p>
+        <p>Start typing and results from both names and call notes will appear. Tap a result to view that person's full history.</p>
+      </div>
+      <div class="guide-tip"><span class="guide-tip-icon">&#128161;</span>Search checks both contact names and the notes field, so you can search for keywords from a conversation.</div>
+    </div>
+
+    <!-- 8. Analytics -->
+    <div class="guide-section" id="gs-analytics">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#128202;</div>
+        <div class="guide-section-title">8. Analytics</div>
+      </div>
+      <div class="guide-body">
+        <p>The <strong>Analytics</strong> page gives you a bird's-eye view of your follow-up activity over time. It shows:</p>
+      </div>
+      <div class="guide-step"><div class="guide-step-num">&#128200;</div><div class="guide-step-text"><strong>Calls per week</strong> &#8212; a trend of how many calls you have logged each week.</div></div>
+      <div class="guide-step"><div class="guide-step-num">&#10003;</div><div class="guide-step-text"><strong>Reach rate</strong> &#8212; the percentage of attempts where you actually spoke to someone.</div></div>
+      <div class="guide-step"><div class="guide-step-num">&#128197;</div><div class="guide-step-text"><strong>Activity overview</strong> &#8212; a breakdown of call results (Reached, No Answer, Left Message, Rescheduled).</div></div>
+      <div class="guide-body" style="margin-top:10px;"><p>Tap <strong>Refresh</strong> in the top bar to load the latest data.</p></div>
+    </div>
+
+    <!-- 9. Adding People -->
+    <div class="guide-section" id="gs-addperson">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#10133;</div>
+        <div class="guide-section-title">9. Adding People</div>
+      </div>
+      <div class="guide-body">
+        <p>Add a new contact to your call list from <strong>Home &#8594; Add Person</strong>.</p>
+      </div>
+      <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Full Name</strong> &#8212; required. This is how the person will appear throughout the app.</div></div>
+      <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Role</strong> &#8212; optional. E.g. Cell Leader, Coordinator, Manager.</div></div>
+      <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Fellowship</strong> &#8212; optional. The group, campus, or community they belong to.</div></div>
+      <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Priority</strong> &#8212; optional. E.g. High, Medium, Low &#8212; helps you identify important contacts at a glance.</div></div>
+      <div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Call Cadence (days)</strong> &#8212; how many days between calls. Defaults to 28 days. Flock uses this to calculate when each person is next due.</div></div>
+      <div class="guide-step"><div class="guide-step-num">6</div><div class="guide-step-text">Tap <strong>Add to Call List</strong> to save. The person will appear on the dashboard immediately.</div></div>
+      <div class="guide-tip"><span class="guide-tip-icon">&#128161;</span>You can edit a person's cadence and active status any time from <strong>Settings &#8594; People Settings</strong>.</div>
+    </div>
+
+    <!-- 10. Settings -->
+    <div class="guide-section" id="gs-settings">
+      <div class="guide-section-header">
+        <div class="guide-section-icon">&#9881;&#65039;</div>
+        <div class="guide-section-title">10. Settings</div>
+      </div>
+      <div class="guide-body">
+        <p>Access Settings from the &#9881; icon on the Home screen. There are two sub-sections:</p>
+      </div>
+      <div class="guide-step"><div class="guide-step-num">&#9312;</div><div class="guide-step-text"><strong>Your Name</strong> &#8212; enter your name here so Flock can use it in greetings and email reminders.</div></div>
+      <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:14px 0 8px;">App Settings</div>
+      <div class="guide-step"><div class="guide-step-num">&#9201;</div><div class="guide-step-text"><strong>Reminders</strong> &#8212; configure whether you receive email reminders and at what time of day.</div></div>
+      <div class="guide-step"><div class="guide-step-num">&#127760;</div><div class="guide-step-text"><strong>Timezone</strong> &#8212; set your local timezone so due dates and reminders are calculated correctly.</div></div>
+      <div class="guide-step"><div class="guide-step-num">&#128336;</div><div class="guide-step-text"><strong>Hours</strong> &#8212; define your working hours so Flock does not schedule calls outside of them.</div></div>
+      <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:14px 0 8px;">People Settings</div>
+      <div class="guide-step"><div class="guide-step-num">&#128197;</div><div class="guide-step-text"><strong>Cadence</strong> &#8212; adjust the number of days between calls for any individual. Type a new number and tap <strong>Save</strong>.</div></div>
+      <div class="guide-step"><div class="guide-step-num">&#128280;</div><div class="guide-step-text"><strong>Active / Inactive</strong> &#8212; toggle someone inactive to remove them from the dashboard without deleting their history. Toggle them back on when ready to resume.</div></div>
+      <div class="guide-step"><div class="guide-step-num">&#9998;</div><div class="guide-step-text"><strong>Edit details</strong> &#8212; tap the pencil icon next to any person to update their name, role, fellowship, or priority.</div></div>
+      <div class="guide-note" style="margin-top:14px;"><span class="guide-note-icon">&#8505;&#65039;</span>Changes to cadence take effect immediately &#8212; the dashboard will reflect new due dates the next time it loads.</div>
+    </div>
+
+    <div class="guide-divider"></div>
+    <div style="text-align:center;padding:8px 0 16px;">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">You are all set &#8212; happy shepherding! &#128330;</p>
+      <button onclick="showPage('pg-home')" class="save-btn" style="max-width:220px;padding:12px;">Back to Home</button>
     </div>
   </div>
 </div>
@@ -567,8 +848,10 @@
     <div class="sum-cell ov" onclick="jumpTo('s-ov')"><div class="sum-num2" id="sn-ov">0</div><div class="sum-lbl2">Overdue</div></div>
     <div class="sum-cell td" onclick="jumpTo('s-td')"><div class="sum-num2" id="sn-td">0</div><div class="sum-lbl2">Today</div></div>
     <div class="sum-cell wk" onclick="jumpTo('s-wk')"><div class="sum-num2" id="sn-wk">0</div><div class="sum-lbl2">This Week</div></div>
-    <div class="sum-cell" onclick="jumpTo('s-nd')"><div class="sum-num2" id="sn-nd">0</div><div class="sum-lbl2">Unscheduled</div></div>
+    <div class="sum-cell wk" onclick="jumpTo('s-nx')"><div class="sum-num2" id="sn-nx">0</div><div class="sum-lbl2">Next Week</div></div>
+    <div class="sum-cell" id="sum-nd" onclick="jumpTo('s-nd')"><div class="sum-num2" id="sn-nd">0</div><div class="sum-lbl2">No Date</div></div>
   </div>
+    <div id="dash-today-count" style="display:block;text-align:center;padding:4px 16px 6px;font-size:11px;color:#2f7a4c;letter-spacing:.02em;opacity:.9;font-style:italic;">0 calls logged today</div>
   <div class="ptr-bar" id="ptr-bar" style="display:none">
     <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v3l3-3M8 2l-3 3M2 8a6 6 0 1 0 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Pull down to refresh
@@ -625,7 +908,7 @@
         <label class="field-label">Result</label>
         <div class="chip-grid">
           <button type="button" class="chip" data-r="Reached" onclick="pickResult(this)"><span class="chip-icon">✓</span>Reached</button>
-          <button type="button" class="chip" data-r="No Answer" onclick="pickResult(this)"><span class="chip-icon">—</span>No Answer</button>
+          <button type="button" class="chip" data-r="No Answer" onclick="pickResult(this)"><span class="chip-icon">-</span>No Answer</button>
           <button type="button" class="chip" data-r="Left Message" onclick="pickResult(this)"><span class="chip-icon">✉</span>Left Message</button>
           <button type="button" class="chip" data-r="Rescheduled Call" onclick="pickResult(this)"><span class="chip-icon">↻</span>Rescheduled</button>
         </div>
@@ -646,10 +929,20 @@
       </div>
       <div class="divider"></div>
       <div class="field">
-        <label class="field-label">Notes <span style="font-weight:400;color:var(--line)">— optional</span></label>
+        <label class="field-label">Notes <span style="font-weight:400;color:var(--line)">- optional</span></label>
         <div class="vtb-wrap">
           <textarea id="summary" class="vtb-textarea" placeholder="Brief summary of the conversation…"></textarea>
           <button class="vtb-mic" id="main-mic-btn" title="Voice to text" onclick="toggleVoice('summary','main-mic-btn')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg></button>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="field">
+        <label class="field-label">Action Items <span style="font-weight:400;color:var(--muted)">- optional</span></label>
+        <p class="field-hint" style="margin-bottom:10px;">Things to do as a result of this call.</p>
+        <div id="todo-list" style="margin-bottom:8px;"></div>
+        <div style="display:flex;gap:8px;margin-bottom:6px;">
+          <input type="text" id="todo-input" placeholder="Add an action item…" style="flex:1;padding:10px 13px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-soft);font-family:inherit;font-size:14px;color:var(--text);outline:none;" onkeydown="if(event.key==='Enter'){event.preventDefault();addTodoItem();}">
+          <button type="button" onclick="addTodoItem()" style="padding:10px 14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-family:inherit;font-size:18px;font-weight:400;line-height:1;cursor:pointer;flex-shrink:0;" title="Add item">&#43;</button>
         </div>
       </div>
     </div>
@@ -685,6 +978,7 @@
   <div class="topbar">
     <button class="tb-btn" onclick="showPage('pg-home')">&#8249; Home</button>
     <span class="topbar-title">Settings</span>
+    <button class="tb-btn icon-btn" onclick="showPage('pg-guide')" title="User Guide" aria-label="User Guide"><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><rect x="3" y="2" width="14" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M6 6h8M6 9.5h8M6 13h5" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></button>
   </div>
   <div class="shell">
     <p class="form-kicker">Configuration</p>
@@ -810,6 +1104,7 @@
       <div class="s-title" id="addperson-success-name"></div>
       <div class="s-sub">Added to your call list.</div>
       <button class="s-again" onclick="resetAddPerson()">Add another person</button>
+      <button class="s-again" style="margin-top:10px;background:var(--surface);color:var(--accent);border:1px solid var(--accent);" onclick="returnFromAddPerson()">Back</button>
     </div>
     <div id="addperson-form">
       <p class="form-kicker">Contacts</p>
@@ -863,7 +1158,6 @@
 
 <script>
   var API = 'https://script.google.com/macros/s/AKfycbxIyopzk2Lg2joe_7AWLJhofkEKy4k8sDQBOJ9OtxYhQW7sh98nCuLWLMblpmh7ogC6/exec';
-
   // ── Hash-based routing ───────────────────────────────────
   var HASH_MAP = {
     'home':        'pg-home',
@@ -875,14 +1169,26 @@
     'cadence':     'pg-cadence',
     'addperson':   'pg-addperson',
     'analytics':   'pg-analytics',
-    'search':      'pg-search'
+    'search':      'pg-search',
+    'guide':       'pg-guide',
+    'todos':       'pg-todos'
   };
   var PAGE_HASH = {};
   Object.keys(HASH_MAP).forEach(function(h){ PAGE_HASH[HASH_MAP[h]] = h; });
 
   var _navigating = false;
+  var _addPersonReturn = null;
+
+  function activePageId_() {
+    var active = document.querySelector('.page.active');
+    return active ? active.id : 'pg-home';
+  }
 
   function showPage(id, pushState) {
+    var currentId = activePageId_();
+    if (id === 'pg-addperson' && currentId !== 'pg-addperson') {
+      _addPersonReturn = { page: currentId || 'pg-home', scrollY: window.scrollY || 0 };
+    }
     document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
     document.getElementById(id).classList.add('active');
     window.scrollTo(0,0);
@@ -901,6 +1207,7 @@
     if (id === 'pg-cadence')      initCadencePage();
     if (id === 'pg-addperson')    initAddPersonPage();
     if (id === 'pg-analytics')    loadAnalytics();
+    if (id === 'pg-todos')         loadTodos();
     if (id === 'pg-search') {
       setTimeout(function(){
         var inp = document.getElementById('search-page-input');
@@ -910,6 +1217,18 @@
     // close bottom sheet and stop voice when navigating away
     if (id !== 'pg-search') stopVoice && stopVoice();
   }
+
+  function openAddPerson() {
+    showPage('pg-addperson');
+  }
+  window.openAddPerson = openAddPerson;
+
+  function returnFromAddPerson() {
+    var ret = _addPersonReturn || { page: 'pg-home', scrollY: 0 };
+    showPage(ret.page || 'pg-home');
+    setTimeout(function(){ window.scrollTo(0, Number(ret.scrollY) || 0); }, 40);
+  }
+  window.returnFromAddPerson = returnFromAddPerson;
 
   window.addEventListener('hashchange', function() {
     if (_navigating) return;
@@ -962,12 +1281,12 @@
   }
 
   var SECS = [
-    { key:'callbacks', id:'s-cb', sn:'sn-cb', label:'Callbacks',   pip:'pip-cb', badge:'badge-cb', av:'av-cb', row:'row-cb', when:function(p){ return p.callbackDue ? 'Callback due ' + p.callbackDue : 'Open callback'; } },
-    { key:'overdue',   id:'s-ov', sn:'sn-ov', label:'Overdue',     pip:'pip-ov', badge:'badge-ov', av:'av-ov', row:'row-ov', when:function(p){ return p.nextDueDate ? 'Was due ' + p.nextDueDate : 'Overdue'; } },
-    { key:'today',     id:'s-td', sn:'sn-td', label:'Due Today',   pip:'pip-td', badge:'badge-td', av:'av-td', row:'row-td', when:function(){ return 'Due today'; } },
-    { key:'thisWeek',  id:'s-wk', sn:'sn-wk', label:'This Week',   pip:'pip-wk', badge:'badge-wk', av:'av-wk', row:'row-wk', when:function(p){ return p.nextDueDate ? 'Due ' + p.nextDueDate : 'This week'; } },
-    { key:'nextWeek',  id:'s-nx', sn:null,     label:'Next Week',   pip:'pip-nx', badge:'badge-nx', av:'av-nx', row:'row-nx', when:function(p){ return p.nextDueDate ? 'Due ' + p.nextDueDate : 'Next week'; } },
-    { key:'noDate',    id:'s-nd', sn:'sn-nd',  label:'Not Yet Scheduled', pip:'pip-nd', badge:'badge-nd', av:'av-nd', row:'row-nd', when:function(){ return 'No due date — call when ready'; } }
+    { key:'callbacks', id:'s-cb', sn:'sn-cb', label:'Callbacks',  pip:'pip-cb', badge:'badge-cb', av:'av-cb', row:'row-cb', when:function(p){ return p.callbackDue ? 'Callback due ' + p.callbackDue : 'Open callback'; } },
+    { key:'overdue',   id:'s-ov', sn:'sn-ov', label:'Overdue',    pip:'pip-ov', badge:'badge-ov', av:'av-ov', row:'row-ov', when:function(p){ return p.nextDueDate ? 'Was due ' + p.nextDueDate : 'Overdue'; } },
+    { key:'today',     id:'s-td', sn:'sn-td', label:'Due Today',  pip:'pip-td', badge:'badge-td', av:'av-td', row:'row-td', when:function(){ return 'Due today'; } },
+    { key:'thisWeek',  id:'s-wk', sn:'sn-wk', label:'This Week',  pip:'pip-wk', badge:'badge-wk', av:'av-wk', row:'row-wk', when:function(p){ return p.nextDueDate ? 'Due ' + p.nextDueDate : 'This week'; } },
+    { key:'nextWeek',  id:'s-nx', sn:null,     label:'Next Week',  pip:'pip-nx', badge:'badge-nx', av:'av-nx', row:'row-nx', when:function(p){ return p.nextDueDate ? 'Due ' + p.nextDueDate : 'Next week'; } },
+    { key:'noDate',    id:'s-nd', sn:'sn-nd',  label:'No Date Set',pip:'pip-nd', badge:'badge-nd', av:'av-nd', row:'row-nd', when:function(){ return 'No due date \u2014 call when ready'; } }
   ];
 
   function ini(name){ if(!name) return '?'; var p = String(name).trim().split(/\s+/); return p.length === 1 ? p[0][0].toUpperCase() : (p[0][0] + p[p.length-1][0]).toUpperCase(); }
@@ -978,35 +1297,68 @@
     var h = '<div class="section" id="' + sec.id + '">';
     h += '<div class="sec-head"><span class="sec-pip ' + sec.pip + '"></span><span class="sec-title2">' + esc(sec.label) + '</span><span class="sec-badge ' + sec.badge + '">' + arr.length + '</span></div>';
     if (!arr.length) {
-      h += '<div class="empty-row">None — all clear here ✓</div>';
+      h += '<div class="empty-row">None - all clear here </div>';
     } else arr.forEach(function(p){
       var pid = esc(p.id);
-      h += '<div class="person-row ' + sec.row + '">';
+      h += '<div class="person-row ' + sec.row + '" data-pid="' + pid + '" data-sec="' + sec.id + '" onclick="openBsheet(\'' + pid + '\',\'' + esc(p.name) + '\',\'who_to_call\')">';
       h += '<div class="av ' + sec.av + '">' + esc(ini(p.name)) + '</div>';
       h += '<div class="row-info"><div class="row-name">' + esc(p.name || 'Unnamed') + '</div>';
       h += '<div class="row-meta"><span class="row-when">' + esc(sec.when(p)) + '</span>';
       if (p.priority) h += '<span class="row-pill">' + esc(p.priority) + '</span>';
       if (p.lastAttempt) h += '<span class="row-pill">Last: ' + esc(p.lastAttempt) + '</span>';
       h += '</div></div>';
-      h += '<button class="log-btn" onclick="openBsheet(\'' + pid + '\',\'' + esc(p.name) + '\')" >Log</button>';
+      h += '<button class="log-btn" data-pid="' + pid + '" onclick="event.stopPropagation();openBsheet(\'' + pid + '\',\'' + esc(p.name) + '\',\'who_to_call\')" >Log</button>';
       h += '</div>';
-      // No notes dropdown on the Who to Call page — notes are in Past Notes
+      // No notes dropdown on the Who to Call page - notes are in Past Notes
     });
     h += '</div>';
     return h;
   }
 
   function renderDash(data) {
+    // Be defensive: include explicit noDate rows and also any "Scheduled" person
+    // that might arrive in another bucket due to stale backend payloads.
+    var noDate = (data.noDate || []).slice();
+    var noDateSeen = {};
+    noDate.forEach(function(p){ noDateSeen[String(p && p.id || '')] = true; });
+
+    ['callbacks','overdue','today','thisWeek','nextWeek'].forEach(function(key){
+      var arr = data[key] || [];
+      var kept = [];
+      arr.forEach(function(p){
+        var st = String((p && p.status) || '').trim().toLowerCase();
+        var pid = String((p && p.id) || '');
+        var shouldBeNoDate = (st === 'scheduled') || !(p && p.nextDueDate);
+        if (shouldBeNoDate) {
+          if (!noDateSeen[pid]) {
+            noDate.push(p);
+            noDateSeen[pid] = true;
+          }
+        } else {
+          kept.push(p);
+        }
+      });
+      data[key] = kept;
+    });
+
+    data = Object.assign({}, data, { noDate: noDate });
+
     var h = '<div class="shell">';
-    SECS.forEach(function(s){ h += renderSection(s, data[s.key]); });
+    SECS.forEach(function(s) {
+      if (s.key === 'noDate' && !(data.noDate || []).length) return;
+      h += renderSection(s, data[s.key]);
+    });
     h += '</div>';
     document.getElementById('dash-body').innerHTML = h;
     document.getElementById('sum-strip').style.display = 'flex';
     document.getElementById('sn-cb').textContent = (data.callbacks || []).length;
     document.getElementById('sn-ov').textContent = (data.overdue || []).length;
     document.getElementById('sn-td').textContent = (data.today || []).length;
-    document.getElementById('sn-wk').textContent = ((data.thisWeek || []).length + (data.nextWeek || []).length);
+    document.getElementById('sn-wk').textContent = (data.thisWeek || []).length;
+    document.getElementById('sn-nx').textContent = (data.nextWeek || []).length;
     document.getElementById('sn-nd').textContent = (data.noDate || []).length;
+    var noDateCell = document.getElementById('sum-nd');
+    if (noDateCell) noDateCell.style.display = (data.noDate || []).length ? '' : 'none';
     // Jump to section if triggered from home stat boxes
     if (dashJumpTarget) {
       var target = dashJumpTarget;
@@ -1198,7 +1550,7 @@
         h += '</div>';
       });
       if (list.length > 3) {
-        h += '<div style="padding:9px 14px;border-top:1px solid var(--line);"><button type="button" onclick="goHistoryPerson(\'' + esc(pid) + '\')" style="background:none;border:none;font-family:inherit;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:0;">View full history (' + list.length + ' total) ›</button></div>';
+        h += '<div style="padding:9px 14px;border-top:1px solid var(--line);"><button type="button" onclick="goHistoryPerson(\'' + esc(pid) + '\')" style="background:none;border:none;font-family:inherit;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:0;">View full history (' + list.length + ' total) ></button></div>';
       }
       h += '</div>';
       body.innerHTML = h;
@@ -1226,6 +1578,7 @@
     document.getElementById('sel-pill').classList.remove('on');
     document.getElementById('person-search').focus();
     recentOpen = false;
+    if (window.clearTodoItems) window.clearTodoItems();
     var ri = document.getElementById('recent-interactions');
     if (ri) ri.style.display = 'none';
     var rb = document.getElementById('recent-body');
@@ -1290,15 +1643,30 @@
     var name = p ? p.name : (document.getElementById('sel-name').textContent || pid);
     var payload = { personId:pid, fullName:name, result:selResult, nextAction:selAction, summary:sum, nextActionDateTime:ndt || null };
     var sig = JSON.stringify(payload);
-    if (sig === lastSig && (Date.now() - lastAt) < 15000) { showMsg('This call was just saved — tap "Log another call" to continue.', 'info'); return; }
+    if (sig === lastSig && (Date.now() - lastAt) < 15000) { showMsg('This call was just saved - tap "Log another call" to continue.', 'info'); return; }
     setSaving(true); showMsg('Saving…', 'info');
     apiFetch('saveInteraction', { payload: JSON.stringify(payload) })
       .then(function(res){
         setSaving(false);
         if (res && res.success) {
           lastSig = sig; lastAt = Date.now();
+          // Save action items if any
+          var todoItems = (window.getTodoItems ? window.getTodoItems() : []);
+          if (todoItems.length && res.interactionId) {
+            apiFetch('saveTodos', { payload: JSON.stringify({
+              interactionId: res.interactionId,
+              personId: pid,
+              personName: name,
+              todos: todoItems.map(function(t){
+                if (t && typeof t === 'object') {
+                  return { text: String(t.text || ''), dueDate: String(t.dueDate || '') };
+                }
+                return { text: String(t || ''), dueDate: '' };
+              }).filter(function(t){ return String(t.text || '').trim(); })
+            }) }).catch(function(){});
+          }
           document.getElementById('log-form').style.display = 'none';
-          document.getElementById('success-sub').textContent = 'Call with ' + name + ' has been saved.';
+          document.getElementById('success-sub').textContent = 'Call with ' + name + ' has been saved.' + (todoItems.length ? ' ' + todoItems.length + ' action item' + (todoItems.length > 1 ? 's' : '') + ' added.' : '');
           document.getElementById('success-screen').classList.add('on');
           document.getElementById('save-bar').style.display = 'none';
         } else {
@@ -1333,6 +1701,7 @@
     selAction = 'None';
     showMsg('', '');
     setSaving(false);
+    if (window.clearTodoItems) window.clearTodoItems();
     var ri = document.getElementById('recent-interactions');
     if (ri) ri.style.display = 'none';
   }
@@ -1377,7 +1746,7 @@
       var pid = esc(p.id);
       var isActive = histActivePid === String(p.id);
       var rowCls = 'hist-person-row' + (isActive ? ' active' : '');
-      var arrowChar = isActive ? '▾' : '›';
+      var arrowChar = isActive ? 'v' : '>';
       return '<div class="' + rowCls + '" data-pid="' + pid + '" data-name="' + esc(p.name) + '" onclick="pickHistPersonFromList(this)">' +
         '<div class="hist-pav">' + esc(ini(p.name)) + '</div>' +
         '<span class="hist-pname">' + esc(p.name) + '</span>' +
@@ -1503,7 +1872,7 @@
           '<div class="aset-label">' + icon + ' ' + esc(s.label || s.key) + '</div>' +
           (s.desc ? '<div class="aset-desc">' + esc(s.desc) + '</div>' : '') +
           '<div class="aset-row-ctrl">' +
-            '<input class="aset-input" id="aset-' + k + '" value="' + esc(s.val) + '" placeholder="—">' +
+            '<input class="aset-input" id="aset-' + k + '" value="' + esc(s.val) + '" placeholder="-">' +
             '<button class="aset-save" id="assave-' + k + '" onclick="saveAppSetting(\'' + k + '\')">Save</button>' +
             '<span class="aset-status" id="asstat-' + k + '"></span>' +
           '</div>' +
@@ -1757,7 +2126,7 @@
           document.getElementById('addperson-success-name').textContent = name + ' has been added.';
           document.getElementById('addperson-success').classList.add('on');
         } else {
-          var errMsg = (res && (res.error || res.message)) ? (res.error || res.message) : 'Save failed — check that your Apps Script is deployed and up to date.';
+          var errMsg = (res && (res.error || res.message)) ? (res.error || res.message) : 'Save failed - check that your Apps Script is deployed and up to date.';
           showAddPersonMsg(errMsg, 'error');
         }
       })
@@ -1783,12 +2152,12 @@
   function loadAnalytics() {
     var el = document.getElementById('analytics-body');
     el.innerHTML = '<div class="people-loading" style="padding:40px 0"><span>Loading</span><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
-    // Fetch main analytics first — role frequency is secondary and must never block it
+    // Fetch main analytics first - role frequency is secondary and must never block it
     apiFetch('getAnalytics').then(function(data) {
       if (data.error) { el.innerHTML = '<div class="err-box">' + esc(data.error) + '</div>'; return; }
       analyticsData = data;
       renderAnalytics(data);
-      // Now fetch role frequency independently — failures are silent
+      // Now fetch role frequency independently - failures are silent
       apiFetch('getRoleFrequency').then(function(r) {
         if (r && Array.isArray(r.roles) && r.roles.length) {
           roleFreqData = r;
@@ -1859,7 +2228,7 @@
     var bestInRange = filtered.reduce(function(b, w){ return w.reached > b.reached ? w : b; }, filtered[0] || {});
     var bestHtml = bestInRange && bestInRange.reached > 0
       ? '<div style="background:var(--accent-soft);border:1px solid rgba(36,76,67,.15);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:20px;font-size:13px;color:var(--accent);">' +
-          '🏆 <strong>Best week (reached):</strong> w/c ' + esc(bestInRange.label) + ' — ' + bestInRange.reached + ' person' + (bestInRange.reached !== 1 ? 's' : '') + ' reached' +
+          '🏆 <strong>Best week (reached):</strong> w/c ' + esc(bestInRange.label) + ' - ' + bestInRange.reached + ' person' + (bestInRange.reached !== 1 ? 's' : '') + ' reached' +
         '</div>'
       : '';
 
@@ -1873,10 +2242,10 @@
           ? 'Last contact: ' + esc(p.lastContact) + (p.weeksSince ? ' (' + p.weeksSince + ' weeks ago)' : '')
           : 'No contact recorded';
         var pid = esc(p.pid || '');
-        silentHtml += '<div class="an-silent-row" style="cursor:pointer;" onclick="goLogPerson(\'' + pid + '\',\'' + esc(p.name) + '\')">' +
+        silentHtml += '<div class="an-silent-row" style="cursor:pointer;" onclick="openBsheet(\'' + pid + '\',\'' + esc(p.name) + '\')">' +
           '<div class="an-silent-av">' + esc(ini(p.name)) + '</div>' +
           '<div style="flex:1;min-width:0;"><div class="an-silent-name">' + esc(p.name) + '</div><div class="an-silent-sub">' + sub + '</div></div>' +
-          '<div style="font-size:11px;font-weight:600;color:var(--accent);flex-shrink:0;padding-left:8px;">Log →</div>' +
+          '<div style="font-size:11px;font-weight:600;color:var(--accent);flex-shrink:0;padding-left:8px;">Quick Log -></div>' +
         '</div>';
       });
       silentHtml += '</div>';
@@ -2111,10 +2480,11 @@
   // ═══════════════════════════════════════════════════════════
   // QUICK LOG BOTTOM SHEET
   // ═══════════════════════════════════════════════════════════
-  var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = false;
+var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = false, bsSource = 'general';
 
-  function openBsheet(pid, name) {
+  function openBsheet(pid, name, source) {
     bsPid = pid; bsName = name; bsResult = ''; bsAction = 'None'; bsSaving = false;
+    bsSource = source || 'general';
     document.getElementById('bsheet-av').textContent = ini(name);
     document.getElementById('bsheet-name').textContent = name;
     document.getElementById('bsheet-sub').textContent = 'Logging call for ' + name;
@@ -2162,16 +2532,67 @@
     el.textContent = text; el.className = 'msg ' + cls;
   }
 
+  function optimisticRemoveFromDash(pid) {
+    if (!pid) return;
+    var row = document.querySelector('.person-row[data-pid="' + String(pid).replace(/"/g, '\\"') + '"]');
+    if (!row) return;
+
+    var section = row.closest('.section');
+    var isCb = row.classList.contains('row-cb');
+    var isOv = row.classList.contains('row-ov');
+    var isTd = row.classList.contains('row-td');
+    row.remove();
+
+    if (section) {
+      var badge = section.querySelector('.sec-badge');
+      if (badge) {
+        var n = parseInt(badge.textContent, 10);
+        if (!isNaN(n) && n > 0) badge.textContent = String(n - 1);
+      }
+      if (!section.querySelector('.person-row') && !section.querySelector('.empty-row')) {
+        section.insertAdjacentHTML('beforeend', '<div class="empty-row">None - all clear here</div>');
+      }
+    }
+
+    function decText(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var n = parseInt(el.textContent, 10);
+      if (!isNaN(n) && n > 0) el.textContent = String(n - 1);
+    }
+    if (isCb) { decText('sn-cb'); decText('h-cb'); }
+    if (isOv) { decText('sn-ov'); decText('h-ov'); }
+    if (isTd) { decText('sn-td'); decText('h-td'); }
+  }
+
   function saveBsheet() {
     if (bsSaving) return;
     if (!bsPid) { bsShowMsg('No person selected.', 'error'); return; }
     if (!bsResult) { bsShowMsg('Please choose a result.', 'error'); return; }
+    var summary = document.getElementById('bs-summary').value.trim();
+    var aiAssist = inferAssistFromText(summary);
     var ndt = document.getElementById('bs-next-dt').value;
+    if (bsAction === 'None' && aiAssist.nextAction !== 'None') {
+      bsAction = aiAssist.nextAction;
+      var inferredBtn = document.querySelector('#bsheet [data-a="' + bsAction + '"]');
+      if (inferredBtn) bsPick(inferredBtn, 'a');
+    }
+    if (!ndt && aiAssist.nextActionDateTime && (bsAction === 'Callback' || bsAction === 'Follow-up')) {
+      try { ndt = dtLocalValue(new Date(aiAssist.nextActionDateTime)); } catch(e) { ndt = ''; }
+      if (ndt) document.getElementById('bs-next-dt').value = ndt;
+    }
     if ((bsAction === 'Callback' || bsAction === 'Follow-up') && !ndt) {
       bsShowMsg('Please set a date for ' + bsAction + '.', 'error'); return;
     }
-    var summary = document.getElementById('bs-summary').value.trim();
-    var payload = { personId: bsPid, fullName: bsName, result: bsResult, nextAction: bsAction, summary: summary, nextActionDateTime: ndt || null };
+    var payload = {
+      personId: bsPid,
+      fullName: bsName,
+      result: bsResult,
+      nextAction: bsAction,
+      summary: summary,
+      nextActionDateTime: ndt || null,
+      channel: bsSource === 'who_to_call' ? 'Who to Call' : 'Call'
+    };
     bsSaving = true;
     document.getElementById('bsheet-save-btn').disabled = true;
     bsShowMsg('Saving…', 'info');
@@ -2187,8 +2608,19 @@
     savePromise.then(function(res) {
       bsSaving = false;
       if (res && res.success) {
-        bsShowMsg(res.offline ? '📶 Saved offline — will sync when back online.' : '✓ Call logged!', 'success');
-        setTimeout(function() { closeBsheet(); loadDash(); }, 1200);
+        var quickTodos = aiAssist.todos || [];
+        if (quickTodos.length && res.interactionId) {
+          apiFetch('saveTodos', { payload: JSON.stringify({
+            interactionId: res.interactionId,
+            personId: bsPid,
+            personName: bsName,
+            todos: quickTodos.map(function(t){ return { text: t }; })
+          }) }).then(function(){ if (window.loadTodos && document.getElementById('pg-todos') && document.getElementById('pg-todos').classList.contains('active')) loadTodos(); }).catch(function(){});
+        }
+        var todoNote = quickTodos.length ? ' ' + quickTodos.length + ' action item' + (quickTodos.length > 1 ? 's' : '') + ' added.' : '';
+        bsShowMsg((res.offline ? '📶 Saved offline - will sync when back online.' : '✓ Call logged!') + todoNote, 'success');
+        if (bsResult === 'Reached' && bsAction === 'None') optimisticRemoveFromDash(bsPid);
+        setTimeout(function() { closeBsheet(); loadDash(); }, 260);
       } else {
         document.getElementById('bsheet-save-btn').disabled = false;
         bsShowMsg('Save failed: ' + (res && res.error ? res.error : 'Unknown error.'), 'error');
@@ -2351,7 +2783,7 @@
       queueOfflineCall(payload);
       var sig = JSON.stringify(payload); lastSig = sig; lastAt = Date.now();
       document.getElementById('log-form').style.display = 'none';
-      document.getElementById('success-sub').textContent = '📶 Saved offline — will sync when reconnected.';
+      document.getElementById('success-sub').textContent = '📶 Saved offline - will sync when reconnected.';
       document.getElementById('success-screen').classList.add('on');
       document.getElementById('save-bar').style.display = 'none';
       return;
@@ -2519,7 +2951,7 @@
     document.getElementById('ai-input-msg').className = 'msg';
 
     // ── Client-side parsing with chrono-node (no API key needed) ──
-    // Reuse the already-loaded allPeople list if available — avoids a second fetch
+    // Reuse the already-loaded allPeople list if available - avoids a second fetch
     var peoplePromise = (allPeople && allPeople.length)
       ? Promise.resolve(allPeople)
       : (_aiPeopleCache && _aiPeopleCache.length)
@@ -2536,7 +2968,7 @@
       var result = 'No Answer';
       var noAnswerPattern = /(voicemail|left a message|left message|left them a message|went to voicemail|no answer|didn.t pick|did not pick|didn.t answer|did not answer|not available|couldn.t reach|could not reach|no response|never answered|never picked|didn.t get through|did not get through)/;
       var reachedPattern = /(spoke|talked|chatted|connected|reached|answered|picked up|pick up|she picked|he picked|they picked|caught up|had a call|had a chat|had a conversation|great call|good call|nice call|quick call|long call|good chat|great chat|nice chat|she said|he said|they said|she told|he told|they told|she mentioned|he mentioned|they mentioned|she.s |he.s |they.re |she is |he is |she was |he was |she has |he has |graduating|told me|let me know|shared|mentioned|praying|discussed|talked about|spoke about|we talked|we spoke|we chatted|we discussed)/;
-      // Also catch "called X, she/he/they ..." — comma or "and" after name implies conversation
+      // Also catch "called X, she/he/they ..." - comma or "and" after name implies conversation
       var calledAndPattern = /called .{1,40}[,]\s*(she|he|they|we)\b/;
       var calledNameAndPattern = /called .{1,40} and (she|he|they|we)\b/;
       if (noAnswerPattern.test(lower)) {
@@ -2555,7 +2987,7 @@
         nextAction = 'Follow-up';
       }
 
-      // ── Date parsing with chrono-node — runs always, not gated on nextAction ──
+      // ── Date parsing with chrono-node - runs always, not gated on nextAction ──
       var nextActionDateTime = null;
       if (typeof chrono !== 'undefined') {
         var parsedDate = chrono.parseDate(desc, new Date(), { forwardDate: true });
@@ -2735,9 +3167,20 @@
 
     savePromise.then(function(res) {
       if (res && res.success) {
+        // Extract action items from summary text and save as todos
+        var aiTodos = extractTodosFromText(p.summary || '');
+        if (aiTodos.length && res.interactionId) {
+          apiFetch('saveTodos', { payload: JSON.stringify({
+            interactionId: res.interactionId,
+            personId: p.personId,
+            personName: p.personName,
+            todos: aiTodos.map(function(t){ return { text: t }; })
+          }) }).then(function(){ loadTodos && loadTodos(); }).catch(function(){});
+        }
+        var todoNote = aiTodos.length ? ' ' + aiTodos.length + ' action item' + (aiTodos.length > 1 ? 's' : '') + ' added.' : '';
         document.getElementById('ai-success-sub').textContent =
-          (res.offline ? '📶 Saved offline — ' : 'Call with ') + p.personName +
-          (res.offline ? ' will sync when reconnected.' : ' has been logged.');
+          (res.offline ? '📶 Saved offline - ' : 'Call with ') + p.personName +
+          (res.offline ? ' will sync when reconnected.' : ' has been logged.') + todoNote;
         aiShowStep('success');
       } else {
         btn.disabled = false; btn.textContent = '✓ Log This Call';
@@ -2749,6 +3192,56 @@
       var msg = document.getElementById('ai-confirm-msg');
       msg.textContent = 'Error: ' + String(e); msg.className = 'msg error';
     });
+  }
+
+  // Extract actionable todo items from freeform call notes
+  function extractTodosFromText(text) {
+    if (!text || text.length < 6) return [];
+    var todos = [];
+    var lower = text.toLowerCase();
+    // Pattern: sentences containing action-intent phrases
+    var actionPhrases = [
+      /(will|need to|going to|plan to|should|must|have to|want to)\s+(send|call|email|pray|visit|check|follow|reach|connect|text|schedule|set up|look into|share|bring|remind|help|meet|write|prepare)/,
+      /(send|email|pray for|visit|check on|follow up|reach out|connect with|text|schedule|set up|remind)/,
+      /(action|todo|to-do|to do|action item|next step)/
+    ];
+    // Split on sentence boundaries and filter for actionable ones
+    var sentences = text.replace(/([.!?])\s+/g, '$1|').split('|');
+    sentences.forEach(function(s) {
+      s = s.trim();
+      if (s.length < 8 || s.length > 160) return;
+      var sl = s.toLowerCase();
+      var isAction = actionPhrases.some(function(re){ return re.test(sl); });
+      if (isAction && todos.indexOf(s) < 0) todos.push(s);
+    });
+    return todos.slice(0, 5); // cap at 5
+  }
+
+  function inferAssistFromText(text) {
+    var summary = (text || '').trim();
+    if (!summary) return { nextAction: 'None', nextActionDateTime: null, todos: [] };
+    var lower = summary.toLowerCase();
+    var nextAction = 'None';
+    if (/\b(call back|callback|ring back|phone back|they will call|she will call|he will call)\b/.test(lower)) {
+      nextAction = 'Callback';
+    } else if (/\b(follow up|follow-up|check in|check on|reach out|connect again|touch base|send|text|email|pray|visit|remind|next week|tomorrow|in \d+ (day|days|week|weeks|month|months))\b/.test(lower)) {
+      nextAction = 'Follow-up';
+    }
+    var nextActionDateTime = null;
+    if (typeof chrono !== 'undefined' && chrono.parseDate) {
+      try {
+        var parsed = chrono.parseDate(summary, new Date(), { forwardDate: true });
+        if (parsed) {
+          nextActionDateTime = parsed.toISOString();
+          if (nextAction === 'None') nextAction = 'Follow-up';
+        }
+      } catch(e) {}
+    }
+    return {
+      nextAction: nextAction,
+      nextActionDateTime: nextActionDateTime,
+      todos: extractTodosFromText(summary)
+    };
   }
 
 </script>
@@ -2765,15 +3258,15 @@
       <input class="modal-input" id="em-name" type="text" placeholder="Full name">
     </div>
     <div class="modal-field">
-      <label class="modal-label">Role <span style="font-weight:400;color:var(--muted)">— optional</span></label>
+      <label class="modal-label">Role <span style="font-weight:400;color:var(--muted)">- optional</span></label>
       <input class="modal-input" id="em-role" type="text" placeholder="e.g. Coordinator, Cell leader, Manager">
     </div>
     <div class="modal-field">
-      <label class="modal-label">Fellowship <span style="font-weight:400;color:var(--muted)">— optional</span></label>
+      <label class="modal-label">Fellowship <span style="font-weight:400;color:var(--muted)">- optional</span></label>
       <input class="modal-input" id="em-fellowship" type="text" placeholder="e.g. University of Manitoba, University of Lethbridge">
     </div>
     <div class="modal-field">
-      <label class="modal-label">Priority <span style="font-weight:400;color:var(--muted)">— optional</span></label>
+      <label class="modal-label">Priority <span style="font-weight:400;color:var(--muted)">- optional</span></label>
       <input class="modal-input" id="em-priority" type="text" placeholder="e.g. High, Medium, Low">
     </div>
     <div class="modal-actions">
@@ -2811,7 +3304,7 @@
     <div class="modal-sub" id="notes-modal-sub">Persistent notes about this person</div>
     <div class="modal-msg" id="notes-modal-msg"></div>
     <div class="vtb-wrap" style="position:relative;">
-      <textarea class="notes-textarea vtb-textarea" id="notes-modal-ta" rows="6" placeholder="Add notes about this person — background, context, prayer requests…" style="padding-right:44px;"></textarea>
+      <textarea class="notes-textarea vtb-textarea" id="notes-modal-ta" rows="6" placeholder="Add notes about this person - background, context, prayer requests…" style="padding-right:44px;"></textarea>
       <button class="vtb-mic" id="notes-mic-btn" title="Voice to text" onclick="toggleVoice('notes-modal-ta','notes-mic-btn')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg></button>
     </div>
     <div class="modal-actions">
@@ -2882,7 +3375,7 @@
           <div style="background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;">
             <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px;">Next Action <span style="font-weight:400;opacity:.6;">(tap to change)</span></div>
             <div style="display:flex;flex-wrap:wrap;gap:5px;" id="ai-action-chips">
-              <button class="ai-rc" data-a="None" onclick="aiPickAction(this)">— None</button>
+              <button class="ai-rc" data-a="None" onclick="aiPickAction(this)">- None</button>
               <button class="ai-rc" data-a="Callback" onclick="aiPickAction(this)">↩ Callback</button>
               <button class="ai-rc" data-a="Follow-up" onclick="aiPickAction(this)">↗ Follow-up</button>
             </div>
@@ -2900,7 +3393,7 @@
 
       <!-- Person override if no match found -->
       <div id="ai-person-override" style="display:none;margin-bottom:14px;">
-        <div style="font-size:12px;color:var(--danger);font-weight:600;margin-bottom:8px;">⚠️ Person not found — please select:</div>
+        <div style="font-size:12px;color:var(--danger);font-weight:600;margin-bottom:8px;">⚠️ Person not found - please select:</div>
         <div style="position:relative;">
           <input id="ai-override-search" style="width:100%;padding:10px 14px;border:1px solid var(--danger);border-radius:var(--radius-sm);background:var(--surface-soft);font-family:inherit;font-size:14px;color:var(--text);outline:none;" placeholder="Search by name…" oninput="aiOverrideSearch()" autocomplete="off">
           <div id="ai-override-drop" style="display:none;position:absolute;top:calc(100%+4px);left:0;right:0;background:var(--surface);border:1px solid var(--accent);border-radius:var(--radius-sm);box-shadow:0 8px 24px rgba(0,0,0,.12);max-height:160px;overflow-y:auto;z-index:100;"></div>
@@ -2974,11 +3467,11 @@
     var diffDays = Math.round((startDate - startToday) / 86400000);
     var timeStr = d.toLocaleTimeString([], { hour:'numeric', minute:'2-digit' });
     var dateStr = d.toLocaleDateString([], { weekday:'short', month:'short', day:'numeric' });
-    if (diffDays === 0) return 'Today — ' + dateStr + ', ' + timeStr;
-    if (diffDays === 1) return 'Tomorrow — ' + dateStr + ', ' + timeStr;
+    if (diffDays === 0) return 'Today - ' + dateStr + ', ' + timeStr;
+    if (diffDays === 1) return 'Tomorrow - ' + dateStr + ', ' + timeStr;
     if (diffDays > 1 && diffDays <= 7) return dateStr + ', ' + timeStr;
-    if (diffDays === 14) return 'In 2 weeks — ' + dateStr + ', ' + timeStr;
-    if (diffDays === 21) return 'In 3 weeks — ' + dateStr + ', ' + timeStr;
+    if (diffDays === 14) return 'In 2 weeks - ' + dateStr + ', ' + timeStr;
+    if (diffDays === 21) return 'In 3 weeks - ' + dateStr + ', ' + timeStr;
     return d.toLocaleDateString([], { weekday:'long', month:'short', day:'numeric' }) + ', ' + timeStr;
   }
   function twoWeeksDate(){ var d=new Date(); d.setDate(d.getDate()+14); d.setHours(10,0,0,0); return d; }
@@ -3101,7 +3594,7 @@
           '<div class="aset-label">' + icon + ' ' + esc(s.label || s.key) + '</div>' +
           (s.desc ? '<div class="aset-desc">' + esc(s.desc) + '</div>' : '') +
           '<div class="aset-row-ctrl">' +
-            '<input class="aset-input" id="aset-' + k + '" value="' + esc(s.val) + '" placeholder="—">' +
+            '<input class="aset-input" id="aset-' + k + '" value="' + esc(s.val) + '" placeholder="-">' +
             '<button class="aset-save" id="assave-' + k + '" onclick="saveAppSetting(\'' + k + '\')">Save</button>' +
             '<span class="aset-status" id="asstat-' + k + '"></span>' +
           '</div>' +
@@ -3360,7 +3853,7 @@
     if ($('ai-conf-name')) $('ai-conf-name').textContent = parsed.personName || 'Select a person';
     if ($('ai-conf-av')) $('ai-conf-av').textContent = initials(parsed.personName || '?');
     if ($('ai-conf-match')) {
-      $('ai-conf-match').textContent = parsed.matchConfidence === 'high' ? 'High confidence match' : parsed.matchConfidence === 'medium' ? 'Possible match — please confirm' : parsed.matchConfidence === 'manual' ? 'Manual selection' : 'No confident match';
+      $('ai-conf-match').textContent = parsed.matchConfidence === 'high' ? 'High confidence match' : parsed.matchConfidence === 'medium' ? 'Possible match - please confirm' : parsed.matchConfidence === 'manual' ? 'Manual selection' : 'No confident match';
     }
     var inline = $('ai-person-inline');
     var drop = $('ai-override-drop');
@@ -3440,6 +3933,12 @@
     if (!p.personId) {
       var msg = $('ai-confirm-msg'); if (msg) { msg.textContent='Please choose the person before saving.'; msg.className='msg error'; } return;
     }
+    var summaryText = $('ai-conf-summary') ? $('ai-conf-summary').value.trim() : (p.summary || '');
+    var aiAssist = inferAssistFromText(summaryText);
+    if ((!p.nextAction || p.nextAction === 'None') && aiAssist.nextAction !== 'None') p.nextAction = aiAssist.nextAction;
+    if (!p.nextActionDateTime && aiAssist.nextActionDateTime && (p.nextAction === 'Callback' || p.nextAction === 'Follow-up')) {
+      p.nextActionDateTime = aiAssist.nextActionDateTime;
+    }
     if ((p.nextAction === 'Callback' || p.nextAction === 'Follow-up') && !p.nextActionDateTime) {
       var msg2 = $('ai-confirm-msg'); if (msg2) { msg2.textContent='Please choose a follow-up date.'; msg2.className='msg error'; } return;
     }
@@ -3448,16 +3947,25 @@
       fullName: p.personName,
       result: p.result,
       nextAction: p.nextAction || 'None',
-      summary: $('ai-conf-summary') ? $('ai-conf-summary').value.trim() : (p.summary || ''),
+      summary: summaryText,
       nextActionDateTime: p.nextActionDateTime || null
     };
     var btn = $('ai-confirm-btn'); if (btn) { btn.disabled=true; btn.textContent='Saving…'; }
     var savePromise = !navigator.onLine ? (queueOfflineCall(payload), Promise.resolve({ success:true, offline:true })) : apiFetch('saveInteraction', { payload: JSON.stringify(payload) });
     savePromise.then(function(res){
       if (res && res.success) {
+        var aiTodos = aiAssist.todos || [];
+        if (aiTodos.length && res.interactionId) {
+          apiFetch('saveTodos', { payload: JSON.stringify({
+            interactionId: res.interactionId,
+            personId: payload.personId,
+            personName: payload.fullName,
+            todos: aiTodos.map(function(t){ return { text: t }; })
+          }) }).then(function(){ if (window.loadTodos && $('pg-todos') && $('pg-todos').classList.contains('active')) loadTodos(); }).catch(function(){});
+        }
         scheduleLocalReminder(payload);
         clearAiDraft();
-        if ($('ai-success-sub')) $('ai-success-sub').textContent = (res.offline ? '📶 Saved offline — ' : 'Call with ') + payload.fullName + (res.offline ? ' will sync when reconnected.' : ' has been logged.');
+        if ($('ai-success-sub')) $('ai-success-sub').textContent = (res.offline ? '📶 Saved offline - ' : 'Call with ') + payload.fullName + (res.offline ? ' will sync when reconnected.' : ' has been logged.') + (aiTodos.length ? ' ' + aiTodos.length + ' action item' + (aiTodos.length > 1 ? 's' : '') + ' added.' : '');
         aiShowStep('success');
       } else {
         if (btn) { btn.disabled=false; btn.textContent='✓ Log This Call'; }
@@ -3485,7 +3993,13 @@
   };
 
   var _origCloseAiAssist = window.closeAiAssist;
-  window.closeAiAssist = function(){ saveAiDraft(); if (_origCloseAiAssist) _origCloseAiAssist(); };
+  window.closeAiAssist = function(){
+    // If AI log was successfully saved, do not recreate a draft on close.
+    var savedView = $('ai-step-success') && $('ai-step-success').style.display !== 'none';
+    if (savedView) clearAiDraft();
+    else saveAiDraft();
+    if (_origCloseAiAssist) _origCloseAiAssist();
+  };
 
   var _origInitLogPage = window.initLogPage;
   window.initLogPage = function(){ if (_origInitLogPage) _origInitLogPage(); restoreLogDraft(); };
@@ -3567,21 +4081,14 @@
   .ux-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(10px);background:rgba(26,26,24,.94);color:#fff;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:600;z-index:500;opacity:0;pointer-events:none;transition:opacity .18s ease, transform .18s ease;box-shadow:0 10px 30px rgba(0,0,0,.18)}
   .ux-toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
   body.dark .ux-toast{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12)}
-  .daily-progress{margin:12px auto 0;max-width:560px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:13px;color:var(--muted);text-align:center;display:block;width:calc(100% - 32px)}
-  .daily-progress strong{color:var(--text)}
   .person-row,.nav-card,.hist-person-row,.search-result-card,.log-btn,.tb-btn,.dark-toggle,.chip,.ac,.ai-rc,.ai-suggestion-btn,.ai-date-chip,.save-btn,.bsheet-save,.aset-save,.modal-save,.modal-cancel{transition:transform .08s ease, filter .12s ease, background-color .12s ease, border-color .12s ease, box-shadow .12s ease}
   .person-row:active,.nav-card:active,.hist-person-row:active,.search-result-card:active,.log-btn:active,.tb-btn:active,.dark-toggle:active,.chip:active,.ac:active,.ai-rc:active,.ai-suggestion-btn:active,.ai-date-chip:active,.save-btn:active,.bsheet-save:active,.aset-save:active,.modal-save:active,.modal-cancel:active{transform:scale(.985);filter:brightness(.98)}
 </style>
 <div id="ux-toast" class="ux-toast"></div>
 <script>
 (function(){
-  var TODAY_COUNT_KEY = 'ct-today-progress-count';
-  var TODAY_COUNT_DATE_KEY = 'ct-today-progress-date';
-  function $(id){ return document.getElementById(id); }
   function todayKey(){ return new Date().toISOString().slice(0,10); }
-  function resetDailyCountIfNeeded(){ try { if (localStorage.getItem(TODAY_COUNT_DATE_KEY) !== todayKey()) { localStorage.setItem(TODAY_COUNT_DATE_KEY, todayKey()); localStorage.setItem(TODAY_COUNT_KEY, '0'); } } catch(e){} }
-  function getDailyCount(){ resetDailyCountIfNeeded(); try { return parseInt(localStorage.getItem(TODAY_COUNT_KEY) || '0', 10) || 0; } catch(e){ return 0; } }
-  function bumpDailyCount(){ resetDailyCountIfNeeded(); try { localStorage.setItem(TODAY_COUNT_KEY, String(getDailyCount() + 1)); } catch(e){} }
+
   function showToast(msg){
     var el = $('ux-toast'); if (!el) return;
     el.textContent = msg;
@@ -3591,26 +4098,35 @@
   }
   window.showUxToast = showToast;
 
-  function ensureDailyProgress(data){
-    var dash = $('pg-dash');
-    if (!dash) return;
-    var totalDue = ((data && data.today) ? data.today.length : 0) + ((data && data.overdue) ? data.overdue.length : 0) + ((data && data.callbacks) ? data.callbacks.length : 0);
-    var done = getDailyCount();
-    var node = $('daily-progress');
-    if (!node) {
-      node = document.createElement('div');
-      node.id = 'daily-progress';
-      node.className = 'daily-progress';
-      var target = $('sum-strip');
-      if (target && target.parentNode) target.parentNode.insertBefore(node, target.nextSibling);
+  // Session bump so the counter updates immediately after a save,
+  // then a live fetch from the sheet confirms the real number.
+  if (!window.__todayLoggedCount) window.__todayLoggedCount = 0;
+
+  function updateDailyProgress(count){
+    var n = (count !== undefined) ? count : (window.__todayLoggedCount || 0);
+    var dc = $('dash-today-count');
+    if (dc) {
+      dc.textContent = n + ' call' + (n === 1 ? '' : 's') + ' logged today';
+      dc.style.color = '#2f7a4c';
+      dc.style.fontStyle = 'italic';
+      dc.style.opacity = '0.9';
+      dc.style.display = 'block';
     }
-    node.innerHTML = '<strong>' + done + ' / ' + totalDue + '</strong> calls done today';
+  }
+
+  function fetchAndUpdateDailyProgress(){
+    if (typeof apiFetch !== 'function') { updateDailyProgress(); return; }
+    apiFetch('getTodayCount').then(function(res){
+      var n = (res && res.count != null) ? res.count : (window.__todayLoggedCount || 0);
+      window.__todayLoggedCount = n;
+      updateDailyProgress(n);
+    }).catch(function(){ updateDailyProgress(); });
   }
 
   var _oldRenderDash = window.renderDash;
   window.renderDash = function(data){
     if (_oldRenderDash) _oldRenderDash(data);
-    ensureDailyProgress(data);
+    fetchAndUpdateDailyProgress();
   };
 
   function successScreenVisible(){ return $('success-screen') && $('success-screen').classList.contains('on'); }
@@ -3622,10 +4138,11 @@
     var ret = _oldSaveCall ? _oldSaveCall() : null;
     setTimeout(function(){
       if (successScreenVisible()) {
-        bumpDailyCount();
-        if (offline) showToast('Saved locally — will sync when you reconnect');
+        window.__todayLoggedCount = (window.__todayLoggedCount || 0) + 1;
+        updateDailyProgress();
+        setTimeout(fetchAndUpdateDailyProgress, 1500);
+        if (offline) showToast('Saved locally - will sync when you reconnect');
         else showToast('Call logged');
-        if ($('daily-progress')) ensureDailyProgress(window.__lastDashData || null);
       }
     }, 140);
     return ret;
@@ -3637,10 +4154,11 @@
     var ret = _oldConfirmAiLog ? _oldConfirmAiLog() : null;
     setTimeout(function(){
       if (aiSuccessVisible()) {
-        bumpDailyCount();
-        if (offline) showToast('Saved locally — will sync when you reconnect');
+        window.__todayLoggedCount = (window.__todayLoggedCount || 0) + 1;
+        updateDailyProgress();
+        setTimeout(fetchAndUpdateDailyProgress, 1500);
+        if (offline) showToast('Saved locally - will sync when you reconnect');
         else showToast('Call logged');
-        if ($('daily-progress')) ensureDailyProgress(window.__lastDashData || null);
       }
     }, 180);
     return ret;
@@ -3653,15 +4171,17 @@
     setTimeout(function(){
       var msg = $('bs-msg') ? $('bs-msg').textContent : '';
       if (/saved/i.test(msg)) {
-        bumpDailyCount();
-        if (offline) showToast('Saved locally — will sync when you reconnect');
+        window.__todayLoggedCount = (window.__todayLoggedCount || 0) + 1;
+        updateDailyProgress();
+        setTimeout(fetchAndUpdateDailyProgress, 1500);
+        if (offline) showToast('Saved locally - will sync when you reconnect');
         else showToast('Call logged');
       }
     }, 180);
     return ret;
   };
 
-  // Cache latest dashboard data so progress can refresh without refetching
+  // Cache latest dashboard data
   var _origLoadDash = window.loadDash;
   window.loadDash = function(){
     if (!_origLoadDash) return;
@@ -3675,7 +4195,7 @@
   window.toggleDailySummary = function(on){
     if (_oldToggleDailySummary) _oldToggleDailySummary(on);
     setTimeout(function(){
-      showToast(on ? 'Notifications enabled — you’ll get one daily summary' : 'Notifications turned off');
+      showToast(on ? 'Notifications enabled - you’ll get one daily summary' : 'Notifications turned off');
     }, 180);
   };
 
@@ -3792,7 +4312,7 @@
     backBtn.textContent = labelMap[window.__returnPageForLog] || 'Back';
   }
 
-  // AI assist card removed — icon now lives in the Log a Call topbar
+  // AI assist card removed - icon now lives in the Log a Call topbar
   function injectAiShortcut(){ }
 
   // After successful save, keep a clean way back to source page
@@ -3883,6 +4403,607 @@
     if (_oldInitCadencePage) _oldInitCadencePage();
     var sub = document.querySelector('#pg-cadence .form-sub');
     if (sub) sub.textContent = 'Set call cadence for each person.';
+  };
+})();
+</script>
+
+<!-- TO-DO PAGE -->
+<div class="page" id="pg-todos">
+  <div class="topbar">
+    <button class="tb-btn" onclick="showPage('pg-home')">&#8249; Home</button>
+    <span class="topbar-title">To-Do List</span>
+    <button class="tb-btn" onclick="loadTodos()">Refresh</button>
+  </div>
+  <div class="shell">
+    <p class="form-kicker">Action Items</p>
+    <h1 class="form-title">To-Do List</h1>
+    <p class="form-sub">Things to do as a result of your calls.</p>
+    <div class="todo-toolbar">
+      <div class="todo-seg" role="tablist" aria-label="To-do filter">
+        <button class="todo-filter-btn active" id="tf-open" onclick="setTodoFilter('open')">Open</button>
+        <button class="todo-filter-btn" id="tf-all" onclick="setTodoFilter('all')">All</button>
+      </div>
+      <div class="todo-sort-wrap">
+        <span class="todo-sort-label">Sort by</span>
+        <select id="ts-sort" class="todo-sort-select" onchange="setTodoSort(this.value)" aria-label="Sort to-dos">
+          <option value="person">Person</option>
+          <option value="due">Due Date</option>
+        </select>
+      </div>
+    </div>
+    <div class="todo-add-row">
+      <input id="todo-direct-input" class="todo-add-input" type="text" placeholder="@Name then your to-do (or just type for My Tasks)" onkeydown="if(event.key==='Enter'){event.preventDefault();addTodoDirect();}">
+      <input id="todo-direct-due" class="todo-date-input" type="date" title="Optional due date">
+      <button id="todo-direct-btn" class="todo-plus-btn" onclick="addTodoDirect()" title="Add to-do" aria-label="Add to-do">+</button>
+    </div>
+    <div id="todos-body">
+      <div class="people-loading" style="padding:40px 0"><span>Loading</span><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ── Log form todo items ──
+  var _logTodos = [];
+
+  window.getTodoItems = function(){ return _logTodos.slice(); };
+
+  window.clearTodoItems = function(){
+    _logTodos = [];
+    var list = document.getElementById('todo-list');
+    if (list) list.innerHTML = '';
+    var inp = document.getElementById('todo-input');
+    if (inp) inp.value = '';
+  };
+
+  window.addTodoItem = function(){
+    var inp = document.getElementById('todo-input');
+    if (!inp) return;
+    var text = inp.value.trim();
+    if (!text) return;
+    _logTodos.push(text);
+    inp.value = '';
+    renderLogTodos();
+    inp.focus();
+  };
+
+  function renderLogTodos(){
+    var list = document.getElementById('todo-list');
+    if (!list) return;
+    list.innerHTML = _logTodos.map(function(item, i){
+      var text = typeof item === 'object' ? item.text : item;
+      return '<div class="todo-item">' +
+        '<div style="flex:1;min-width:0;">' +
+          '<span class="todo-text">' + escHtml(text) + '</span>' +
+        '</div>' +
+        '<button class="todo-del" onclick="removeLogTodo(' + i + ')" title="Remove">&#215;</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  window.removeLogTodo = function(i){
+    _logTodos.splice(i, 1);
+    renderLogTodos();
+  };
+
+  // Override getTodoItems for log form action items
+  window.getTodoItems = function(){
+    return _logTodos.map(function(item){
+      return String(typeof item === 'object' ? item.text : item || '').trim();
+    }).filter(Boolean);
+  };
+
+  function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  // ── To-Do page ──
+  var _todoFilter = 'open';
+  var _todoSort = 'person';
+  var _allTodos   = [];
+  var _editingTodoId = null;
+  var _editingTodoBusy = false;
+  var _manualTodosKey = 'ct-manual-todos';
+  var _todoPeople = [];
+  var _todoPeoplePromise = null;
+  var _addingTodoDirect = false;
+
+  function getManualTodos() {
+    try {
+      var raw = localStorage.getItem(_manualTodosKey);
+      var list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list) ? list : [];
+    } catch(e) { return []; }
+  }
+
+  function setManualTodos(list) {
+    try { localStorage.setItem(_manualTodosKey, JSON.stringify(list || [])); } catch(e) {}
+  }
+
+  function todoIsoFromAny_(raw) {
+    var s = String(raw || '').trim();
+    if (!s) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+    var d = new Date(s);
+    if (isNaN(d.getTime())) return '';
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + day;
+  }
+
+  function todoKey_(personId, text, done, dueDate) {
+    return [String(personId || ''), String(text || '').trim().toLowerCase(), done ? '1' : '0', todoIsoFromAny_(dueDate)].join('|');
+  }
+
+  function dedupeTodos_(items) {
+    var keep = {};
+    (items || []).forEach(function(t){
+      var key = todoKey_(t.personId, t.text, !!t.done, t.dueDateIso || t.dueDate);
+      var existing = keep[key];
+      if (!existing || (existing.localOnly && !t.localOnly)) {
+        keep[key] = t;
+      }
+    });
+    return Object.keys(keep).map(function(k){ return keep[k]; });
+  }
+
+  function mergeTodos(serverTodos) {
+    var manual = getManualTodos();
+    return dedupeTodos_((serverTodos || []).concat(manual));
+  }
+
+  function ensureTodoPeopleLoaded() {
+    if (_todoPeople && _todoPeople.length) return Promise.resolve(_todoPeople);
+    if (_todoPeoplePromise) return _todoPeoplePromise;
+    _todoPeoplePromise = ((window.allPeople && window.allPeople.length)
+      ? Promise.resolve(window.allPeople)
+      : apiFetch('people'))
+      .then(function(list){
+        _todoPeople = Array.isArray(list) ? list : [];
+        return _todoPeople;
+      }).catch(function(){
+        _todoPeople = [];
+        return _todoPeople;
+      }).finally(function(){
+        _todoPeoplePromise = null;
+      });
+    return _todoPeoplePromise;
+  }
+
+  function normalizeName_(s) {
+    return String(s || '')
+      .toLowerCase()
+      .replace(/[^\w\s'-]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function resolveTodoMention_(rawText) {
+    var text = String(rawText || '').trim();
+    if (!text) {
+      return { personId: 'manual', personName: 'My Tasks', text: text, mentioned: false, mentionRaw: '' };
+    }
+    var mentionMatch = text.match(/@([^\s,;:!?()[\]{}]+)/);
+    if (!mentionMatch) {
+      return { personId: 'manual', personName: 'My Tasks', text: text, mentioned: false, mentionRaw: '' };
+    }
+
+    var mention = String(mentionMatch[1] || '').trim();
+    var normMention = normalizeName_(mention);
+    if (!normMention) {
+      return { personId: 'manual', personName: 'My Tasks', text: text, mentioned: true, mentionRaw: '' };
+    }
+
+    var cleanText = text.replace(mentionMatch[0], '').replace(/\s{2,}/g, ' ').trim();
+    cleanText = cleanText.replace(/^[,;:\-–—\s]+/, '').trim();
+
+    var candidates = (_todoPeople || []).map(function(p){
+      var full = normalizeName_(p.name || '');
+      var first = full.split(/\s+/)[0] || '';
+      if (!full) return null;
+      var score = -1;
+      if (normMention === full) score = 100;
+      else if (normMention === first) score = 95;
+      else if (full.indexOf(normMention + ' ') === 0) score = 90;
+      else if (full.indexOf(normMention) === 0) score = 85;
+      else if (full.indexOf(normMention) >= 0) score = 70;
+      return score >= 0 ? { person: p, score: score, fullLen: full.length } : null;
+    }).filter(Boolean);
+
+    candidates.sort(function(a, b){
+      if (b.score !== a.score) return b.score - a.score;
+      return b.fullLen - a.fullLen;
+    });
+
+    if (candidates.length) {
+      var chosen = candidates[0].person;
+      return {
+        personId: String(chosen.id),
+        personName: chosen.name || 'My Tasks',
+        text: cleanText || text,
+        mentioned: true,
+        mentionRaw: mention
+      };
+    }
+
+    return { personId: 'manual', personName: 'My Tasks', text: cleanText || text, mentioned: true, mentionRaw: mention };
+  }
+
+  window.addTodoDirect = function(){
+    var inp = document.getElementById('todo-direct-input');
+    var dueInp = document.getElementById('todo-direct-due');
+    var btn = document.getElementById('todo-direct-btn');
+    if (!inp || !btn) return;
+    if (_addingTodoDirect) return;
+    var raw = inp.value.trim();
+    if (!raw) return;
+    _addingTodoDirect = true;
+    btn.disabled = true;
+    ensureTodoPeopleLoaded().then(function(){
+      var resolved = resolveTodoMention_(raw);
+      var text = String(resolved.text || '').trim();
+      if (!text) {
+        if (window.showUxToast) showUxToast('Add text after the @name');
+        return;
+      }
+      var personId = resolved.personId || 'manual';
+      var personName = resolved.personName || 'My Tasks';
+      var dueDateIso = todoIsoFromAny_(dueInp ? dueInp.value : '');
+      var payload = {
+        interactionId: 'manual-' + Date.now(),
+        personId: personId,
+        personName: personName,
+        todos: [{ text: text, dueDate: dueDateIso || '' }]
+      };
+      return apiFetch('saveTodos', { payload: JSON.stringify(payload) }).then(function(res){
+        if (!res || res.success !== true) throw new Error((res && res.error) ? res.error : 'Save failed');
+        var localAfter = getManualTodos().filter(function(t){
+          return todoKey_(t.personId, t.text, !!t.done, t.dueDateIso || t.dueDate) !== todoKey_(payload.personId, text, false, dueDateIso);
+        });
+        setManualTodos(localAfter);
+        inp.value = '';
+        if (dueInp) dueInp.value = '';
+        loadTodos();
+        if (window.showUxToast) {
+          if (resolved.mentioned && personId === 'manual' && resolved.mentionRaw) showUxToast('No person matched @' + resolved.mentionRaw + ' - saved to My Tasks');
+          else showUxToast('To-do added');
+        }
+      }).catch(function(){
+        var local = getManualTodos();
+        var candidate = {
+          id: 'local-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+          personId: personId || 'manual',
+          personName: personName,
+          text: text,
+          dueDate: dueDateIso || '',
+          dueDateIso: dueDateIso || '',
+          done: false,
+          createdAt: 'Saved locally',
+          localOnly: true
+        };
+        var exists = local.some(function(t){
+          return todoKey_(t.personId, t.text, !!t.done, t.dueDateIso || t.dueDate) === todoKey_(candidate.personId, candidate.text, false, candidate.dueDateIso);
+        });
+        if (!exists) local.unshift(candidate);
+        setManualTodos(local);
+        inp.value = '';
+        if (dueInp) dueInp.value = '';
+        _allTodos = mergeTodos(_allTodos.filter(function(t){ return !t.localOnly; }));
+        renderTodos(_allTodos);
+        updateHomeTodoSub(_allTodos);
+        if (window.showUxToast) showUxToast('Saved locally - will sync on next successful save');
+      });
+    }).finally(function(){
+      _addingTodoDirect = false;
+      btn.disabled = false;
+    });
+  };
+
+  window.setTodoFilter = function(f){
+    _todoFilter = f;
+    document.getElementById('tf-open').className = 'todo-filter-btn' + (f === 'open' ? ' active' : '');
+    document.getElementById('tf-all').className  = 'todo-filter-btn' + (f === 'all'  ? ' active' : '');
+    renderTodos(_allTodos);
+  };
+
+  window.setTodoSort = function(mode){
+    _todoSort = (mode === 'due') ? 'due' : 'person';
+    var sel = document.getElementById('ts-sort');
+    if (sel) sel.value = _todoSort;
+    renderTodos(_allTodos);
+  };
+
+  window.loadTodos = function(){
+    var body = document.getElementById('todos-body');
+    if (!body) return;
+    body.innerHTML = '<div class="people-loading" style="padding:40px 0"><span>Loading</span><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
+    apiFetch('getTodos').then(function(res){
+      _allTodos = mergeTodos((res && res.todos) ? res.todos : []);
+      renderTodos(_allTodos);
+      updateHomeTodoSub(_allTodos);
+    }).catch(function(e){
+      _allTodos = mergeTodos([]);
+      if (_allTodos.length) {
+        renderTodos(_allTodos);
+        updateHomeTodoSub(_allTodos);
+      } else {
+        body.innerHTML = '<div class="err-box">Could not load to-dos.<br><small>' + String(e) + '</small></div>';
+      }
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    ensureTodoPeopleLoaded();
+    var sel = document.getElementById('ts-sort');
+    if (sel) sel.value = _todoSort;
+  });
+
+  function updateHomeTodoSub(todos){
+    var open = todos.filter(function(t){ return !t.done; }).length;
+    var sub = document.getElementById('home-todo-sub');
+    if (sub) sub.textContent = open > 0 ? open + ' open item' + (open > 1 ? 's' : '') : 'All caught up ✓';
+  }
+
+  function renderTodos(todos){
+    var body = document.getElementById('todos-body');
+    if (!body) return;
+    var list = _todoFilter === 'open' ? todos.filter(function(t){ return !t.done; }) : todos;
+    if (!list.length){
+      body.innerHTML = '<div class="hist-empty">' + (_todoFilter === 'open' ? 'No open to-dos &#10003;' : 'No action items yet.') + '</div>';
+      return;
+    }
+
+    function dueStamp_(t) {
+      var iso = todoIsoFromAny_(t.dueDateIso || t.dueDate);
+      return iso ? new Date(iso + 'T00:00:00').getTime() : Number.MAX_SAFE_INTEGER;
+    }
+
+    function dueLabel_(t) {
+      var iso = todoIsoFromAny_(t.dueDateIso || t.dueDate);
+      if (!iso) return 'No Due Date';
+      return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+    }
+
+    // Normalize ordering before grouping
+    var sorted = list.slice().sort(function(a, b){
+      var ad = dueStamp_(a), bd = dueStamp_(b);
+      if (ad !== bd) return ad - bd;
+      var an = String(a.personName || '').toLowerCase();
+      var bn = String(b.personName || '').toLowerCase();
+      if (an !== bn) return an < bn ? -1 : 1;
+      var at = String(a.text || '').toLowerCase();
+      var bt = String(b.text || '').toLowerCase();
+      return at < bt ? -1 : (at > bt ? 1 : 0);
+    });
+
+    // Group by selected sort mode
+    var groups = {};
+    var order  = [];
+    sorted.forEach(function(t){
+      var key;
+      var label;
+      if (_todoSort === 'due') {
+        key = todoIsoFromAny_(t.dueDateIso || t.dueDate) || 'zzzz-nodue';
+        label = dueLabel_(t);
+      } else {
+        key = String(t.personId || 'unknown');
+        label = t.personName || 'Unknown';
+      }
+      if (!groups[key]) {
+        groups[key] = { name: label, items: [] };
+        order.push(key);
+      }
+      groups[key].items.push(t);
+    });
+
+    if (_todoSort === 'person') {
+      order.sort(function(a, b){
+        var an = String(groups[a].name || '').toLowerCase();
+        var bn = String(groups[b].name || '').toLowerCase();
+        return an < bn ? -1 : (an > bn ? 1 : 0);
+      });
+    } else {
+      order.sort(function(a, b){
+        if (a === 'zzzz-nodue') return 1;
+        if (b === 'zzzz-nodue') return -1;
+        return a < b ? -1 : (a > b ? 1 : 0);
+      });
+    }
+
+    var html = '';
+    order.forEach(function(key){
+      var g = groups[key];
+      html += '<div class="todo-person-group">';
+      var rightLabel = (_todoSort === 'due')
+        ? (g.items.length + ' item' + (g.items.length === 1 ? '' : 's'))
+        : (g.items.filter(function(i){ return !i.done; }).length + ' open');
+      html += '<div class="todo-person-label"><span>' + escHtml(g.name) + '</span><span>' + rightLabel + '</span></div>';
+      g.items.forEach(function(t){
+        var done = t.done;
+        var isEditing = (_editingTodoId === t.id);
+        html += '<div class="todo-item' + (done ? ' done-item' : '') + '" id="tdi-' + escHtml(t.id) + '">';
+        html += '<input type="checkbox" class="todo-cb" ' + (done ? 'checked' : '') + ' onchange="toggleTodo(\'' + escHtml(t.id) + '\',this.checked)">';
+        html += '<div style="flex:1;min-width:0;">';
+        if (isEditing) {
+          html += '<input class="todo-edit-input" type="text" value="' + escHtml(t.text) + '" maxlength="240" onkeydown="if(event.key===\'Enter\'){event.preventDefault();saveTodoInline(\'' + escHtml(t.id) + '\');} if(event.key===\'Escape\'){event.preventDefault();cancelTodoInline();}">';
+          html += '<input class="todo-edit-input" type="date" value="' + escHtml(todoIsoFromAny_(t.dueDateIso || t.dueDate)) + '" style="margin-top:6px;" title="Due date">';
+          html += '<div class="todo-edit-actions">';
+          html += '<button class="todo-edit-btn save" onclick="saveTodoInline(\'' + escHtml(t.id) + '\')" ' + (_editingTodoBusy ? 'disabled' : '') + '>Save</button>';
+          html += '<button class="todo-edit-btn" onclick="cancelTodoInline()" ' + (_editingTodoBusy ? 'disabled' : '') + '>Cancel</button>';
+          html += '</div>';
+        } else {
+          html += '<div class="todo-text' + (done ? ' done-text' : '') + '">' + escHtml(t.text) + '</div>';
+        }
+        var metaBits = [];
+        if (t.dueDate) metaBits.push('Due: ' + escHtml(t.dueDate));
+        if (t.createdAt) metaBits.push('Created: ' + escHtml(t.createdAt));
+        if (metaBits.length) html += '<div class="todo-meta">' + metaBits.join(' • ') + '</div>';
+        html += '</div>';
+        if (!isEditing) {
+          html += '<button class="todo-del" onclick="startTodoInlineEdit(\'' + escHtml(t.id) + '\')" title="Edit task note" aria-label="Edit task note" style="font-size:16px;padding:2px 4px;">🖊️</button>';
+        }
+        html += '<button class="todo-del" onclick="deleteTodo(\'' + escHtml(t.id) + '\')" title="Delete task" aria-label="Delete task">&#215;</button>';
+        html += '</div>';
+      });
+      html += '</div>';
+    });
+    body.innerHTML = html;
+  }
+
+  window.toggleTodo = function(todoId, done){
+    // Optimistic UI update
+    var row = document.getElementById('tdi-' + todoId);
+    if (row){
+      row.className = 'todo-item' + (done ? ' done-item' : '');
+      var txt = row.querySelector('.todo-text');
+      if (txt) txt.className = 'todo-text' + (done ? ' done-text' : '');
+    }
+    var t = _allTodos.find(function(x){ return x.id === todoId; });
+    if (t) t.done = done;
+    if (t && t.localOnly) {
+      var localItems = getManualTodos();
+      localItems = localItems.map(function(item){
+        if (item.id === todoId) item.done = done;
+        return item;
+      });
+      setManualTodos(localItems);
+      updateHomeTodoSub(_allTodos);
+      if (_todoFilter === 'open' && done) setTimeout(function(){ renderTodos(_allTodos); }, 250);
+      return;
+    }
+    apiFetch('updateTodo', { todoId: todoId, done: done ? 'true' : 'false' }).then(function(){
+      updateHomeTodoSub(_allTodos);
+      if (_todoFilter === 'open' && done) {
+        setTimeout(function(){ renderTodos(_allTodos); }, 600);
+      }
+    }).catch(function(){
+      // Revert on failure
+      if (t) t.done = !done;
+      if (row){
+        row.className = 'todo-item' + (!done ? ' done-item' : '');
+        var txt = row.querySelector('.todo-text');
+        if (txt) txt.className = 'todo-text' + (!done ? ' done-text' : '');
+      }
+    });
+  };
+
+  window.deleteTodo = function(todoId){
+    if (!todoId) return;
+    var row = document.getElementById('tdi-' + todoId);
+    var t = _allTodos.find(function(x){ return x.id === todoId; });
+    var wasLocal = !!(t && t.localOnly);
+    if (row) row.style.opacity = '.45';
+
+    if (wasLocal) {
+      var local = getManualTodos().filter(function(item){ return item.id !== todoId; });
+      setManualTodos(local);
+      _allTodos = _allTodos.filter(function(item){ return item.id !== todoId; });
+      renderTodos(_allTodos);
+      updateHomeTodoSub(_allTodos);
+      if (window.showUxToast) showUxToast('Task deleted');
+      return;
+    }
+
+    apiFetch('deleteTodo', { todoId: todoId }).then(function(res){
+      if (!res || res.success !== true) throw new Error((res && res.error) ? res.error : 'Delete failed');
+      _allTodos = _allTodos.filter(function(item){ return item.id !== todoId; });
+      renderTodos(_allTodos);
+      updateHomeTodoSub(_allTodos);
+      if (window.showUxToast) showUxToast('Task deleted');
+    }).catch(function(){
+      if (row) row.style.opacity = '';
+      if (window.showUxToast) showUxToast('Could not delete task');
+    });
+  };
+
+  window.editTodoText = function(todoId){
+    window.startTodoInlineEdit(todoId);
+  };
+
+  window.startTodoInlineEdit = function(todoId){
+    if (!todoId) return;
+    _editingTodoId = todoId;
+    _editingTodoBusy = false;
+    renderTodos(_allTodos);
+    setTimeout(function(){
+      var row = document.getElementById('tdi-' + todoId);
+      var inp = row ? row.querySelector('.todo-edit-input') : null;
+      if (inp) { inp.focus(); inp.select(); }
+    }, 10);
+  };
+
+  window.cancelTodoInline = function(){
+    _editingTodoId = null;
+    _editingTodoBusy = false;
+    renderTodos(_allTodos);
+  };
+
+  window.saveTodoInline = function(todoId){
+    if (!todoId || _editingTodoBusy) return;
+    var t = _allTodos.find(function(x){ return x.id === todoId; });
+    if (!t) return;
+
+    var row = document.getElementById('tdi-' + todoId);
+    var inputs = row ? row.querySelectorAll('.todo-edit-input') : null;
+    var inp = (inputs && inputs.length) ? inputs[0] : null;
+    var dueInp = (inputs && inputs.length > 1) ? inputs[1] : null;
+    var current = String(t.text || '');
+    var next = String(inp ? inp.value : current).trim();
+    var currentDue = todoIsoFromAny_(t.dueDateIso || t.dueDate);
+    var nextDue = todoIsoFromAny_(dueInp ? dueInp.value : currentDue);
+    if (!next) {
+      if (window.showUxToast) showUxToast('Task note cannot be empty');
+      return;
+    }
+    if (next === current && nextDue === currentDue) {
+      _editingTodoId = null;
+      _editingTodoBusy = false;
+      renderTodos(_allTodos);
+      return;
+    }
+
+    var oldText = current;
+    var oldDue = currentDue;
+    t.text = next;
+    t.dueDateIso = nextDue || '';
+    t.dueDate = nextDue ? new Date(nextDue + 'T00:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) : '';
+    _editingTodoBusy = true;
+    renderTodos(_allTodos);
+
+    if (t.localOnly) {
+      var local = getManualTodos().map(function(item){
+        if (item.id === todoId) {
+          item.text = next;
+          item.dueDateIso = nextDue || '';
+          item.dueDate = t.dueDate || '';
+        }
+        return item;
+      });
+      setManualTodos(local);
+      _editingTodoId = null;
+      _editingTodoBusy = false;
+      renderTodos(_allTodos);
+      if (window.showUxToast) showUxToast('Task updated');
+      return;
+    }
+
+    var reqs = [];
+    if (next !== current) reqs.push(apiFetch('updateTodoText', { todoId: todoId, text: next }));
+    if (nextDue !== currentDue) reqs.push(apiFetch('updateTodoDueDate', { todoId: todoId, dueDate: nextDue || '' }));
+    Promise.all(reqs).then(function(results){
+      if (results.some(function(res){ return !res || res.success !== true; })) throw new Error('Update failed');
+      _editingTodoId = null;
+      _editingTodoBusy = false;
+      renderTodos(_allTodos);
+      if (window.showUxToast) showUxToast('Task updated');
+    }).catch(function(){
+      t.text = oldText;
+      t.dueDateIso = oldDue || '';
+      t.dueDate = oldDue ? new Date(oldDue + 'T00:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) : '';
+      _editingTodoBusy = false;
+      renderTodos(_allTodos);
+      if (window.showUxToast) showUxToast('Could not update task');
+    });
   };
 })();
 </script>
