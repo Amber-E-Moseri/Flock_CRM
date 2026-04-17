@@ -1,107 +1,86 @@
-# 📞 Pastoral CRM (Flock)
+# Flock — Pastoral CRM
 
-A lightweight outreach system built on Google Apps Script and Google Sheets — designed to make sure nothing slips.
+A lightweight relationship management system built on Google Apps Script and Google Sheets. Built to make sure no one slips through the cracks.
 
-**[Demo →](https://amber-e-moseri.github.io/Flock_CRM_Dev/)**
+**[Live Demo →](https://flockdemo.netlify.app/)**
+
 ---
+
 ## Screenshots
-<img width="1898" height="916" alt="image" src="https://github.com/user-attachments/assets/75de2bbb-bf94-4786-b6e6-76000caa8558" />
-<img width="1900" height="913" alt="image" src="https://github.com/user-attachments/assets/4a33b232-5a17-4fd7-aaf4-8dce86d5f165" />
-<img width="1901" height="912" alt="image" src="https://github.com/user-attachments/assets/03306a19-88a5-4b4a-bc5f-580b4d6015d2" />
 
-<img width="1918" height="851" alt="image" src="https://github.com/user-attachments/assets/91595f00-fe77-472c-8345-9657e2a03eb3" />
-<img width="1901" height="911" alt="image" src="https://github.com/user-attachments/assets/a8b9e64d-abb0-4809-9ceb-a9a03c4cd6d7" />
-<img width="1901" height="907" alt="image" src="https://github.com/user-attachments/assets/a8833303-83d1-4afb-91cb-80134bb9f32d" />
-<img width="1897" height="915" alt="image" src="https://github.com/user-attachments/assets/9dada27d-31a5-4d80-8880-028c9b8d2369" />
-
+<img width="1898" height="916" alt="Priority dashboard" src="https://github.com/user-attachments/assets/75de2bbb-bf94-4786-b6e6-76000caa8558" />
+<img width="1900" height="913" alt="Log call flow" src="https://github.com/user-attachments/assets/4a33b232-5a17-4fd7-aaf4-8dce86d5f165" />
+<img width="1901" height="912" alt="Call history" src="https://github.com/user-attachments/assets/03306a19-88a5-4b4a-bc5f-580b4d6015d2" />
+<img width="1918" height="851" alt="Analytics" src="https://github.com/user-attachments/assets/91595f00-fe77-472c-8345-9657e2a03eb3" />
+<img width="1901" height="911" alt="Settings" src="https://github.com/user-attachments/assets/a8b9e64d-abb0-4809-9ceb-a9a03c4cd6d7" />
+<img width="1901" height="907" alt="Add person" src="https://github.com/user-attachments/assets/a8833303-83d1-4afb-91cb-80134bb9f32d" />
+<img width="1897" height="915" alt="Mobile view" src="https://github.com/user-attachments/assets/9dada27d-31a5-4d80-8880-028c9b8d2369" />
 
 ---
 
 ## The Problem
 
-A pastor managing outreach to a number of people had no clear system.
+I built this for a pastor who was managing outreach to dozens of people with no real system. Every few weeks he'd realize he hadn't spoken to someone in over a month — not because he didn't care, but because there was no clear view of who needed attention next. Notes were scattered across texts and memory. Follow-ups were missed.
 
-Follow-ups were missed. Notes were scattered. And there wasn’t a simple way to know who needed attention next.
-
-The goal was simple:
-
-> Have one flow where everything is clear and nothing is forgotten.
-
-This was built for church leadership. But the problem is not unique.
-
-Anyone responsible for consistent follow-up — mentorship, coaching, team leadership — runs into the same issue.
+The same problem exists for anyone responsible for consistent, personal outreach — mentors, coaches, team leads, community organizers. The tools that exist are either too heavy (full CRMs) or too passive (spreadsheets). There was nothing designed around the simple question: *who do I call next, and why?*
 
 ---
 
-## What This Solves
+## What It Does
 
-* Every call is logged
-* Every follow-up is tracked
-* Every person has a clear next step
-
-No guessing. No relying on memory. Just clarity and consistency.
-
----
-
-## What’s New (v3)
-
-This version moves the system from a simple tracker → a more complete pastoral CRM.
-
-* **AI Log Assistant** — log calls in plain language, edit before saving
-* **Editable confirm step** — fix person, result, or follow-up date instantly
-* **Daily summary notifications** — know what’s due without opening the app
-* **Draft restore** — continue where you left off if interrupted
-* **Return-to-context navigation** — go back to where you started after logging
-* **Improved settings structure** — clearer separation of app vs people settings
-* **Mobile-first UX improvements** — faster, cleaner, fewer taps
+- **Priority dashboard** — see callbacks, overdue, due today, and upcoming at a glance
+- **AI-assisted logging** — describe a call in plain language; the system extracts result and next step, lets you edit before saving
+- **Smart scheduling** — next due dates calculated automatically per person based on their cadence
+- **Call history** — clean interaction timeline per person
+- **Offline support** — saves locally when offline, syncs when back online
+- **Daily notification** — one morning summary of who's due today, nothing more
+- **Todos** — lightweight task layer attached to people and follow-ups
+- **Analytics** — weekly call volume, silent contacts (6+ weeks), best week, role frequency
 
 ---
 
-## Features
+## What's New (v3)
 
-* **Priority dashboard**
-  See callbacks, overdue, due today, and upcoming at a glance
-
-* **AI-assisted logging**
-  Describe the call naturally → system extracts result and next step
-
-* **Call logging flow**
-  Outcome, summary, and next action in one clean step
-
-* **Smart scheduling**
-  Next due dates calculated automatically based on cadence
-
-* **Call history**
-  Clean interaction timeline per person
-
-* **Daily progress tracking**
-  See how many calls you’ve completed today
-
-* **Offline support (light)**
-  Save locally when offline, sync later
-
-* **Daily notification reminder**
-  One summary notification — not noisy, just useful
-
-* **Add people directly**
-  No need to go into the sheet
-
-* **Settings from the app**
-  Manage cadence, reminders, and preferences easily
-
-* **Works anywhere**
-  Mobile-friendly, no Google login required
+- **AI Log Assistant** — log calls in plain language, edit before saving
+- **Editable confirm step** — fix person, result, or follow-up date before committing
+- **Daily summary notifications** — know what's due without opening the app
+- **Draft restore** — continue where you left off if interrupted
+- **Return-to-context navigation** — go back to where you started after logging
+- **Backend test suite** — smoke tests for all core write operations via Node test runner + custom GAS harness
+- **Module split** — `app-core.js` broken into focused `core-*.js` modules
 
 ---
 
-## Demo
+## Architecture
 
-This public demo is hosted on GitHub Pages and uses sample data.
+```
+Frontend (HTML / CSS / JS)
+        ↓
+Google Apps Script Web App  ←  API layer
+        ↓
+Core Logic (code.gs)
+        ↓
+Google Sheets  ←  PEOPLE / INTERACTIONS / FOLLOWUPS / SETTINGS / TODOS
+```
 
-**Live Demo:**
-https://amber-e-moseri.github.io/Pastoral_CRM/
+The frontend is fully static. It talks to the backend through a single API endpoint — no server, no hosting costs, no build pipeline. This separation means the frontend could be replaced with a React app or mobile client without touching the backend.
 
-> Note: This demo is separate from the private production version and does not expose real user data.
+**Frontend modules:**
+
+| File | Responsibility |
+| --- | --- |
+| `core-api.js` | All fetch calls to the GAS backend |
+| `core-cache.js` | Client-side caching and invalidation |
+| `core-log.js` | Call logging flow |
+| `core-ai.js` | AI assist parsing and confirm step |
+| `core-navigation.js` | View routing and return-to-context |
+| `core-analytics.js` | Analytics rendering |
+| `core-history.js` | Per-person interaction timeline |
+| `core-settings.js` | Settings UI |
+| `core-init.js` | Bootstrap and app initialization |
+| `core-config.js` | Config loading from meta tag |
+| `drafts-offline.js` | Offline queue and draft persistence |
+| `todos.js` | Todo layer |
 
 ---
 
@@ -114,170 +93,75 @@ https://amber-e-moseri.github.io/Pastoral_CRM/
 | Frontend | HTML / CSS / JavaScript |
 | Email    | GmailApp                |
 | Hosting  | GitHub Pages / Netlify  |
+| Tests    | Node.js test runner + custom GAS harness |
 
-No frameworks. No build tools.
-
-Kept simple on purpose — easy to run, easy to maintain, easy to keep using.
-
----
-
-## Architecture
-
-```text
-Frontend (HTML/JS)
-        ↓
-Apps Script Web App (API)
-        ↓
-Core Logic (Code.gs)
-        ↓
-Google Sheets (PEOPLE / INTERACTIONS / FOLLOWUPS / SETTINGS)
-```
-
-Frontend and backend are separated cleanly.
-
-So the system can later support:
-
-* a React frontend
-* a mobile app
-* another internal dashboard
-
-without rewriting the backend.
-
----
-
-## Data Model
-
-| Sheet        | Purpose                       |
-| ------------ | ----------------------------- |
-| PEOPLE       | Who is being tracked          |
-| INTERACTIONS | Every call logged             |
-| FOLLOWUPS    | Open callbacks and follow-ups |
-| SETTINGS     | App configuration             |
-
-v3 addition:
-
-* **Notes (PEOPLE sheet)** — persistent per-person context 
+No frameworks. No build tools. Kept simple intentionally — easy to run, easy to maintain, easy to keep using.
 
 ---
 
 ## Engineering Decisions
 
-These were intentional, not random.
+These were deliberate choices, not defaults.
 
-### 1. Sheets instead of a database
+### Google Sheets as the database
 
-The user already understands it.
+The user already understood Sheets and could see and audit his own data directly. A proper database would have required me to build an admin UI just to replace what Sheets provides for free. That's complexity without benefit at this scale.
 
-That made the system usable immediately.
+The tradeoff: Sheets doesn't handle concurrency well and has API rate limits. That's acceptable for a single-user tool. At team scale, I'd migrate to PostgreSQL — the API-first architecture makes that swap straightforward without rewriting the frontend.
 
----
+### API-first structure
 
-### 2. Caching for speed
+The frontend never touches Sheets directly — it only calls the GAS web app, which acts as a REST API. Every read and write goes through `code.gs`. This means the frontend is fully replaceable (React, mobile app, another dashboard), all business logic lives in one place, and input validation and sanitization happens once, server-side.
 
-* People list
-* Due buckets
+### Caching for speed
 
-Cached briefly → invalidated on write
+People lists and due-date buckets are cached briefly and invalidated on write. GAS cold starts are slow — caching keeps the UI feeling responsive without stale data.
 
-Fast reads, fresh data.
+### No heavy recalculation on save
 
----
+Saving a call doesn't refresh all due statuses. That calculation runs on a scheduled trigger instead. This keeps the logging flow fast and separates concerns cleanly.
 
-### 3. No heavy recalculation on save
+### Cadence-based scheduling
 
-Saving a call does **not** refresh everything.
+Each person has their own follow-up rhythm rather than one global setting. A close contact might be weekly; a peripheral one might be monthly. The system respects that difference automatically.
 
-That work runs on a scheduled trigger instead.
+### Offline queue
 
----
+Calls are queued in localStorage when offline and synced when connectivity is restored. Draft state is also persisted so an interrupted logging flow can be resumed. Both were real pain points — the pastor often logged calls from places with spotty signal.
 
-### 4. Duplicate protection
+### AI assist with a mandatory edit step
 
-Double taps happen.
-
-Duplicate submissions are blocked server-side.
+The AI parses natural language call descriptions and suggests a result and next step. But it never commits silently — the user always sees and can edit the suggestion before it saves. The goal was speed without sacrificing accuracy.
 
 ---
 
-### 5. Cadence-based scheduling
+## Testing
 
-Each person can have their own follow-up rhythm.
+Backend logic is tested via a custom GAS harness that mocks `SpreadsheetApp`, `CacheService`, `ContentService`, and `Utilities` in a plain Node.js environment — no emulator, no deploy required.
 
-Not one-size-fits-all.
+```bash
+node tests/run-backend-tests.js
+```
 
----
-
-### 6. API-first structure
-
-Frontend is static. Backend is an API.
-
-Simple, but scalable.
+Tests cover the core write operations: `api_saveInteraction`, `api_addPerson`, `computeDuePeople_`, duplicate prevention, and the `doPost`/`doGet` routing layer.
 
 ---
 
-## AI Assist (v3)
+## Data Model
 
-The goal is not “more AI.”
-
-It is:
-
-> Make logging faster, but still correct.
-
-So the system:
-
-* parses natural language
-* suggests result + next step
-* lets you **edit before saving**
-* never silently commits wrong data
-
-If unsure:
-
-* it asks
-* or lets you correct it quickly
+| Sheet        | Purpose                                 |
+| ------------ | --------------------------------------- |
+| PEOPLE       | Who is being tracked                    |
+| INTERACTIONS | Every call logged                       |
+| FOLLOWUPS    | Open callbacks and follow-ups           |
+| SETTINGS     | App configuration                       |
+| TODOS        | Tasks attached to people and follow-ups |
 
 ---
 
-## Notifications
+## What I'd Do Differently
 
-Minimal by design.
-
-* **One daily summary**
-* No spam
-* No per-person noise
-
-Example:
-
-> You have 4 people due today
-
----
-
-## Analytics
-
-The analytics page makes outreach visible:
-
-* Weekly call volume
-* Reached this week (correctly from INTERACTIONS, not PEOPLE)
-* Silent people (6+ weeks)
-* Role frequency
-* Best week
-
-This helps answer:
-
-> Are we actually being consistent?
-
----
-
-## What I’d Do Next
-
-If scaling:
-
-* move data → PostgreSQL
-* introduce TypeScript
-* migrate UI → React
-* add authentication
-* add role-based access
-
-Sheets works well here. But it’s still the weakest layer long-term.
+**Add authentication from day one.** The GAS endpoint is deployed as "Access: Anyone" — which made early iteration fast, but it means anyone with the `/exec` URL can read or write all data. Retrofitting auth is always harder than building it in. A shared secret header verified in `doPost`/`doGet` would have been a one-hour addition early on; it's more disruptive now.
 
 ---
 
@@ -285,49 +169,34 @@ Sheets works well here. But it’s still the weakest layer long-term.
 
 ### 1. Create a Google Sheet
 
-Extensions → Apps Script
+Extensions → Apps Script → paste `code.gs` → run `setupSystem()`
 
-### 2. Paste backend code
+### 2. Deploy the web app
 
-Run:
+- Execute as: Me
+- Access: Anyone
 
-```javascript
-setupSystem()
-```
+Copy the `/exec` URL.
 
----
+### 3. Connect the frontend
 
-### 3. Deploy web app
-
-* Execute as: Me
-* Access: Anyone
-
-Copy `/exec` URL
-
----
-
-### 4. Connect frontend
-
-Set the API URL via HTML meta tag at deploy time (do **not** commit live `/exec` URLs):
+Set the API URL at deploy time — do not commit it directly:
 
 ```html
 <meta name="flock-api-url" content="YOUR_APPS_SCRIPT_EXEC_URL" />
 ```
 
-The frontend reads this value automatically in `js/app-core.js`.
+Or use the inject script with an environment variable:
 
----
+```bash
+FLOCK_CLIENT_API_URL=https://script.google.com/... node inject-config.js
+```
 
-### 5. Configure settings
+### 4. Configure settings
 
-* reminder email
-* notification hour
-* timezone
-* your name
+Set reminder email, notification hour, timezone, and your name from the app's Settings page.
 
----
-
-### 6. Set triggers
+### 5. Set triggers
 
 | Function                    | Schedule |
 | --------------------------- | -------- |
@@ -335,34 +204,26 @@ The frontend reads this value automatically in `js/app-core.js`.
 | sendMorningDueNowReminder   | Daily    |
 | sendMondayFollowupsThisWeek | Weekly   |
 
----
+### 6. Host the frontend
 
-### 7. Host frontend
-
-* GitHub Pages
-* Netlify
+GitHub Pages or Netlify both work. The frontend is fully static — no server required.
 
 ---
 
-## Why This Project Matters
+## If I Were Scaling This
 
-This was not built as a demo.
+- Move data → PostgreSQL (Sheets is the weakest layer long-term)
+- Introduce TypeScript
+- Migrate UI → React
+- Add proper authentication (JWT or session-based)
+- Add role-based access for team use
 
-It was built around a real workflow:
-
-* missed follow-ups
-* scattered notes
-* no visibility
-* inconsistency
-
-The value is not in complexity.
-
-It is in making the next action clear.
+The architecture is already set up for this — the API boundary means none of these changes require rewriting both layers at once.
 
 ---
 
-## Core Idea
+## Why This Project
+
+This wasn't built as a demo. It came from a real workflow with real gaps — missed follow-ups, scattered notes, no visibility into consistency. The value isn't in technical complexity. It's in making the next action obvious.
 
 > Clarity → Consistency → Results
-
-If you always know who to call next, and you follow through, nothing slips.

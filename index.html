@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <!-- Inject at deploy time (do not commit live Apps Script URL) -->
-<meta name="flock-api-url" content="__FLOCK_CLIENT_API_URL__"/>
+<meta name="flock-api-url" content="https://script.google.com/macros/s/AKfycbwlbMarblzx0P71Q8pNuYF2ngYJGYKDLachgNBHM5bfdiaA1FAM7Fc-1YZD9lQtpjOB/exec"/>
 <meta name="flock-api-token" content=""/>
 <title>Flock</title>
 <link href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMjQ0YzQzIi8+PHBhdGggZD0iTTUwIDgyIEM1MCA4MiAxMiA1NSAxMiAzMiBDMTIgMjAgMjEgMTMgMzIgMTYgQzM5IDE4IDQ1IDI0IDUwIDMwIEM1NSAyNCA2MSAxOCA2OCAxNiBDNzkgMTMgODggMjAgODggMzIgQzg4IDU1IDUwIDgyIDUwIDgyWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjg5MTQ2IiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNTAgMTUgTDUzIDI3IEw2MCAyMiBMNTYgMzIgTDY4IDMwIEw2MCAzOCBMNjUgMzggTDUwIDU1IEwzNSAzOCBMNDAgMzggTDMyIDMwIEw0NCAzMiBMNDAgMjIgTDQ3IDI3IFoiIGZpbGw9IndoaXRlIi8+PHJlY3QgeD0iNDciIHk9IjU0IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMCIgcng9IjIiIGZpbGw9IndoaXRlIi8+PC9zdmc+" id="pwa-icon" rel="apple-touch-icon"/>
@@ -672,7 +672,16 @@
 </div>
 </div>
 </div>
-<script src="js/app-core.js"></script>
+<script src="js/core-config.js"></script>
+<script src="js/core-api.js"></script>
+<script src="js/core-cache.js"></script>
+<script src="js/core-navigation.js"></script>
+<script src="js/core-history.js"></script>
+<script src="js/core-settings.js"></script>
+<script src="js/core-analytics.js"></script>
+<script src="js/core-log.js"></script>
+<script src="js/core-ai.js"></script>
+<script src="js/core-init.js"></script>
 <!-- EDIT PERSON MODAL -->
 <div class="modal-backdrop" id="edit-modal" onclick="if(event.target===this)closeEditModal()">
 <div class="modal-sheet">
