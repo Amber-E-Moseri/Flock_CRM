@@ -1,4 +1,5 @@
 ﻿  window.Flock = window.Flock || {};
+  var _apiGetInFlight = {};
   function apiFetch(action, params) {
     if (!API) return Promise.reject(new Error('API URL is not configured.'));
     var url = API + '?action=' + action;
@@ -7,9 +8,10 @@
         url += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
       });
     }
+    if (_apiGetInFlight[url]) return _apiGetInFlight[url];
     var controller = new AbortController();
     var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
-    return fetch(url, { method: 'GET', redirect: 'follow', signal: controller.signal })
+    _apiGetInFlight[url] = fetch(url, { method: 'GET', redirect: 'follow', signal: controller.signal })
       .then(function(r) {
         clearTimeout(timeoutId);
         if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -24,9 +26,13 @@
       })
       .catch(function(e) {
         clearTimeout(timeoutId);
-        if (e && e.name === 'AbortError') throw new Error('Request timed out — please try again');
+        if (e && e.name === 'AbortError') throw new Error('Request timed out - please try again');
         throw e;
+      })
+      .finally(function() {
+        delete _apiGetInFlight[url];
       });
+    return _apiGetInFlight[url];
   }
 
   function apiPost(action, payload) {
@@ -57,7 +63,7 @@
       })
       .catch(function(e) {
         clearTimeout(timeoutId);
-        if (e && e.name === 'AbortError') throw new Error('Request timed out — please try again');
+        if (e && e.name === 'AbortError') throw new Error('Request timed out - please try again');
         throw e;
       });
   }
@@ -119,5 +125,4 @@
   window.getPeople = getPeople;
   window.invalidatePeopleCache = invalidatePeopleCache;
   window._peopleCache = _peopleCache;
-
 

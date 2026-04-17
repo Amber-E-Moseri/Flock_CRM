@@ -133,6 +133,10 @@
   var _dashLoadSeq = 0;
   var _dashDueSnapshot = null;
   var _dashTodaySnapshot = null;
+  var _duePeoplePromise = null;
+  var _todayCountPromise = null;
+  var _postSaveRefreshPromise = null;
+  var _postSaveRefreshAt = 0;
 
   function applyDashTodayCount(today) {
     var el = document.getElementById('dash-today-count');
@@ -140,6 +144,72 @@
     var n = Number(today && today.count) || 0;
     el.textContent = n + (n === 1 ? ' call logged today' : ' calls logged today');
   }
+
+  function applyHomeQuickStatsFromDue_(due) {
+    var data = due || {};
+    var stats = {
+      callbacks: (data.callbacks || []).length,
+      overdue: (data.overdue || []).length,
+      today: (data.today || []).length
+    };
+    _homeQuickStatsCache = { ts: Date.now(), data: stats };
+    var cb = document.getElementById('h-cb');
+    var ov = document.getElementById('h-ov');
+    var td = document.getElementById('h-td');
+    if (cb) cb.textContent = stats.callbacks;
+    if (ov) ov.textContent = stats.overdue;
+    if (td) td.textContent = stats.today;
+  }
+
+  function refreshDuePeople() {
+    if (_duePeoplePromise) return _duePeoplePromise;
+    _duePeoplePromise = apiFetch('duePeople')
+      .then(function(due) {
+        _dashDueSnapshot = due || {};
+        applyHomeQuickStatsFromDue_(_dashDueSnapshot);
+        if (document.getElementById('pg-dash') && document.getElementById('pg-dash').classList.contains('active')) {
+          renderDash(_dashDueSnapshot);
+        }
+        return _dashDueSnapshot;
+      })
+      .finally(function() {
+        _duePeoplePromise = null;
+      });
+    return _duePeoplePromise;
+  }
+
+  function refreshTodayCount() {
+    if (_todayCountPromise) return _todayCountPromise;
+    _todayCountPromise = apiFetch('getTodayCount')
+      .then(function(today) {
+        _dashTodaySnapshot = today || {};
+        applyDashTodayCount(_dashTodaySnapshot);
+        if (window.__todayLoggedCount != null && _dashTodaySnapshot && _dashTodaySnapshot.count != null) {
+          window.__todayLoggedCount = Number(_dashTodaySnapshot.count) || 0;
+        }
+        return _dashTodaySnapshot;
+      })
+      .finally(function() {
+        _todayCountPromise = null;
+      });
+    return _todayCountPromise;
+  }
+
+  function runPostSaveRefresh() {
+    var now = Date.now();
+    if (_postSaveRefreshPromise && (now - _postSaveRefreshAt) < 3000) return _postSaveRefreshPromise;
+    _postSaveRefreshAt = now;
+    _postSaveRefreshPromise = Promise.all([
+      refreshTodayCount(),
+      refreshDuePeople()
+    ]).finally(function() {
+      _postSaveRefreshPromise = null;
+    });
+    return _postSaveRefreshPromise;
+  }
+  window.runPostSaveRefresh = runPostSaveRefresh;
+  window.refreshTodayCount = refreshTodayCount;
+  window.refreshDuePeople = refreshDuePeople;
 
   function loadDash() {
     var seq = ++_dashLoadSeq;
@@ -149,11 +219,11 @@
     else showDashLoading();
     if (_dashTodaySnapshot) applyDashTodayCount(_dashTodaySnapshot);
 
-    apiFetch('duePeople')
+    refreshDuePeople()
       .then(function(due){
         if (seq !== _dashLoadSeq) return;
-        _dashDueSnapshot = due || {};
-        renderDash(_dashDueSnapshot);
+        _dashDueSnapshot = due || _dashDueSnapshot || {};
+        if (_dashDueSnapshot) renderDash(_dashDueSnapshot);
         if (refreshBtn) refreshBtn.classList.remove('loading');
       })
       .catch(function(e){
@@ -162,11 +232,11 @@
         if (refreshBtn) refreshBtn.classList.remove('loading');
       });
 
-    apiFetch('getTodayCount')
+    refreshTodayCount()
       .then(function(today){
         if (seq !== _dashLoadSeq) return;
-        _dashTodaySnapshot = today || {};
-        applyDashTodayCount(_dashTodaySnapshot);
+        _dashTodaySnapshot = today || _dashTodaySnapshot || {};
+        if (_dashTodaySnapshot) applyDashTodayCount(_dashTodaySnapshot);
       })
       .catch(function(e){ console.warn('[Flock]', e); });
   }

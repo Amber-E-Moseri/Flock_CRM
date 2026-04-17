@@ -430,7 +430,7 @@
       if (personHeader) {
         personHeader.classList.add('ai-editable-card');
         personHeader.id = 'ai-conf-edit-person';
-        personHeader.insertAdjacentHTML('afterend', '<div id="ai-person-inline" class="ai-inline-edit"><div class="ai-mini-label">Change person</div><div style="position:relative;"><input id="ai-override-search" style="width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-soft);font-family:inherit;font-size:14px;color:var(--text);outline:none;" placeholder="Search by nameâ€¦" oninput="aiOverrideSearch()" autocomplete="off"><div id="ai-override-drop" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--accent);border-radius:var(--radius-sm);box-shadow:0 8px 24px rgba(0,0,0,.12);max-height:160px;overflow-y:auto;z-index:100;"></div></div><div class="ai-person-picked" id="ai-person-picked-note"></div></div>');
+        personHeader.insertAdjacentHTML('afterend', '<div id="ai-person-inline" class="ai-inline-edit"><div class="ai-mini-label">Change person</div><div style="position:relative;"><input id="ai-override-search" style="width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-soft);font-family:inherit;font-size:14px;color:var(--text);outline:none;" placeholder="Search by name..." oninput="aiOverrideSearch()" autocomplete="off"><div id="ai-override-drop" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--accent);border-radius:var(--radius-sm);box-shadow:0 8px 24px rgba(0,0,0,.12);max-height:160px;overflow-y:auto;z-index:100;"></div></div><div class="ai-person-picked" id="ai-person-picked-note"></div></div>');
         personHeader.addEventListener('click', function(e){ if (e.target.closest('#ai-person-inline')) return; $('ai-person-inline').classList.toggle('open'); var inp=$('ai-override-search'); if (inp) setTimeout(function(){ inp.focus(); }, 50); });
       }
       personWrap.style.display = 'none';
@@ -505,7 +505,7 @@
       inline.classList.toggle('open', parsed.matchConfidence !== 'high');
       if (drop && parsed.suggestions && parsed.suggestions.length) {
         drop.style.display = 'block';
-        drop.innerHTML = '<div class="ai-mini-label" style="padding:10px 10px 0;">Did you meanâ€¦?</div>' + parsed.suggestions.map(function(item){ return '<button type="button" class="ai-suggestion-btn" data-action="ai-choose-person" data-pid="' + esc(String(item.person.id)) + '">' + esc(item.person.name || item.person.id) + '<div style="font-size:11px;color:var(--muted);margin-top:2px;">' + Math.round(item.score*100) + '% match</div></button>'; }).join('');
+        drop.innerHTML = '<div class="ai-mini-label" style="padding:10px 10px 0;">Did you mean...?</div>' + parsed.suggestions.map(function(item){ return '<button type="button" class="ai-suggestion-btn" data-action="ai-choose-person" data-pid="' + esc(String(item.person.id)) + '">' + esc(item.person.name || item.person.id) + '<div style="font-size:11px;color:var(--muted);margin-top:2px;">' + Math.round(item.score*100) + '% match</div></button>'; }).join('');
       } else if (drop) {
         drop.style.display = 'none';
       }
@@ -600,6 +600,7 @@
     var savePromise = !navigator.onLine ? (queueOfflineCall(payload), Promise.resolve({ success:true, offline:true })) : apiPost('saveInteraction', { payload: payload });
     savePromise.then(function(res){
       if (res && res.success) {
+        if (window.runPostSaveRefresh) runPostSaveRefresh().catch(function(e){ console.warn('[Flock]', e); });
         var aiTodos = aiAssist.todos || [];
         if (aiTodos.length && res.interactionId) {
           apiPost('saveTodos', { payload: {

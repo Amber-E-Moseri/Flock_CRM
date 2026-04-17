@@ -304,6 +304,7 @@
       if (res && res.success) {
         hapticTick_();
         _homeQuickStatsCache = null;
+        if (window.runPostSaveRefresh) runPostSaveRefresh().catch(function(e){ console.warn('[Flock]', e); });
         // Extract action items from summary text and save as todos
         var aiTodos = extractTodosFromText(p.summary || '');
         if (aiTodos.length && res.interactionId) {

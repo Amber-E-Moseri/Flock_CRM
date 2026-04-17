@@ -145,7 +145,10 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
         var todoNote = quickTodos.length ? ' ' + quickTodos.length + ' action item' + (quickTodos.length > 1 ? 's' : '') + ' added.' : '';
         bsShowMsg((res.offline ? 'Saved offline - will sync when back online.' : 'Call logged!') + todoNote, 'success');
         if (bsResult === 'Reached' && bsAction === 'None') optimisticRemoveFromDash(bsPid);
-        setTimeout(function() { closeBsheet(); loadDash(); }, 260);
+        (window.runPostSaveRefresh ? runPostSaveRefresh() : Promise.resolve())
+          .finally(function() {
+            setTimeout(function() { closeBsheet(); loadDash(); }, 260);
+          });
       } else {
         document.getElementById('bsheet-save-btn').disabled = false;
         bsShowMsg('Save failed: ' + (res && res.error ? res.error : 'Unknown error.'), 'error');
@@ -366,7 +369,10 @@ var bsPid = null, bsName = null, bsResult = '', bsAction = 'None', bsSaving = fa
         if (failedCount > 0 && window.showUxToast) {
           window.showUxToast(failedCount + ' offline item' + (failedCount === 1 ? '' : 's') + ' still unsynced');
         }
-        if (idx > 0) loadDash();
+        if (idx > 0) {
+          (window.runPostSaveRefresh ? runPostSaveRefresh() : Promise.resolve())
+            .finally(function() { loadDash(); });
+        }
         return;
       }
       var queued = queue[idx];

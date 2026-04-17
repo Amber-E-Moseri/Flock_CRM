@@ -290,6 +290,7 @@
         if (res && res.success) {
           hapticTick_();
           _homeQuickStatsCache = null;
+          if (window.runPostSaveRefresh) runPostSaveRefresh().catch(function(e){ console.warn('[Flock]', e); });
           lastSig = sig; lastAt = Date.now();
           // Capture pending action item text, then save action items if any
           if (window.flushPendingLogTodoItem) window.flushPendingLogTodoItem();

@@ -28,18 +28,21 @@
   }
 
   function fetchAndUpdateDailyProgress(){
-    if (typeof apiFetch !== 'function') { updateDailyProgress(); return; }
-    apiFetch('getTodayCount').then(function(res){
-      var n = (res && res.count != null) ? res.count : (window.__todayLoggedCount || 0);
-      window.__todayLoggedCount = n;
-      updateDailyProgress(n);
-    }).catch(function(){ updateDailyProgress(); });
+    if (typeof window.refreshTodayCount === 'function') {
+      window.refreshTodayCount().then(function(res){
+        var n = (res && res.count != null) ? res.count : (window.__todayLoggedCount || 0);
+        window.__todayLoggedCount = n;
+        updateDailyProgress(n);
+      }).catch(function(){ updateDailyProgress(); });
+      return;
+    }
+    updateDailyProgress();
   }
 
   var _oldRenderDash = window.renderDash;
   window.renderDash = function(data){
     if (_oldRenderDash) _oldRenderDash(data);
-    fetchAndUpdateDailyProgress();
+    updateDailyProgress();
   };
 
   function successScreenVisible(){ return $('success-screen') && $('success-screen').classList.contains('on'); }
@@ -53,7 +56,10 @@
       if (successScreenVisible()) {
         window.__todayLoggedCount = (window.__todayLoggedCount || 0) + 1;
         updateDailyProgress();
-        setTimeout(fetchAndUpdateDailyProgress, 1500);
+        setTimeout(function(){
+          if (window.runPostSaveRefresh) window.runPostSaveRefresh().catch(function(e){ console.warn('[Flock]', e); });
+          else fetchAndUpdateDailyProgress();
+        }, 120);
         if (offline) showToast('Saved locally - will sync when you reconnect');
         else showToast('Call logged');
       }
@@ -69,7 +75,10 @@
       if (aiSuccessVisible()) {
         window.__todayLoggedCount = (window.__todayLoggedCount || 0) + 1;
         updateDailyProgress();
-        setTimeout(fetchAndUpdateDailyProgress, 1500);
+        setTimeout(function(){
+          if (window.runPostSaveRefresh) window.runPostSaveRefresh().catch(function(e){ console.warn('[Flock]', e); });
+          else fetchAndUpdateDailyProgress();
+        }, 120);
         if (offline) showToast('Saved locally - will sync when you reconnect');
         else showToast('Call logged');
       }
@@ -86,7 +95,10 @@
       if (/saved/i.test(msg)) {
         window.__todayLoggedCount = (window.__todayLoggedCount || 0) + 1;
         updateDailyProgress();
-        setTimeout(fetchAndUpdateDailyProgress, 1500);
+        setTimeout(function(){
+          if (window.runPostSaveRefresh) window.runPostSaveRefresh().catch(function(e){ console.warn('[Flock]', e); });
+          else fetchAndUpdateDailyProgress();
+        }, 120);
         if (offline) showToast('Saved locally - will sync when you reconnect');
         else showToast('Call logged');
       }
